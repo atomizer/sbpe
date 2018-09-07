@@ -1,0 +1,1650 @@
+{
+  "castable": {
+    "AccountWindow": [
+      "ChangeNameWindow",
+      "ChangePasswordWindow",
+      "ExportAccountWindow",
+      "ForgotPasswordWindow",
+      "ImportAccountWindow",
+      "LoginWindow",
+      "RegisterWindow"
+    ],
+    "Action": [
+      "AttackAction",
+      "BombJumpAction",
+      "BoosterAction",
+      "DashAction",
+      "DashDownAction",
+      "FlailAction",
+      "FlailAttackAction",
+      "FlailSpinAction",
+      "GunAction",
+      "HammerAction",
+      "HitAction",
+      "HomeAction",
+      "KickAction",
+      "ShieldBashAction"
+    ],
+    "AsyncTask": [
+      "ServerRequestTask<ChangePasswordResponse>",
+      "ServerRequestTask<GeneralResponse>",
+      "ServerRequestTask<LoginResponse>",
+      "ServerRequestTask<PortAccountResponse>",
+      "ServerRequestTask<RegisterResponse>"
+    ],
+    "AttackAction": [
+      "BombJumpAction",
+      "DashAction",
+      "DashDownAction",
+      "FlailAction",
+      "FlailAttackAction",
+      "FlailSpinAction",
+      "GunAction",
+      "HammerAction",
+      "KickAction",
+      "ShieldBashAction"
+    ],
+    "BulletBase": [
+      "BounceBullet",
+      "Bullet"
+    ],
+    "ClientObject": [
+      "Admin",
+      "AggressorDrone",
+      "Ancient",
+      "Blocker",
+      "BounceBoomerang",
+      "BounceBullet",
+      "Bullet",
+      "BulletBase",
+      "Chest",
+      "ClientAnimObject",
+      "CreatedPlatform",
+      "DamageOverTime",
+      "DamageOverTimeSeed",
+      "DamagingClientObject",
+      "DeactivatedDrone",
+      "Duskwing",
+      "Explosion",
+      "Fabricator",
+      "Flappy",
+      "FlaskFire",
+      "Guide",
+      "HammerBomb",
+      "Hoverer",
+      "Incendiary",
+      "Ironclad",
+      "LaunchedRocket",
+      "LiveBulletPinata",
+      "LiveCluster",
+      "LiveGrenade",
+      "LiveGrenadeBase",
+      "Loot",
+      "MortarBall",
+      "MortarDrone",
+      "MultiExplosion",
+      "OverlaidAnimation",
+      "PetFollower",
+      "Player",
+      "PlayerCharacter",
+      "ProtoCreatedPlatform",
+      "Seed",
+      "SeedX",
+      "Spark",
+      "StickyBoomerang",
+      "TeleportObj",
+      "ThrownBoomerang",
+      "Toaster",
+      "Totem",
+      "WavePart",
+      "WaveSeed",
+      "Wildfire",
+      "Wings",
+      "WingsBullet"
+    ],
+    "DamagingClientObject": [
+      "Blocker",
+      "BounceBoomerang",
+      "BounceBullet",
+      "Bullet",
+      "BulletBase",
+      "DamageOverTime",
+      "Explosion",
+      "FlaskFire",
+      "HammerBomb",
+      "Incendiary",
+      "LaunchedRocket",
+      "LiveCluster",
+      "LiveGrenade",
+      "LiveGrenadeBase",
+      "MortarBall",
+      "SeedX",
+      "StickyBoomerang",
+      "ThrownBoomerang",
+      "Totem",
+      "WavePart"
+    ],
+    "DynamicGraphic": [
+      "AnimationGraphic",
+      "HitNumberGraphic",
+      "PlayerBoostGraphic",
+      "PlayerTextGraphic",
+      "ScatterMovingGraphic"
+    ],
+    "FlailAction": [
+      "FlailAttackAction",
+      "FlailSpinAction"
+    ],
+    "ForeignObject": [
+      "BodyDispenser",
+      "CharSlot",
+      "SlottedChar",
+      "Stash",
+      "StashedItem"
+    ],
+    "GameService": [
+      "SteamGameService"
+    ],
+    "Graphic": [
+      "AnimationGraphic",
+      "DynamicGraphic",
+      "EdgeElementGraphic",
+      "HitNumberGraphic",
+      "PlayerBoostGraphic",
+      "PlayerTextGraphic",
+      "ScatterGraphic",
+      "ScatterMovingGraphic",
+      "TestGraphic"
+    ],
+    "ImageButton": [
+      "CloseButton",
+      "PurchaseButton"
+    ],
+    "Item": [
+      "BombJump",
+      "Boomerang",
+      "Booster",
+      "BulletPinata",
+      "Dash",
+      "DroneMaker",
+      "Flail",
+      "Flask",
+      "Grenade",
+      "GroupHeal",
+      "Gun",
+      "Hammer",
+      "HoverGun",
+      "Kick",
+      "PetCreator",
+      "PlatformCreator",
+      "Rocket",
+      "Shield",
+      "SimpleWeapon",
+      "Star",
+      "TeleportThrow"
+    ],
+    "Label": [
+      "ClickableLabel"
+    ],
+    "LiveGrenadeBase": [
+      "LiveCluster",
+      "LiveGrenade"
+    ],
+    "MessageHandlers::MessageHandlerBase": [
+      "MessageHandlers::DataHandler",
+      "MessageHandlers::MessageHandler<ChangePasswordResponse>",
+      "MessageHandlers::MessageHandler<ChangeServer>",
+      "MessageHandlers::MessageHandler<CharacterDescription>",
+      "MessageHandlers::MessageHandler<Chat>",
+      "MessageHandlers::MessageHandler<Emote>",
+      "MessageHandlers::MessageHandler<ErrorMessage>",
+      "MessageHandlers::MessageHandler<FactionRosterResponse>",
+      "MessageHandlers::MessageHandler<GeneralResponse>",
+      "MessageHandlers::MessageHandler<Hello>",
+      "MessageHandlers::MessageHandler<ItemDescription>",
+      "MessageHandlers::MessageHandler<Joined>",
+      "MessageHandlers::MessageHandler<LoadPVid>",
+      "MessageHandlers::MessageHandler<LoginResponse>",
+      "MessageHandlers::MessageHandler<PortAccountResponse>",
+      "MessageHandlers::MessageHandler<RegisterResponse>",
+      "MessageHandlers::MessageHandler<ShowCharScore>",
+      "MessageHandlers::MessageHandler<ShowZoneCompleteScore>",
+      "MessageHandlers::MessageHandler<TrackEvent>",
+      "MessageHandlers::MessageHandler<UserLinksMessage>"
+    ],
+    "NativeObject": [
+      "Admin",
+      "AggressorDrone",
+      "Ancient",
+      "Blocker",
+      "BounceBoomerang",
+      "BounceBullet",
+      "Bullet",
+      "BulletBase",
+      "Chest",
+      "ClientAnimObject",
+      "ClientObject",
+      "CreatedPlatform",
+      "DamageOverTime",
+      "DamageOverTimeSeed",
+      "DamagingClientObject",
+      "DeactivatedDrone",
+      "Duskwing",
+      "Explosion",
+      "Fabricator",
+      "Flappy",
+      "FlaskFire",
+      "Guide",
+      "HammerBomb",
+      "Hoverer",
+      "Incendiary",
+      "Ironclad",
+      "LaunchedRocket",
+      "LiveBulletPinata",
+      "LiveCluster",
+      "LiveGrenade",
+      "LiveGrenadeBase",
+      "Loot",
+      "MortarBall",
+      "MortarDrone",
+      "MultiExplosion",
+      "OverlaidAnimation",
+      "PetFollower",
+      "Player",
+      "PlayerCharacter",
+      "ProtoCreatedPlatform",
+      "Seed",
+      "SeedX",
+      "Spark",
+      "StickyBoomerang",
+      "TeleportObj",
+      "ThrownBoomerang",
+      "Toaster",
+      "Totem",
+      "WavePart",
+      "WaveSeed",
+      "Wildfire",
+      "Wings",
+      "WingsBullet"
+    ],
+    "NativeSubWorld<ClientObject>": [
+      "ClientSubWorld"
+    ],
+    "OptionsDialog": [
+      "Controls",
+      "GameplayOptions",
+      "GraphicsOptions",
+      "SoundsOptions"
+    ],
+    "Player": [
+      "Admin",
+      "Ancient",
+      "Duskwing",
+      "Fabricator",
+      "Flappy",
+      "Ironclad",
+      "PlayerCharacter",
+      "Spark",
+      "Toaster",
+      "Wildfire",
+      "Wings"
+    ],
+    "PlayerCharacter": [
+      "Ancient",
+      "Duskwing",
+      "Fabricator",
+      "Ironclad",
+      "Toaster",
+      "Wildfire"
+    ],
+    "Shape": [
+      "LLTri",
+      "LRTri",
+      "Rect",
+      "Tri",
+      "ULTri",
+      "URTri"
+    ],
+    "SlotSprite": [
+      "EquipSlotSprite",
+      "HomeSlotSprite",
+      "KeysSlotSprite",
+      "RejoinSlotSprite"
+    ],
+    "SubWorld": [
+      "ClientSubWorld",
+      "ForeignSubWorld",
+      "NativeSubWorld<ClientObject>",
+      "SubWorldImpl<ClientObject>",
+      "SubWorldImpl<ForeignObject>"
+    ],
+    "SubWorldImpl<ClientObject>": [
+      "ClientSubWorld",
+      "NativeSubWorld<ClientObject>"
+    ],
+    "SubWorldImpl<ForeignObject>": [
+      "ForeignSubWorld"
+    ],
+    "TextInputField": [
+      "ChatInput",
+      "LabeledInputField"
+    ],
+    "ToolTip": [
+      "ItemToolTip",
+      "KeysToolTip",
+      "NameWindow",
+      "StatsWindow"
+    ],
+    "Tri": [
+      "LLTri",
+      "LRTri",
+      "ULTri",
+      "URTri"
+    ],
+    "UIElement": [
+      "AccountWindow",
+      "Background",
+      "BackgroundVH",
+      "ChangeNameWindow",
+      "ChangePasswordWindow",
+      "ChatInput",
+      "ChatWindow",
+      "ChatWindow::ChatLine",
+      "Checkbox",
+      "CheckboxLine",
+      "ClickableLabel",
+      "CloseButton",
+      "Controls",
+      "CutScene",
+      "DecoratedBackground",
+      "DecorationVisualElement",
+      "Dialog",
+      "DialogButton",
+      "Dropdown",
+      "DropdownLine",
+      "DropdownSelection",
+      "EquipSlotSprite",
+      "ExportAccountWindow",
+      "FactionRegisterDialog",
+      "FactionRegisterWindow",
+      "FactionRosterDialog",
+      "FactionRosterLine",
+      "FactionRosterWindow",
+      "FactionVendorWindow",
+      "FilledRect",
+      "FinalScoreSprite",
+      "ForgotPasswordWindow",
+      "GameClient",
+      "GameMenu",
+      "GameMenuButton",
+      "GameplayOptions",
+      "Graph",
+      "GraphicsOptions",
+      "HUD",
+      "HUDEquip",
+      "HUDStatus",
+      "HomeSlotSprite",
+      "IconStat",
+      "ImageButton",
+      "ImportAccountWindow",
+      "InstructionLabel",
+      "InventoryOverlay",
+      "InventoryWindow",
+      "ItemToolTip",
+      "KeyRemapLine",
+      "KeyRemapPage",
+      "KeypressLabel",
+      "KeysSlotSprite",
+      "KeysToolTip",
+      "Label",
+      "LabeledCheckbox",
+      "LabeledInput",
+      "LabeledInputField",
+      "LoadingScreen",
+      "LoginWindow",
+      "MainMenu",
+      "MarkupLabel",
+      "NameWindow",
+      "OptionsDialog",
+      "PerfDisplay",
+      "PlayerWindowExitSprite",
+      "ProgressOverlay",
+      "ProgressWindow",
+      "PurchaseButton",
+      "RegisterWindow",
+      "RejoinSlotSprite",
+      "ScoreBonusWindow",
+      "ScoreCharWindow",
+      "ScoreOverlay",
+      "ScoreStatLine",
+      "ScoreStatsWindow",
+      "Slider",
+      "SliderLine",
+      "SlotSprite",
+      "SoundsOptions",
+      "Stage",
+      "StashWindow",
+      "StatBar",
+      "StatLine",
+      "StatsWindow",
+      "StringChoices",
+      "StringChooser",
+      "Tabs",
+      "TextButton",
+      "TextInputField",
+      "ToolTip",
+      "UCPurchaseWindow",
+      "UCVendorWindow",
+      "UIElementContainer",
+      "VisualElement",
+      "WorldClient",
+      "WorldOverlay",
+      "WorldTitle",
+      "WorldView",
+      "XPLevelBars",
+      "ZoneScoreOverlay"
+    ],
+    "UIElementContainer": [
+      "AccountWindow",
+      "ChangeNameWindow",
+      "ChangePasswordWindow",
+      "ChatWindow",
+      "ChatWindow::ChatLine",
+      "CheckboxLine",
+      "CloseButton",
+      "Controls",
+      "CutScene",
+      "DecoratedBackground",
+      "Dialog",
+      "DialogButton",
+      "Dropdown",
+      "DropdownLine",
+      "DropdownSelection",
+      "EquipSlotSprite",
+      "ExportAccountWindow",
+      "FactionRegisterDialog",
+      "FactionRegisterWindow",
+      "FactionRosterDialog",
+      "FactionRosterLine",
+      "FactionRosterWindow",
+      "FactionVendorWindow",
+      "FinalScoreSprite",
+      "ForgotPasswordWindow",
+      "GameClient",
+      "GameMenu",
+      "GameMenuButton",
+      "GameplayOptions",
+      "GraphicsOptions",
+      "HUD",
+      "HUDEquip",
+      "HUDStatus",
+      "HomeSlotSprite",
+      "IconStat",
+      "ImageButton",
+      "ImportAccountWindow",
+      "InstructionLabel",
+      "InventoryOverlay",
+      "InventoryWindow",
+      "ItemToolTip",
+      "KeyRemapLine",
+      "KeyRemapPage",
+      "KeypressLabel",
+      "KeysSlotSprite",
+      "KeysToolTip",
+      "LabeledCheckbox",
+      "LabeledInput",
+      "LoadingScreen",
+      "LoginWindow",
+      "MainMenu",
+      "NameWindow",
+      "OptionsDialog",
+      "PerfDisplay",
+      "PlayerWindowExitSprite",
+      "ProgressOverlay",
+      "ProgressWindow",
+      "PurchaseButton",
+      "RegisterWindow",
+      "RejoinSlotSprite",
+      "ScoreBonusWindow",
+      "ScoreCharWindow",
+      "ScoreOverlay",
+      "ScoreStatLine",
+      "ScoreStatsWindow",
+      "Slider",
+      "SliderLine",
+      "SlotSprite",
+      "SoundsOptions",
+      "Stage",
+      "StashWindow",
+      "StatLine",
+      "StatsWindow",
+      "StringChoices",
+      "StringChooser",
+      "Tabs",
+      "TextButton",
+      "ToolTip",
+      "UCPurchaseWindow",
+      "UCVendorWindow",
+      "WorldClient",
+      "WorldOverlay",
+      "WorldTitle",
+      "XPLevelBars",
+      "ZoneScoreOverlay"
+    ],
+    "Visual": [
+      "AnimatedImage",
+      "Image",
+      "TileSet",
+      "VisualSet"
+    ],
+    "VisualElement": [
+      "DecorationVisualElement"
+    ],
+    "World": [
+      "ClientWorld"
+    ],
+    "WorldObject": [
+      "Admin",
+      "AggressorDrone",
+      "Ancient",
+      "Blocker",
+      "BodyDispenser",
+      "BounceBoomerang",
+      "BounceBullet",
+      "Bullet",
+      "BulletBase",
+      "CharSlot",
+      "Chest",
+      "ClientAnimObject",
+      "ClientObject",
+      "CreatedPlatform",
+      "DamageOverTime",
+      "DamageOverTimeSeed",
+      "DamagingClientObject",
+      "DeactivatedDrone",
+      "Duskwing",
+      "Explosion",
+      "Fabricator",
+      "Flappy",
+      "FlaskFire",
+      "ForeignObject",
+      "Guide",
+      "HammerBomb",
+      "Hoverer",
+      "Incendiary",
+      "Ironclad",
+      "LaunchedRocket",
+      "LiveBulletPinata",
+      "LiveCluster",
+      "LiveGrenade",
+      "LiveGrenadeBase",
+      "Loot",
+      "MortarBall",
+      "MortarDrone",
+      "MultiExplosion",
+      "NativeObject",
+      "OverlaidAnimation",
+      "PetFollower",
+      "Player",
+      "PlayerCharacter",
+      "ProtoCreatedPlatform",
+      "Seed",
+      "SeedX",
+      "SlottedChar",
+      "Spark",
+      "Stash",
+      "StashedItem",
+      "StickyBoomerang",
+      "TeleportObj",
+      "ThrownBoomerang",
+      "Toaster",
+      "Totem",
+      "WavePart",
+      "WaveSeed",
+      "Wildfire",
+      "Wings",
+      "WingsBullet"
+    ],
+    "WorldOverlay": [
+      "FactionRosterWindow",
+      "InventoryOverlay",
+      "ProgressOverlay",
+      "ScoreOverlay",
+      "ZoneScoreOverlay"
+    ]
+  },
+  "chains": {
+    "AccountWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Admin": [
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "AggressorDrone": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Ancient": [
+      "PlayerCharacter",
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "AnimatedImage": [
+      "Visual"
+    ],
+    "AnimationGraphic": [
+      "DynamicGraphic",
+      "Graphic"
+    ],
+    "AttackAction": [
+      "Action"
+    ],
+    "Background": [
+      "UIElement"
+    ],
+    "BackgroundVH": [
+      "UIElement"
+    ],
+    "Blocker": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "BodyDispenser": [
+      "ForeignObject",
+      "WorldObject"
+    ],
+    "BombJump": [
+      "Item"
+    ],
+    "BombJumpAction": [
+      "AttackAction",
+      "Action"
+    ],
+    "Boomerang": [
+      "Item"
+    ],
+    "Booster": [
+      "Item"
+    ],
+    "BoosterAction": [
+      "Action"
+    ],
+    "BounceBoomerang": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "BounceBullet": [
+      "BulletBase",
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Bullet": [
+      "BulletBase",
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "BulletBase": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "BulletPinata": [
+      "Item"
+    ],
+    "ChangeNameWindow": [
+      "AccountWindow",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ChangePasswordWindow": [
+      "AccountWindow",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "CharSlot": [
+      "ForeignObject",
+      "WorldObject"
+    ],
+    "ChatInput": [
+      "TextInputField",
+      "UIElement"
+    ],
+    "ChatWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ChatWindow::ChatLine": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Checkbox": [
+      "UIElement"
+    ],
+    "CheckboxLine": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Chest": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "ClickableLabel": [
+      "Label",
+      "UIElement"
+    ],
+    "ClientAnimObject": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "ClientObject": [
+      "NativeObject",
+      "WorldObject"
+    ],
+    "ClientSubWorld": [
+      "NativeSubWorld<ClientObject>",
+      "SubWorldImpl<ClientObject>",
+      "SubWorld"
+    ],
+    "ClientWorld": [
+      "World"
+    ],
+    "CloseButton": [
+      "ImageButton",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Controls": [
+      "OptionsDialog",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "CreatedPlatform": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "CutScene": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "DamageOverTime": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "DamageOverTimeSeed": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "DamagingClientObject": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Dash": [
+      "Item"
+    ],
+    "DashAction": [
+      "AttackAction",
+      "Action"
+    ],
+    "DashDownAction": [
+      "AttackAction",
+      "Action"
+    ],
+    "DeactivatedDrone": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "DecoratedBackground": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "DecorationVisualElement": [
+      "VisualElement",
+      "UIElement"
+    ],
+    "Dialog": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "DialogButton": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "DroneMaker": [
+      "Item"
+    ],
+    "Dropdown": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "DropdownLine": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "DropdownSelection": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Duskwing": [
+      "PlayerCharacter",
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "DynamicGraphic": [
+      "Graphic"
+    ],
+    "EdgeElementGraphic": [
+      "Graphic"
+    ],
+    "EquipSlotSprite": [
+      "SlotSprite",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Explosion": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "ExportAccountWindow": [
+      "AccountWindow",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Fabricator": [
+      "PlayerCharacter",
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "FactionRegisterDialog": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "FactionRegisterWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "FactionRosterDialog": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "FactionRosterLine": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "FactionRosterWindow": [
+      "WorldOverlay",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "FactionVendorWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "FilledRect": [
+      "UIElement"
+    ],
+    "FinalScoreSprite": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Flail": [
+      "Item"
+    ],
+    "FlailAction": [
+      "AttackAction",
+      "Action"
+    ],
+    "FlailAttackAction": [
+      "FlailAction",
+      "AttackAction",
+      "Action"
+    ],
+    "FlailSpinAction": [
+      "FlailAction",
+      "AttackAction",
+      "Action"
+    ],
+    "Flappy": [
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Flask": [
+      "Item"
+    ],
+    "FlaskFire": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "ForeignObject": [
+      "WorldObject"
+    ],
+    "ForeignSubWorld": [
+      "SubWorldImpl<ForeignObject>",
+      "SubWorld"
+    ],
+    "ForgotPasswordWindow": [
+      "AccountWindow",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "GameClient": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "GameMenu": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "GameMenuButton": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "GameplayOptions": [
+      "OptionsDialog",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Graph": [
+      "UIElement"
+    ],
+    "GraphicsOptions": [
+      "OptionsDialog",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Grenade": [
+      "Item"
+    ],
+    "GroupHeal": [
+      "Item"
+    ],
+    "Guide": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Gun": [
+      "Item"
+    ],
+    "GunAction": [
+      "AttackAction",
+      "Action"
+    ],
+    "HUD": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "HUDEquip": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "HUDStatus": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Hammer": [
+      "Item"
+    ],
+    "HammerAction": [
+      "AttackAction",
+      "Action"
+    ],
+    "HammerBomb": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "HitAction": [
+      "Action"
+    ],
+    "HitNumberGraphic": [
+      "DynamicGraphic",
+      "Graphic"
+    ],
+    "HomeAction": [
+      "Action"
+    ],
+    "HomeSlotSprite": [
+      "SlotSprite",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "HoverGun": [
+      "Item"
+    ],
+    "Hoverer": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "IconStat": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Image": [
+      "Visual"
+    ],
+    "ImageButton": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ImportAccountWindow": [
+      "AccountWindow",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Incendiary": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "InstructionLabel": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "InventoryOverlay": [
+      "WorldOverlay",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "InventoryWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Ironclad": [
+      "PlayerCharacter",
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "ItemToolTip": [
+      "ToolTip",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "KeyRemapLine": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "KeyRemapPage": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "KeypressLabel": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "KeysSlotSprite": [
+      "SlotSprite",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "KeysToolTip": [
+      "ToolTip",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Kick": [
+      "Item"
+    ],
+    "KickAction": [
+      "AttackAction",
+      "Action"
+    ],
+    "LLTri": [
+      "Tri",
+      "Shape"
+    ],
+    "LRTri": [
+      "Tri",
+      "Shape"
+    ],
+    "Label": [
+      "UIElement"
+    ],
+    "LabeledCheckbox": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "LabeledInput": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "LabeledInputField": [
+      "TextInputField",
+      "UIElement"
+    ],
+    "LaunchedRocket": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "LiveBulletPinata": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "LiveCluster": [
+      "LiveGrenadeBase",
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "LiveGrenade": [
+      "LiveGrenadeBase",
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "LiveGrenadeBase": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "LoadingScreen": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "LoginWindow": [
+      "AccountWindow",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Loot": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "MainMenu": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "MarkupLabel": [
+      "UIElement"
+    ],
+    "MessageHandlers::DataHandler": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<ChangePasswordResponse>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<ChangeServer>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<CharacterDescription>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<Chat>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<Emote>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<ErrorMessage>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<FactionRosterResponse>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<GeneralResponse>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<Hello>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<ItemDescription>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<Joined>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<LoadPVid>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<LoginResponse>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<PortAccountResponse>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<RegisterResponse>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<ShowCharScore>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<ShowZoneCompleteScore>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<TrackEvent>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MessageHandlers::MessageHandler<UserLinksMessage>": [
+      "MessageHandlers::MessageHandlerBase"
+    ],
+    "MortarBall": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "MortarDrone": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "MultiExplosion": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "NameWindow": [
+      "ToolTip",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "NativeObject": [
+      "WorldObject"
+    ],
+    "NativeSubWorld<ClientObject>": [
+      "SubWorldImpl<ClientObject>",
+      "SubWorld"
+    ],
+    "OptionsDialog": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "OverlaidAnimation": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "PerfDisplay": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "PetCreator": [
+      "Item"
+    ],
+    "PetFollower": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "PlatformCreator": [
+      "Item"
+    ],
+    "Player": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "PlayerBoostGraphic": [
+      "DynamicGraphic",
+      "Graphic"
+    ],
+    "PlayerCharacter": [
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "PlayerTextGraphic": [
+      "DynamicGraphic",
+      "Graphic"
+    ],
+    "PlayerWindowExitSprite": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ProgressOverlay": [
+      "WorldOverlay",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ProgressWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ProtoCreatedPlatform": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "PurchaseButton": [
+      "ImageButton",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Rect": [
+      "Shape"
+    ],
+    "RegisterWindow": [
+      "AccountWindow",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "RejoinSlotSprite": [
+      "SlotSprite",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Rocket": [
+      "Item"
+    ],
+    "ScatterGraphic": [
+      "Graphic"
+    ],
+    "ScatterMovingGraphic": [
+      "DynamicGraphic",
+      "Graphic"
+    ],
+    "ScoreBonusWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ScoreCharWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ScoreOverlay": [
+      "WorldOverlay",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ScoreStatLine": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ScoreStatsWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Seed": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "SeedX": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "ServerRequestTask<ChangePasswordResponse>": [
+      "AsyncTask"
+    ],
+    "ServerRequestTask<GeneralResponse>": [
+      "AsyncTask"
+    ],
+    "ServerRequestTask<LoginResponse>": [
+      "AsyncTask"
+    ],
+    "ServerRequestTask<PortAccountResponse>": [
+      "AsyncTask"
+    ],
+    "ServerRequestTask<RegisterResponse>": [
+      "AsyncTask"
+    ],
+    "Shield": [
+      "Item"
+    ],
+    "ShieldBashAction": [
+      "AttackAction",
+      "Action"
+    ],
+    "SimpleWeapon": [
+      "Item"
+    ],
+    "Slider": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "SliderLine": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "SlotSprite": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "SlottedChar": [
+      "ForeignObject",
+      "WorldObject"
+    ],
+    "SoundsOptions": [
+      "OptionsDialog",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Spark": [
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Stage": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Star": [
+      "Item"
+    ],
+    "Stash": [
+      "ForeignObject",
+      "WorldObject"
+    ],
+    "StashWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "StashedItem": [
+      "ForeignObject",
+      "WorldObject"
+    ],
+    "StatBar": [
+      "UIElement"
+    ],
+    "StatLine": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "StatsWindow": [
+      "ToolTip",
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "SteamGameService": [
+      "GameService"
+    ],
+    "StickyBoomerang": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "StringChoices": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "StringChooser": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "SubWorldImpl<ClientObject>": [
+      "SubWorld"
+    ],
+    "SubWorldImpl<ForeignObject>": [
+      "SubWorld"
+    ],
+    "Tabs": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "TeleportObj": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "TeleportThrow": [
+      "Item"
+    ],
+    "TestGraphic": [
+      "Graphic"
+    ],
+    "TextButton": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "TextInputField": [
+      "UIElement"
+    ],
+    "ThrownBoomerang": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "TileSet": [
+      "Visual"
+    ],
+    "Toaster": [
+      "PlayerCharacter",
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "ToolTip": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "Totem": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Tri": [
+      "Shape"
+    ],
+    "UCPurchaseWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "UCVendorWindow": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "UIElementContainer": [
+      "UIElement"
+    ],
+    "ULTri": [
+      "Tri",
+      "Shape"
+    ],
+    "URTri": [
+      "Tri",
+      "Shape"
+    ],
+    "VisualElement": [
+      "UIElement"
+    ],
+    "VisualSet": [
+      "Visual"
+    ],
+    "WavePart": [
+      "DamagingClientObject",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "WaveSeed": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Wildfire": [
+      "PlayerCharacter",
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "Wings": [
+      "Player",
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "WingsBullet": [
+      "ClientObject",
+      "NativeObject",
+      "WorldObject"
+    ],
+    "WorldClient": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "WorldOverlay": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "WorldTitle": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "WorldView": [
+      "UIElement"
+    ],
+    "XPLevelBars": [
+      "UIElementContainer",
+      "UIElement"
+    ],
+    "ZoneScoreOverlay": [
+      "WorldOverlay",
+      "UIElementContainer",
+      "UIElement"
+    ]
+  }
+}
