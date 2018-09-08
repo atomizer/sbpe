@@ -164,7 +164,7 @@ def kickstart(p):
             refs[sname] = ffi.cast('p' + sname, offset)
 
     # import object inheritance info
-    with open(os.path.join(refs.SCRIPTPATH, 'proto.json'), 'r') as f:
+    with open(os.path.join(refs.SCRIPTPATH, 'cdefs/proto.json'), 'r') as f:
         d = json.load(f)
         refs.CHAINS = d['chains']
         refs.CASTABLE = d['castable']

@@ -33,7 +33,7 @@ def build():
     ffibuilder.embedding_init_code(readfile('remote.py'))
 
     ffibuilder.set_source(
-        '_remote', readfile('remote.c'), sources=EXTRA_SRC,
+        '_remote', readfile('cdefs/remote.c'), sources=EXTRA_SRC,
         libraries=['SDL2'], library_dirs=LIBDIRS,
         define_macros=[('SUBHOOK_STATIC', None)])
 
