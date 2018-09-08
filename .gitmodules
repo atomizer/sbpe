@@ -1,0 +1,6 @@
+[submodule "libs/plthook"]
+	path = libs/plthook
+	url = https://github.com/kubo/plthook/
+[submodule "libs/subhook"]
+	path = libs/subhook
+	url = https://github.com/Zeex/subhook

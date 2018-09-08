@@ -1,6 +1,6 @@
 build/
 symquery/
 misc/*.h
-libs/
+libs/SDL
 *__pycache__*
 *.log
