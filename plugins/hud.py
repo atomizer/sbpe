@@ -15,7 +15,8 @@ class Plugin(PluginBase):
             'size_currency': 16,
             'spacing': 0
         })
-        self.config.option('color_hp', 0xff00ff00, 'color')
+        self.config.option('color_hp', 0xffffffff, 'color')
+        self.config.option('color_hp_full', 0xff00ff00, 'color')
         self.config.option('color_ammo', 0xffffff00, 'color')
         self.config.option('color_currency', 0xff9999ff, 'color')
 
