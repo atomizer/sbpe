@@ -52,10 +52,13 @@ typedef float   GLclampf; /* single precision float in [0,1] */
 typedef double    GLdouble; /* double precision float */
 typedef double    GLclampd; /* double precision float in [0,1] */
 
+typedef GLenum (*pglGetError)(void);
 typedef void (*pglEnable)(GLenum cap);
 typedef void (*pglDisable)(GLenum cap);
 typedef void (*pglHint)(GLenum target, GLenum mode);
-// typedef GLenum (*pglGetError)(void);
+typedef void (*pglTexImage2D)(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid * data);
+typedef void (*pglTexParameteri)(GLenum target, GLenum pname, GLint param);
+
 // typedef void (*pglBindRenderbuffer)(GLenum target, GLuint renderbuffer);
 // typedef void (*pglDeleteRenderbuffers)(GLsizei n, const GLuint *renderbuffers);
 // typedef void (*pglGenRenderbuffers)(GLsizei n, GLuint *renderbuffers);

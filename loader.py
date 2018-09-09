@@ -99,13 +99,31 @@ def inject(proc, data):
 
 
 def runLoader(exepath=''):
-    if not os.path.isfile(exepath) and os.path.exists(CONFFILE):
+    mipmaps = False
+    if os.path.exists(CONFFILE):
         conf = configparser.ConfigParser()
         conf.read(CONFFILE)
-        exepath = conf.get('general', 'game')
+        exepath = conf.get('general', 'game', fallback=exepath)
+        mipmaps = conf.getboolean('general', 'mipmaps', fallback=False)
+
     if not os.path.isfile(exepath):
         logging.error('put the path to the game executable in ' + CONFFILE)
         return
+
+    if mipmaps:
+        gdir = os.path.dirname(os.path.abspath(exepath))
+        tdir = os.path.join(gdir, 'data', 'texture')
+        dvpath = os.path.join(tdir, 'dataVersion.bpb')
+        dvmpath = os.path.join(tdir, 'dataVersion.m.bpb')
+        dvbak = os.path.join(tdir, 'dataVersion.bpb.bak')
+
+        if not os.path.exists(dvmpath):
+            logging.info('generating mipmaps...')
+            # generate mipmaps here
+            return
+
+        os.rename(dvpath, os.path.join(tdir, 'dataVersion.bpb.bak'))
+        os.rename(dvmpath, dvpath)
 
     gpop = subprocess.Popen([exepath], stderr=subprocess.PIPE,
                             cwd=os.path.dirname(exepath))
@@ -137,6 +155,11 @@ def runLoader(exepath=''):
         logging.info('game closed: code {}'.format(gpop.returncode))
         if len(stderr) > 0:
             print(stderr.decode())
+
+        if mipmaps:
+            os.rename(dvpath, dvmpath)
+            os.rename(dvbak, dvpath)
+
         return True
 
 

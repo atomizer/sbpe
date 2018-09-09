@@ -110,6 +110,32 @@ def hook_mouseButton(x, y, button, down, userData):
     ORIGS['mouseButtonCallback'](x, y, button, down, userData)
 
 
+@ffi.def_extern()
+def hook_LoadTextureFile(name, callback, userData):
+    refs._tfname = ffi.string(name).decode()
+
+    hook = lib.subhook_new(callback, lib.hook_textureCallback, 0)
+    refs._orig_callback = ffi.cast(
+        'XDL_LoadTextureDoneCallback', lib.subhook_get_trampoline(hook))
+
+    lib.subhook_install(hook)
+    ORIGS['XDL_LoadTextureFile'](name, callback, userData)
+    lib.subhook_remove(hook)
+    lib.subhook_free(hook)
+
+
+@ffi.def_extern()
+def hook_textureCallback(texture, sptr):
+    refs._orig_callback(texture, sptr)
+
+    tname = refs._tfname.split('/')
+    pname, sid = tname[1].split('.', 1)
+    sid = sid.split('.')
+    if tname[0] != 'texture' or sid[0] != 'm0':
+        return
+    util.loadMipmaps(pname, sid[1])
+
+
 def initHooks():
     def addhook(fname, hookfunc):
         hook = lib.subhook_new(refs[fname], hookfunc, 0)
@@ -126,6 +152,9 @@ def initHooks():
     addhook('XDL_TrackGAEvent', lib.hook_TrackGAEvent)
     addhook('mouseMoveCallback', lib.hook_mouseMove)
     addhook('mouseButtonCallback', lib.hook_mouseButton)
+
+    if refs.config.getboolean('general', 'mipmaps', fallback=False):
+        addhook('XDL_LoadTextureFile', lib.hook_LoadTextureFile)
 
 
 # startup ####################################################################
@@ -177,6 +206,8 @@ def kickstart(p):
     plugpath = os.path.join(refs.SCRIPTPATH, 'plugins')
     man = importlib.import_module('manager')
     refs.manager = man.Manager(path=plugpath, refs=refs)
+
+    util.loadGLFunctions()
 
     # init hooks
     initHooks()

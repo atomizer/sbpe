@@ -1,12 +1,33 @@
 import logging
 import math
 
+from PIL import Image
+
 from _remote import ffi, lib
 
 refs = None
 STRUCTTYPES = ffi.list_types()[1]
 
-GLFUNCTIONS = 'glEnable glDisable glHint'.split()
+GLFUNCTIONS = '''
+glGetError glEnable glDisable glHint
+glTexImage2D glTexParameteri
+'''.split()
+
+GL_TEXTURE_2D = 0x0DE1
+
+GL_TEXTURE_BASE_LEVEL = 0x813C
+GL_TEXTURE_MAX_LEVEL = 0x813D
+
+GL_TEXTURE_MAG_FILTER = 0x2800
+GL_TEXTURE_MIN_FILTER = 0x2801
+
+GL_NEAREST_MIPMAP_NEAREST = 0x2700
+GL_NEAREST_MIPMAP_LINEAR = 0x2702
+GL_LINEAR_MIPMAP_NEAREST = 0x2701
+GL_LINEAR_MIPMAP_LINEAR = 0x2703
+
+GL_UNSIGNED_BYTE = 0x1401
+GL_RGBA = 0x1908
 
 
 # classes ####################################################################
@@ -142,13 +163,35 @@ def loadGLFunctions():
             'p' + name, lib.SDL_GL_GetProcAddress(bytes(name, 'utf-8')))
 
 
+def loadMipmaps(pname, sheet):
+    maxlevel = refs.config.getint('general', 'mipmap_maxlevel', fallback=0)
+    if maxlevel < 1:
+        return
+
+    for level in range(1, maxlevel + 1):
+        fname = 'data/texture/{}.m{}.{}.png'.format(pname, level, sheet)
+        try:
+            img = Image.open(fname)
+        except IOError:
+            logging.error('could not load: "{}"'.format(fname))
+            return
+        pixels = ffi.from_buffer(img.tobytes())
+        refs.glTexImage2D(
+            GL_TEXTURE_2D, level, 4, img.width, img.height,
+            0, GL_RGBA, GL_UNSIGNED_BYTE, pixels)
+
+        logging.debug('pack {} sheet {} level {} err {}'.format(
+            pname, sheet, level, refs.glGetError()))
+
+    refs.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, maxlevel)
+    refs.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                         GL_LINEAR_MIPMAP_LINEAR)
+
+
 def updateState():
     '''make commonly used data more accessible to plugins'''
     if refs.stage[0] == ffi.NULL:
         return
-
-    if GLFUNCTIONS[0] not in refs:
-        loadGLFunctions()
 
     # top level children of stage
     tops = []
