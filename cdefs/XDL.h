@@ -32,19 +32,19 @@ typedef void (*pXDL_DrawTri)(int x0, int y0, int x1, int y1, int x2, int y2, XDL
 typedef void (*pXDL_FillTri)(int x0, int y0, int x1, int y1, int x2, int y2, XDL_Color color, enum BlendMode blendMode);
 
 // drawing2 - textures, text, numbers
-typedef void (*XDL_LoadTextureDoneCallback)(uint32_t, void *);
+typedef void (*XDL_LoadTextureDoneCallback)(unsigned int, void *);
 typedef void (*XDL_LoadTextDoneCallback)(const char *, int, void *);
 typedef void (*pXDL_LoadTextFile)(const char *textFilename, XDL_LoadTextDoneCallback callback, void *userData);
 typedef void (*pXDL_LoadTextureFile)(const char *textureFilename, XDL_LoadTextureDoneCallback callback, void *userData);
-typedef uint32_t (*pXDL_CreateTextTexture)(uint32_t oldTexture, const char *fontName, int size, XDL_Color color, const char *text, int outlineSize, XDL_Color outlineColor);
+typedef unsigned int (*pXDL_CreateTextTexture)(unsigned int oldTexture, const char *fontName, int size, XDL_Color color, const char *text, int outlineSize, XDL_Color outlineColor);
 typedef int (*pXDL_CalculateTextWidth)(const char *fontName, int size, XDL_Color color, const char *text, int outlineSize);
 typedef int (*pXDL_LineSpacing)(const char *fontName, int size, int outlineSize);
-typedef void (*pXDL_QueryTexture)(uint32_t texture, int *width, int *height);
-typedef void (*pXDL_DrawTexture)(uint32_t texture, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh, int rotDegt, int rpx, int rpy, XDL_Flip flip, XDL_Color colorMod, enum BlendMode blendMode);
-typedef uint32_t (*pXDL_GetNumberDict)(const char *fontName, int size, XDL_Color color, int outlineSize, XDL_Color outlineColor);
-typedef void (*pXDL_DrawFromNumberDict)(uint32_t texture, int value, int sw, int sh, int dx, int dy, int dw, int dh);
-typedef void (*pXDL_SizeFromNumberDict)(uint32_t texture, int value, int *width, int *height);
-typedef void (*pXDL_DestroyTexture)(uint32_t texture);
+typedef void (*pXDL_QueryTexture)(unsigned int texture, int *width, int *height);
+typedef void (*pXDL_DrawTexture)(unsigned int texture, int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh, int rotDegt, int rpx, int rpy, XDL_Flip flip, XDL_Color colorMod, enum BlendMode blendMode);
+typedef unsigned int (*pXDL_GetNumberDict)(const char *fontName, int size, XDL_Color color, int outlineSize, XDL_Color outlineColor);
+typedef void (*pXDL_DrawFromNumberDict)(unsigned int texture, int value, int sw, int sh, int dx, int dy, int dw, int dh);
+typedef void (*pXDL_SizeFromNumberDict)(unsigned int texture, int value, int *width, int *height);
+typedef void (*pXDL_DestroyTexture)(unsigned int texture);
 
 // sound
 // void XDL_SetSoundPrefix(const char *sfxPrefix);
