@@ -164,6 +164,9 @@ def loadGLFunctions():
 
 
 def loadMipmaps(pname, sheet):
+    if GLFUNCTIONS[0] not in refs:
+        loadGLFunctions()
+
     maxlevel = refs.config.getint('general', 'mipmap_maxlevel', fallback=0)
     if maxlevel < 1:
         return
@@ -190,6 +193,9 @@ def loadMipmaps(pname, sheet):
 
 def updateState():
     '''make commonly used data more accessible to plugins'''
+    if GLFUNCTIONS[0] not in refs:
+        loadGLFunctions()
+
     if refs.stage[0] == ffi.NULL:
         return
 

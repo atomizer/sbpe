@@ -207,8 +207,6 @@ def kickstart(p):
     man = importlib.import_module('manager')
     refs.manager = man.Manager(path=plugpath, refs=refs)
 
-    util.loadGLFunctions()
-
     # init hooks
     initHooks()
 
