@@ -117,13 +117,14 @@ def runLoader(exepath=''):
         dvmpath = os.path.join(tdir, 'dataVersion.m.bpb')
         dvbak = os.path.join(tdir, 'dataVersion.bpb.bak')
 
-        if not os.path.exists(dvmpath):
-            logging.info('generating mipmaps...')
-            # generate mipmaps here
-            return
+        if not os.path.exists(dvbak):
+            # presumably there are no other instances running
+            if not os.path.exists(dvmpath):
+                logging.info('mipmaps enabled, but not found. generating...')
+                raise NotImplementedError
 
-        os.rename(dvpath, os.path.join(tdir, 'dataVersion.bpb.bak'))
-        os.rename(dvmpath, dvpath)
+            os.rename(dvpath, os.path.join(tdir, 'dataVersion.bpb.bak'))
+            os.rename(dvmpath, dvpath)
 
     gpop = subprocess.Popen([exepath], stderr=subprocess.PIPE,
                             cwd=os.path.dirname(exepath))
@@ -156,7 +157,7 @@ def runLoader(exepath=''):
         if len(stderr) > 0:
             print(stderr.decode())
 
-        if mipmaps:
+        if mipmaps and os.path.exists(dvbak):
             os.rename(dvpath, dvmpath)
             os.rename(dvbak, dvpath)
 
