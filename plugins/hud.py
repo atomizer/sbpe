@@ -2,6 +2,8 @@ from _remote import ffi, lib
 from manager import PluginBase
 import util
 
+ELEMS = 'hp hpmax ammo ammomax currency'.split()
+
 
 class Plugin(PluginBase):
     def onInit(self):
@@ -13,6 +15,7 @@ class Plugin(PluginBase):
             'size_ammo': 20,
             'size_ammomax': 20,
             'size_currency': 16,
+            'outline': 3,
             'spacing': 0
         })
         self.config.option('color_hp', 0xffffffff, 'color')
@@ -20,11 +23,8 @@ class Plugin(PluginBase):
         self.config.option('color_ammo', 0xffffff00, 'color')
         self.config.option('color_currency', 0xff9999ff, 'color')
 
-        self.txt_hp = util.PlainText(font='HemiHeadBold')
-        self.txt_hpmax = util.PlainText(font='HemiHeadBold')
-        self.txt_ammo = util.PlainText(font='HemiHeadBold')
-        self.txt_ammomax = util.PlainText(font='HemiHeadBold')
-        self.txt_currency = util.PlainText(font='HemiHeadBold')
+        for name in ELEMS:
+            setattr(self, 'txt_' + name, util.PlainText(font='HemiHeadBold'))
 
         self.draw = False
 
@@ -57,11 +57,10 @@ class Plugin(PluginBase):
 
         self.txt_currency.text = '{} EC  {} UC'.format(pc.ec, pc.uc)
 
-        self.txt_hp.size = self.config.size_hp
-        self.txt_hpmax.size = self.config.size_hpmax
-        self.txt_ammo.size = self.config.size_ammo
-        self.txt_ammomax.size = self.config.size_ammomax
-        self.txt_currency.size = self.config.size_currency
+        for name in ELEMS:
+            el = getattr(self, 'txt_' + name)
+            el.size = getattr(self.config, 'size_' + name)
+            el.outlineSize = self.config.outline
 
         if wobj.props.hitpoints == wobj.props.maxhitpoints:
             hpcolor = self.config.color_hp_full
