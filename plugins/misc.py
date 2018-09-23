@@ -48,8 +48,6 @@ class Plugin(PluginBase):
         if gc == ffi.NULL:
             return
 
-        # enable admin hotkeys
-        gc.isAdmin = True
         # disable autokick
         gc.sinceKeypress = 0
 
