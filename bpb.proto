@@ -1,0 +1,273 @@
+syntax = "proto2";
+
+// DataVersion
+
+message DataVersion {
+  optional string id = 1;
+  optional int32 timestamp = 2;
+  repeated PVidDescription pvid = 3;
+}
+
+message PVidDescription {
+  optional string name = 1;
+  optional string descId = 2;
+  repeated string imageIds = 3;
+}
+
+// ImageFile
+
+message ImageFileDescription {
+  repeated SheetDefinition sheetDef = 1;
+  repeated ImageVidDescription imageVidDesc = 2;
+  repeated TileVidDescription tileVidDesc = 3;
+  repeated TileDescription tileDesc = 4;
+  repeated AnimatedImageDescription animatedImageDesc = 5;
+}
+
+message SheetDefinition {
+  repeated ImageDefinition imageDef = 1;
+}
+
+message ImageDefinition {
+  optional int32 x = 1;
+  optional int32 y = 2;
+  optional int32 w = 3;
+  optional int32 h = 4;
+  optional sint32 rpX = 5;
+  optional sint32 rpY = 6;
+}
+
+message ImageVidDescription {
+  optional string vid = 1;
+  optional int32 versionId = 2;
+  optional int32 uiid = 3;
+}
+
+message TileVidDescription {
+  optional string vid = 1;
+  optional int32 tileSetId = 2;
+}
+
+message TileDescription {
+  optional int32 uiid = 1;
+  optional int32 tw = 2 [default = 1];
+  optional int32 th = 3 [default = 1];
+  optional bytes type = 4;
+  optional bool mirrorX = 5;
+  optional bool mirrorY = 6;
+  optional bool rotate = 7;
+}
+
+message AnimatedImageDescription {
+  optional string vid = 1;
+  optional int32 versionId = 2;
+  repeated ImageMapDescription imageMapDesc = 3;
+  repeated AnimationDescription animDesc = 4;
+}
+
+message ImageMapDescription {
+  optional string name = 1;
+  repeated ImageMapDescription_Mapping mapping = 2;
+}
+
+message ImageMapDescription_Mapping {
+  optional int32 uiid = 1;
+  optional int32 targetUIID = 2 [default = -1];
+}
+
+message AnimationDescription {
+  optional Pose fullPose = 1;
+  optional Pose prevPose = 2;
+  optional Anim anim = 3;
+  optional string aaid = 4;
+  optional int32 length = 5;
+  optional bool looping = 6;
+  repeated FrameDescription frameDesc = 7;
+  repeated AnimBoxDescription box = 8;
+  repeated AnimPointDescription point = 9;
+}
+
+message FrameDescription {
+  repeated FrameDescription_Element element = 1;
+  optional int32 time = 2;
+}
+
+message FrameDescription_Element {
+  optional int32 uiid = 1;
+  optional sint32 offsetX = 2;
+  optional sint32 offsetY = 3;
+  optional int32 angleDegt = 4;
+  optional sint32 scaleX = 5 [default = 100];
+  optional sint32 scaleY = 6 [default = 100];
+  optional int32 opacity = 7 [default = 100];
+  optional BlendMode blendMode = 13;
+}
+
+message AnimBoxDescription {
+  optional BoxType type = 1;
+  optional int32 id = 2;
+  optional int32 time = 3;
+  optional int32 length = 4;
+  optional int32 x = 5;
+  optional int32 y = 6;
+  optional int32 w = 7;
+  optional int32 h = 8;
+}
+
+message AnimPointDescription {
+  optional PointType type = 1;
+  optional int32 time = 2;
+  optional int32 x = 3;
+  optional int32 y = 4;
+  optional int32 angle = 5;
+}
+
+// enums
+
+enum Anim {
+  ANIM_INVALID = 0;
+  ANIM_HIT = 1;
+  ANIM_SHOOT = 2;
+  ANIM_SHOOT2 = 3;
+  ANIM_SHOOT3 = 4;
+  ANIM_SHOOT4 = 5;
+  ANIM_SHOOT5 = 6;
+  ANIM_FIRE = 7;
+  ANIM_FIRE2 = 8;
+  ANIM_FIRE3 = 9;
+  ANIM_FIRE4 = 10;
+  ANIM_FIRE5 = 11;
+  ANIM_LAUNCH = 12;
+  ANIM_LAUNCH2 = 13;
+  ANIM_LAUNCH3 = 14;
+  ANIM_LAUNCH4 = 15;
+  ANIM_LAUNCH5 = 16;
+  ANIM_SLASH = 17;
+  ANIM_SLASH2 = 18;
+  ANIM_SLASH3 = 19;
+  ANIM_SLASH4 = 20;
+  ANIM_SLASH5 = 21;
+  ANIM_SWING = 22;
+  ANIM_SWING2 = 23;
+  ANIM_SWING3 = 24;
+  ANIM_SWING4 = 25;
+  ANIM_SWING5 = 26;
+  ANIM_THROW = 27;
+  ANIM_THROW2 = 28;
+  ANIM_THROW3 = 29;
+  ANIM_THROW4 = 30;
+  ANIM_THROW5 = 31;
+  ANIM_LOB = 32;
+  ANIM_LOB2 = 33;
+  ANIM_LOB3 = 34;
+  ANIM_LOB4 = 35;
+  ANIM_LOB5 = 36;
+  ANIM_TOSS = 37;
+  ANIM_TOSS2 = 38;
+  ANIM_TOSS3 = 39;
+  ANIM_TOSS4 = 40;
+  ANIM_TOSS5 = 41;
+  ANIM_DROP = 42;
+  ANIM_DROP2 = 43;
+  ANIM_DROP3 = 44;
+  ANIM_DROP4 = 45;
+  ANIM_DROP5 = 46;
+  ANIM_STEP = 47;
+  ANIM_STEP2 = 48;
+  ANIM_STEP3 = 49;
+  ANIM_STEP4 = 50;
+  ANIM_STEP5 = 51;
+  ANIM_TURN = 52;
+  ANIM_TURNL = 53;
+  ANIM_TURNR = 54;
+  ANIM_INTERACT = 55;
+  ANIM_INTERACT2 = 56;
+  ANIM_INTERACT3 = 57;
+  ANIM_INTERACT4 = 58;
+  ANIM_INTERACT5 = 59;
+  ANIM_DESTROY = 60;
+  ANIM_DESTROY_INTERNAL = 61;
+  ANIM_DESTROY_HITPOINTS = 62;
+  ANIM_DESTROY_SHIELD = 63;
+  ANIM_DESTROY_DAMAGES = 64;
+  ANIM_DESTROY_BLOCKED = 65;
+  ANIM_DESTROY_LIFETIME = 66;
+  ANIM_DAMAGE = 67;
+  ANIM_READY = 68;
+  ANIM_SPECIAL = 69;
+  ANIM_CREATE = 70;
+  ANIM_SUMMON = 71;
+  ANIM_SUMMON2 = 72;
+  ANIM_SUMMON3 = 73;
+  ANIM_SUMMON4 = 74;
+  ANIM_SUMMON5 = 75;
+  ANIM_SPECIALUP = 76;
+  ANIM_SPECIALDOWN = 77;
+  ANIM_USED = 78;
+  ANIM_SPECIALSTART = 79;
+  ANIM_SPECIALEND = 80;
+  ANIM_SPECIALHIT = 81;
+  ANIM_SLOT = 82;
+}
+
+enum BlendMode {
+  BLENDMODE_INVALID = -1;
+  BLENDMODE_NONE = 0;
+  BLENDMODE_BLEND = 1;
+  BLENDMODE_ADD = 2;
+  BLENDMODE_MOD = 4;
+}
+
+enum BoxType {
+  BOX_VUL = 0;
+  BOX_HIT = 1;
+  BOX_SHIELD = 2;
+}
+
+enum PointType {
+  POINT_INVALID = -1;
+  POINT_EMIT = 0;
+  POINT_POS = 1;
+  POINT_AURA = 2;
+  POINT_ANCHOR_BACK = 3;
+  POINT_ANCHOR_HEAD = 4;
+  POINT_ANCHOR_HIP = 5;
+}
+
+enum Pose {
+  POSE_INVALID = 0;
+  POSE_AIR = 1;
+  POSE_FLY_HORIZ = 2;
+  POSE_FLY_VERT = 3;
+  POSE_STAND = 4;
+  POSE_WALK = 5;
+  POSE_RUN = 6;
+  POSE_CROUCH = 7;
+  POSE_HOLD = 8;
+  POSE_CLIMB_HORIZ = 9;
+  POSE_CLIMB_VERT = 10;
+
+  POSE_INVALID_UP = 11;
+  POSE_AIR_UP = 12;
+  POSE_FLY_HORIZ_UP = 13;
+  POSE_FLY_VERT_UP = 14;
+  POSE_STAND_UP = 15;
+  POSE_WALK_UP = 16;
+  POSE_RUN_UP = 17;
+  POSE_CROUCH_UP = 18;
+  POSE_HOLD_UP = 19;
+  POSE_CLIMB_HORIZ_UP = 20;
+  POSE_CLIMB_VERT_UP = 21;
+
+  POSE_INVALID_DOWN = 22;
+  POSE_AIR_DOWN = 23;
+  POSE_FLY_HORIZ_DOWN = 24;
+  POSE_FLY_VERT_DOWN = 25;
+  POSE_STAND_DOWN = 26;
+  POSE_WALK_DOWN = 27;
+  POSE_RUN_DOWN = 28;
+  POSE_CROUCH_DOWN = 29;
+  POSE_HOLD_DOWN = 30;
+  POSE_CLIMB_HORIZ_DOWN = 31;
+  POSE_CLIMB_VERT_DOWN = 32;
+}

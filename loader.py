@@ -10,7 +10,7 @@ from mayhem.proc import ProcessError
 from mayhem.proc.native import NativeProcess
 
 import logging
-logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 BASE = 0x400000
 CONFFILE = 'config.ini'
@@ -121,7 +121,13 @@ def runLoader(exepath=''):
             # presumably there are no other instances running
             if not os.path.exists(dvmpath):
                 logging.info('mipmaps enabled, but not found. generating...')
-                raise NotImplementedError
+
+                import genmipmaps
+                genmipmaps.BASEPATH = tdir
+                mn = conf.getint('general', 'mipmap_maxlevel', fallback=2)
+                genmipmaps.main(tdir, mipmaps=mn)
+
+                return
 
             os.rename(dvpath, os.path.join(tdir, 'dataVersion.bpb.bak'))
             os.rename(dvmpath, dvpath)
