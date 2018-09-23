@@ -1,18 +1,25 @@
 # sbppf
 
-starbreak python plugin framework, a.k.a. i suck at naming things
+a.k.a. starbreak python plugin framework, a.k.a. i suck at naming things
 
-currently done features (mostly through plugins):
+current features:
 
 - zoom, faster and more compatible than sbzoom
 - minimap
 - custom status hud
-- centered camera (2 modes)
-- admin keys enabled, also can preset desired flags in config
+- 2 modes of centered camera, inbounds or not
+- "admin key" settings are persistent in config
 - disabled autokick
 - mouse works at any zoom, auto-hides on inactivity
-- fps, net lag indicator
-- most things are configurable and keybindable
+- fps, net lag indicators
+- mipmapping (smooth seamless textures when zooming)
+
+most things are configurable and keybindable
+
+## running
+
+- set game path in `config.ini`
+- run `loader.py`
 
 ## compiling
 
@@ -31,17 +38,14 @@ dependencies:
 
 to compile, run `builder.py`.
 
-## running
-
-- set game path in `config.ini`
-- run `loader.py`
-
 ## config
 
 Use `yes` and `no` for booleans.
 For colors, use hexadecimal `rgb` or `rrggbb` or `aarrggbb`. Use `0` for
 "fully-transparent"; `000` and `000000` mean "opaque black".
 If needed, see plugin sources for exact types of their options.
+
+Any option that changes text size can be set to 0 to hide the element.
 
 For keybinds, the format is `plugin option type value1 [value2...] = keyname`.
 Valid types are:
