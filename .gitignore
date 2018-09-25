@@ -7,3 +7,4 @@ libs/SDL
 Release/
 *.pyd
 rectbinpack/_rbp.cpp
+pypy/

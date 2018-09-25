@@ -168,7 +168,7 @@ def kickstart(p):
     sys.path.insert(1, refs.SCRIPTPATH)
 
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         filename=os.path.join(refs.SCRIPTPATH, LOGFILE), filemode='w',
         format='%(asctime)s %(module)s [%(levelname)s] %(message)s')
 
@@ -210,5 +210,5 @@ def kickstart(p):
     # init hooks
     initHooks()
 
-    logging.debug('startup ok')
+    logging.info('startup ok')
     return 0
