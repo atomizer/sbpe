@@ -11,7 +11,7 @@ from _remote import ffi, lib
 
 util = None
 
-VERSION = 'v1.2.0'
+VERSION = 'v1.4.0'
 LOGFILE = 'remote.log'
 CONFIGFILE = 'config.ini'
 
