@@ -127,8 +127,6 @@ def runLoader(exepath=''):
                 mn = conf.getint('general', 'mipmap_maxlevel', fallback=2)
                 genmipmaps.main(tdir, mipmaps=mn)
 
-                return
-
             os.rename(dvpath, os.path.join(tdir, 'dataVersion.bpb.bak'))
             os.rename(dvmpath, dvpath)
 
