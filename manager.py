@@ -78,29 +78,31 @@ class Manager(object):
 
     def reload(self):
         # check config file
-        cmtime = os.stat(self.refs.CONFIGFILE).st_mtime
-        if 'config' not in self._mtimes or self._mtimes['config'] != cmtime:
-            self.config.read(self.refs.CONFIGFILE)
-            self._mtimes['config'] = cmtime
-            # check if enabled state was changed
-            for name in self.config.sections():
-                if not name.startswith('plugin_'):
-                    continue
-                en = self.config.getboolean(name, 'enabled', fallback=True)
-                if en is False and name in self._active:
-                    del self._active[name]
-                elif en is True and name not in self._active:
-                    # force reload on next check (directly after this).
-                    # does not matter on first load, but will keep trying
-                    # failing plugins whenever config file is edited
-                    # (possible log spam).
-                    self._mtimes[name[7:] + '.py'] = 0
-            # reset config caches to update values on next access
-            for plug in self._active.values():
-                plug.config._cache = {}
-            logging.info('loaded config')
+        if os.path.exists(self.refs.CONFIGFILE):
+            cmt = os.stat(self.refs.CONFIGFILE).st_mtime
+            if 'config' not in self._mtimes or self._mtimes['config'] != cmt:
+                self.config.read(self.refs.CONFIGFILE)
+                self._mtimes['config'] = cmt
+                # check if enabled state was changed
+                for name in self.config.sections():
+                    if not name.startswith('plugin_'):
+                        continue
+                    en = self.config.getboolean(name, 'enabled', fallback=True)
+                    if en is False and name in self._active:
+                        # was disabled
+                        del self._active[name]
+                    elif en is True and name not in self._active:
+                        # was enabled, force reload on next check.
+                        # does not matter on first load, but will keep trying
+                        # failing plugins whenever config file is edited
+                        # (possible log spam).
+                        self._mtimes[name[7:] + '.py'] = 0
+                # reset config caches to update values on next access
+                for plug in self._active.values():
+                    plug.config._cache = {}
+                logging.info('loaded config')
+
         # check plugins
-        changed = False
         for entry in os.scandir(self.path):
             try:
                 if entry.is_file() is False:
@@ -112,10 +114,10 @@ class Manager(object):
             if fname in self._mtimes and self._mtimes[fname] == mtime:
                 continue  # not modified since last check
             self._mtimes[fname] = mtime
-            if self._reload(fname):
-                changed = True
-        # save options declared by new or changed plugins to disk
-        if changed:
+            self._reload(fname)
+
+        # if config was deleted, write default values
+        if not os.path.exists(self.refs.CONFIGFILE):
             with open(self.refs.CONFIGFILE, 'w') as f:
                 self.config.write(f)
             # we did this, so we already know about it
