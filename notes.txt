@@ -1,8 +1,5 @@
 todo
 
-- add pixel borders in texture data to remove seams in tiles and UI at non-native zoom
-  - also add mipmaps to remove shimmering
-
 - window management - borderless, predefined coords, size?
 
 - add proper MSAA to minimap?
@@ -23,4 +20,3 @@ plugin ideas
 - hide noise: friendly bullets, useless animations (ANIM_DESTROY_* if no dmg/hitbox)
 
 - account switcher
-
