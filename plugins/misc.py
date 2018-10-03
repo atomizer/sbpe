@@ -70,10 +70,17 @@ class Plugin(PluginBase):
         if self.config.centered == 1:
             # centered camera (old style)
             wv.offsetsInitialized = False
+            if wv.playerBounds.x != wv.worldBounds.x:
+                wv.playerBounds.x = wv.worldBounds.x
+                wv.playerBounds.y = wv.worldBounds.y
+                wv.playerBounds.w = wv.worldBounds.w
+                wv.playerBounds.h = wv.worldBounds.h
+
         elif self.config.centered == 2:
             # centered, allow camera outside world bounds
             wv.offsetsInitialized = False
-            wv.playerBounds.x = wv.worldBounds.x - 100000
-            wv.playerBounds.y = wv.worldBounds.y - 100000
-            wv.playerBounds.w = wv.worldBounds.w + 200000
-            wv.playerBounds.h = wv.worldBounds.h + 200000
+            if wv.playerBounds.x == wv.worldBounds.x:
+                wv.playerBounds.x = wv.worldBounds.x - 100000
+                wv.playerBounds.y = wv.worldBounds.y - 100000
+                wv.playerBounds.w = wv.worldBounds.w + 200000
+                wv.playerBounds.h = wv.worldBounds.h + 200000
