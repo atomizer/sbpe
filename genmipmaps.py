@@ -227,6 +227,12 @@ def doPack(pvd, local=True, mipmaps=0):
         elw = math.ceil(elw / border) * border + border * 2
         elh = math.ceil(elh / border) * border + border * 2
 
+        if elw > sheetsize[0] or elh > sheetsize[1]:
+            logging.warning('sprite {} was clipped to fit: {} > {}'.format(
+                i, (elw, elh), sheetsize))
+            elw = min(sheetsize[0], elw)
+            elh = min(sheetsize[1], elh)
+
         items[i] = (elw, elh)
 
     packed = repack(items, sheetsize)
