@@ -13,13 +13,13 @@ import logging
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 BASE = 0x400000
-CONFFILE = 'config.ini'
 DEFAULTGAMEPATH = 'c:\\Program Files (x86)\\Steam\\SteamApps\\common\\StarBreak\\mvmmoclient.exe'
 
-SCRIPTPATH = os.getcwd()
+SCRIPTPATH = os.path.dirname(__file__) or os.getcwd()
 REMOTEPATH = os.path.normpath(os.path.join(SCRIPTPATH, 'build/remote.bin'))
 SYMQPATH = 'symquery/{}/bin/symquery'.format(platform.system())
 SYMQPATH = os.path.normpath(os.path.join(SCRIPTPATH, SYMQPATH))
+CONFFILE = os.path.join(SCRIPTPATH, 'config.ini')
 
 STARTUP_OFFSET = subprocess.check_output([
     SYMQPATH, '-e', REMOTEPATH, '-s', 'kickstart'])
