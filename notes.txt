@@ -1,22 +1,37 @@
 todo
 
-- window management - borderless, predefined coords, size?
-
-- add proper MSAA to minimap?
-
-
-plugin ideas
+- window management: borderless, predefined coords, size
 
 - player list
 
-- remove flash/screenshake: worldView.shakeMagnitude, etc -> replace with an indicator
+- remove screen flash/shake: worldView.shakeMagnitude, etc -> replace with an indicator
 
-- own shell marker
+- extra info overlay
 
-- extra info overlay (enemy hp/armor, hitboxes, info about interacts, ...)
+  - own shell pointer + vulbox
+<WorldObject> -> VidAnimData *vad -> STDVector<AnimationData*> animDataVec -> STDVector<AnimBoxes> boxes[3] -> int time, int length, STDVector<Rectangle> rects
 
-- chat (popout, keep log, tabs, extra commands, etc)
+  - interacts and triggers
+    - draw triggers in world
+    - player count on portals
+    - key count
 
-- hide noise: friendly bullets, useless animations (ANIM_DESTROY_* if no dmg/hitbox)
+  - point towards objectives
+    - exits
+    - shops
+    - secrets
+    - hp if needed
+    - boosts if needed
+
+  - enemy hp, armor, etc
+
+- hide
+  - friendlies (transparency or replace with rects)
+  - names/factions, hp bars
+  - death animations (ANIM_DESTROY_* if no dmg/hitbox)
+  - damage flash
+
+- chat
+  - popout, keep log, tabs, commands
 
 - account switcher
