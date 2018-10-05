@@ -225,7 +225,10 @@ def updateState():
             refs.CW = refs.WV = ffi.NULL
         else:
             refs.CW = refs.WC.clientWorld
-            refs.WV = refs.WC.worldView
+            if refs.CW == ffi.NULL:
+                refs.WV = ffi.NULL
+            else:
+                refs.WV = refs.WC.worldView
     else:
         refs.GC = refs.WC = refs.CW = refs.WV = ffi.NULL
 
