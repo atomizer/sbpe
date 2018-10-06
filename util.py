@@ -213,24 +213,25 @@ def updateState():
 
     # main menu
     if types[0] == 'MainMenu':
-        refs.MM = tops[0]
+        refs.MainMenu = tops[0]
     else:
-        refs.MM = ffi.NULL
+        refs.MainMenu = ffi.NULL
 
-    # game client etc
+    # game client
     if types[0] == 'GameClient':
-        refs.GC = tops[0]
-        refs.WC = refs.GC.worldClient
-        if refs.WC == ffi.NULL:
-            refs.CW = refs.WV = ffi.NULL
+        refs.GameClient = tops[0]
+        refs.WorldClient = refs.GameClient.worldClient
+        if refs.WorldClient == ffi.NULL:
+            refs.ClientWorld = refs.WorldView = ffi.NULL
         else:
-            refs.CW = refs.WC.clientWorld
-            if refs.CW == ffi.NULL:
-                refs.WV = ffi.NULL
+            refs.ClientWorld = refs.WorldClient.clientWorld
+            if refs.ClientWorld == ffi.NULL:
+                refs.WorldView = ffi.NULL
             else:
-                refs.WV = refs.WC.worldView
+                refs.WorldView = refs.WorldClient.worldView
     else:
-        refs.GC = refs.WC = refs.CW = refs.WV = ffi.NULL
+        refs.GameClient = refs.WorldClient = refs.ClientWorld =\
+            refs.WorldView = ffi.NULL
 
     # window size and scale
     ww_ = ffi.new('int *')

@@ -50,7 +50,7 @@ class Plugin(PluginBase):
         self.txt.color = self.config.color
         self.txt.draw(self.refs.windowW - 4, 0, anchorX=1)
 
-        cw = self.refs.CW
+        cw = self.refs.ClientWorld
         if cw == ffi.NULL:
             self._oldres = 0
             return

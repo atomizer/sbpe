@@ -136,7 +136,7 @@ class Plugin(PluginBase):
         if self.config.visible is False:
             return
 
-        wc = self.refs.WC
+        wc = self.refs.WorldClient
         if wc == ffi.NULL or wc.overlay != ffi.NULL:
             return
         cw = wc.clientWorld

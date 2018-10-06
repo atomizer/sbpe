@@ -30,8 +30,8 @@ class Plugin(PluginBase):
 
     def afterUpdate(self):
         self.draw = False
-        wc = self.refs.WC
-        cw = self.refs.CW
+        wc = self.refs.WorldClient
+        cw = self.refs.ClientWorld
         if wc == ffi.NULL or cw == ffi.NULL or cw.player == ffi.NULL:
             return
 
@@ -92,7 +92,7 @@ class Plugin(PluginBase):
         self.txt_currency.draw(x, y, anchorX=0.5)
 
     def __del__(self):
-        wc = self.refs.WC
+        wc = self.refs.WorldClient
         if wc != ffi.NULL and wc.hud != ffi.NULL:
             if wc.hud.hudStatus != ffi.NULL:
                 ffi.cast('struct UIElement *', wc.hud.hudStatus).show = True

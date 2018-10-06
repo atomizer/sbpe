@@ -15,7 +15,7 @@ class Plugin(PluginBase):
         self.vtxt = util.PlainText(size=16, font='HemiHeadBold')
 
     def afterUpdate(self):
-        menu = self.refs.MM
+        menu = self.refs.MainMenu
         if menu == ffi.NULL or menu.version == ffi.NULL:
             return
         menu.version.asUIElement.show = False
@@ -24,7 +24,7 @@ class Plugin(PluginBase):
             self.vtxt.text = VTEMPLATE.format(sbver, self.refs)
 
     def onPresent(self):
-        if self.refs.MM == ffi.NULL:
+        if self.refs.MainMenu == ffi.NULL:
             return
         t = time.perf_counter()
         # col = colorsys.hsv_to_rgb((t % 10) / 10, 0.7, 1)
@@ -34,5 +34,6 @@ class Plugin(PluginBase):
         self.vtxt.draw(4, self.refs.windowH - 4, anchorY=1)
 
     def __del__(self):
-        if self.refs.MM != ffi.NULL and self.refs.MM.version != ffi.NULL:
-            self.refs.MM.version.asUIElement.show = True
+        menu = self.refs.MainMenu
+        if menu != ffi.NULL and menu.version != ffi.NULL:
+            menu.version.asUIElement.show = True

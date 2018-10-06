@@ -15,7 +15,7 @@ class Plugin(PluginBase):
         if self.refs.topTypes[0] != 'GameClient':
             lst.append('top: ' + str(self.refs.topTypes))
 
-        cw = self.refs.CW
+        cw = self.refs.ClientWorld
         if cw != ffi.NULL:
             props = cw.asWorld.props
 

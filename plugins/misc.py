@@ -38,13 +38,13 @@ class Plugin(PluginBase):
             if dt <= tdt and visible == 0:
                 lib.SDL_ShowCursor(1)
 
-        menu = self.refs.MM
+        menu = self.refs.MainMenu
         if menu != ffi.NULL:
             # cancel logo flash animation
             if menu.logo != ffi.NULL and menu.logo.anim != 0:
                 menu.logo.anim = 0
 
-        gc = self.refs.GC
+        gc = self.refs.GameClient
         if gc == ffi.NULL:
             return
 
@@ -63,7 +63,7 @@ class Plugin(PluginBase):
                 (int(b * 255) & 0xff)
             self.refs.stage[0].backgroundColor = bg | 0xff000000
 
-        wv = self.refs.WV
+        wv = self.refs.WorldView
         if wv == ffi.NULL:
             return
 
