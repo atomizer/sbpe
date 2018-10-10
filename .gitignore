@@ -8,3 +8,4 @@ Release/
 *.pyd
 rectbinpack/_rbp.cpp
 pypy/
+config.ini
