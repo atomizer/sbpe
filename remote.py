@@ -68,8 +68,13 @@ def hook_DoEvents():
     refs.manager.run()
     refs.manager.runCallbacks('beforeUpdate')
     ORIGS['XDL_DoEvents']()
+
+
+@ffi.def_extern()
+def hook_Clear(color):
     util.updateState()
     refs.manager.runCallbacks('afterUpdate')
+    ORIGS['XDL_Clear'](color)
 
 
 @ffi.def_extern()
@@ -137,16 +142,27 @@ def hook_textureCallback(texture, sptr):
 
 
 def initHooks():
-    def addhook(fname, hookfunc):
+    def addhook(fname, hookfunc, ret=False):
         hook = lib.subhook_new(refs[fname], hookfunc, 0)
         orig = ffi.cast('p' + fname, lib.subhook_get_trampoline(hook))
-        if orig == ffi.NULL:
-            logging.error('{} trampoline == NULL!'.format(fname))
-        else:
+        if orig != ffi.NULL:
             ORIGS[fname] = orig
-            lib.subhook_install(hook)
+        else:
+            logging.warning('{}: no trampoline, using fallback'.format(fname))
+
+            def call_orig(*args):
+                lib.subhook_remove(hook)
+                res = refs[fname](*args)
+                lib.subhook_install(hook)
+                if ret:
+                    return res
+
+            ORIGS[fname] = call_orig
+
+        lib.subhook_install(hook)
 
     addhook('XDL_DoEvents', lib.hook_DoEvents)
+    addhook('XDL_Clear', lib.hook_Clear)
     addhook('XDL_Present', lib.hook_Present)
     addhook('XDL_GetWindowSize', lib.hook_GetWindowSize)
     addhook('XDL_TrackGAEvent', lib.hook_TrackGAEvent)
