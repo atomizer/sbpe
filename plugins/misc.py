@@ -24,6 +24,12 @@ class Plugin(PluginBase):
         self.config.option('max_bg_value', 0.3, 'float')
         self.config.option('hide_cursor_after', 1, 'float')
         self.config.options('bool', FLAGS)
+        self.config.option('replace_effects', True, 'bool')
+
+        self._shake = 0
+        self._flash = 0
+
+        self.effecttxt = util.PlainText(size=30, color=0xffffff00)
 
     def afterUpdate(self):
         for f in FLAGS:
@@ -64,7 +70,10 @@ class Plugin(PluginBase):
             self.refs.stage[0].backgroundColor = bg | 0xff000000
 
         wv = self.refs.WorldView
+
         if wv == ffi.NULL:
+            self._shake = 0
+            self._flash = 0
             return
 
         if self.config.centered == 1:
@@ -84,3 +93,25 @@ class Plugin(PluginBase):
                 wv.playerBounds.y = wv.worldBounds.y - 100000
                 wv.playerBounds.w = wv.worldBounds.w + 200000
                 wv.playerBounds.h = wv.worldBounds.h + 200000
+
+        if self.config.replace_effects:
+            if wv.shakePos < wv.shakeDuration and wv.shakeMagnitude > 0:
+                self._shake = time.perf_counter() + wv.shakeDuration / 1000
+            wv.shakeMagnitude = 0
+
+            flashduration = wv.flashStart + wv.flashHold + wv.flashEnd
+            if wv.flashPos < flashduration and wv.flashColor != 0:
+                self._flash = time.perf_counter() + flashduration / 1000
+            wv.flashColor = 0
+
+    def onPresent(self):
+        if self.config.replace_effects:
+            ct = time.perf_counter()
+            s = []
+            if self._shake > ct:
+                s = ['SHAKE']
+            if self._flash > ct:
+                s += ['FLASH']
+            if len(s) > 0:
+                self.effecttxt.text = '[{}]'.format(', '.join(s))
+                self.effecttxt.draw(self.refs.windowW // 2, 30, anchorX=0.5)
