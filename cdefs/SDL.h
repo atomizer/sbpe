@@ -27,7 +27,25 @@ enum SDL_Keymod {
 
 // window
 
+struct SDL_Rect {
+  int x;
+  int y;
+  int w;
+  int h;
+};
+
+int SDL_GetNumVideoDisplays(void);
+int SDL_GetDisplayBounds(int displayIndex, struct SDL_Rect *rect);
+
 void SDL_GetWindowSize(void *window, int *w, int *h);
+uint32_t SDL_GetWindowFlags(void *window);
+int SDL_SetWindowFullscreen(void *window, uint32_t flags);
+void SDL_SetWindowSize(void *window, int w, int h);
+void SDL_MaximizeWindow(void *window);
+void SDL_SetWindowPosition(void *window, int x, int y);
+void SDL_SetWindowBordered(void *window, int bordered);
+void SDL_SetWindowMinimumSize(void *window, int min_w, int min_h);
+void SDL_SetWindowMaximumSize(void *window, int max_w, int max_h);
 
 // GL
 
@@ -73,3 +91,6 @@ typedef void (*pglTexParameteri)(GLenum target, GLenum pname, GLint param);
 // misc
 
 int SDL_ShowCursor(int toggle);
+
+int SDL_ShowSimpleMessageBox(uint32_t flags, const char* title, const char* message, void* window);
+const char* SDL_GetError(void);

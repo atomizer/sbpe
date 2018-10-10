@@ -26,10 +26,30 @@ class Plugin(PluginBase):
         self.config.options('bool', FLAGS)
         self.config.option('replace_effects', True, 'bool')
 
+        self.config.option('fixed_window', True, 'bool')
+        self.config.options('int', {
+            'window_x': 0,
+            'window_y': 0,
+            'window_width': 1920,
+            'window_height': 1080
+        })
+
         self._shake = 0
         self._flash = 0
 
         self.effecttxt = util.PlainText(size=30, color=0xffffff00)
+
+        nd = lib.SDL_GetNumVideoDisplays()
+        logging.info('displays:')
+        rect = ffi.new('struct SDL_Rect *')
+        for i in range(nd):
+            res = lib.SDL_GetDisplayBounds(i, rect)
+            if res != 0:
+                logging.warning(lib.SDL_GetError())
+                continue
+            logging.info('  {1}: {0.w}x{0.h} at ({0.x},{0.y})'.format(rect, i))
+
+        self.reposition_window()
 
     def afterUpdate(self):
         for f in FLAGS:
@@ -115,3 +135,30 @@ class Plugin(PluginBase):
             if len(s) > 0:
                 self.effecttxt.text = '[{}]'.format(', '.join(s))
                 self.effecttxt.draw(self.refs.windowW // 2, 30, anchorX=0.5)
+
+    def reposition_window(self):
+        if self.config.fixed_window is False:
+            return
+
+        window = self.refs.window_[0]
+
+        # get current state
+        flags = lib.SDL_GetWindowFlags(window)
+        # exit fullscreen if enabled
+        if flags & 1 > 0:
+            lib.SDL_SetWindowFullscreen(window, 0)
+
+        WW = self.config.window_width
+        WH = self.config.window_height
+
+        # force size
+        # SetWindowResizable does not exist in game's version of SDL :/
+        lib.SDL_SetWindowMinimumSize(window, WW, WH)
+        lib.SDL_SetWindowMaximumSize(window, WW, WH)
+
+        # "borderless"
+        lib.SDL_SetWindowBordered(window, 0)
+
+        # lib.SDL_SetWindowSize(window, WW, WH)
+        lib.SDL_SetWindowPosition(
+            window, self.config.window_x, self.config.window_y)
