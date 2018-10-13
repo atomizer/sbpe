@@ -74,7 +74,7 @@ def hook_DoEvents():
 def hook_Clear(color):
     util.updateState()
     refs.manager.runCallbacks('afterUpdate')
-    ORIGS['XDL_Clear'](color)
+    ORIGS['XDL_Clear'](refs.stage[0].backgroundColor)
 
 
 @ffi.def_extern()
