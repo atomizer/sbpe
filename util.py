@@ -155,6 +155,53 @@ class MultilineText(object):
             y += self.spacing
 
 
+class NumberDict(PlainText):
+    def __init__(self, *, size=16, outlineSize=2, font=b'HemiHeadBold',
+                 color=0xffffff, outlineColor=0x000000, screenCoords=False):
+        super().__init__(
+            size=size, outlineSize=outlineSize, font=font,
+            color=color, outlineColor=outlineColor, screenCoords=screenCoords)
+
+    def updateTexture(self):
+        self._texture = refs.XDL_GetNumberDict(
+            self.font, self.size, self.color,
+            self.outlineSize, self.outlineColor)
+        refs.XDL_QueryTexture(self._texture, self._w, self._h)
+        self.w = self._w[0]
+        self.h = self._h[0]
+
+    def draw(self, num, x, y, anchorX=0, anchorY=0):
+        if self.size <= 0:
+            return
+        if self._dirty:
+            self.updateTexture()
+            self._dirty = False
+        if self._texture <= 0:
+            return
+
+        _nw = ffi.new('int *')
+        _nh = ffi.new('int *')
+        refs.XDL_SizeFromNumberDict(self._texture, num, _nw, _nh)
+        nw = _nw[0]
+        nh = _nh[0]
+        sw = nw * refs.scaleX
+        sh = nh * refs.scaleY
+
+        if self.screenCoords:
+            x *= refs.scaleX
+            y *= refs.scaleY
+
+        x -= anchorX * sw
+        y -= anchorY * sh
+
+        refs.XDL_DrawFromNumberDict(
+            self._texture, num, round(nw), round(nh),
+            round(x), round(y), round(sw), round(sh))
+
+    def __del__(self):
+        pass
+
+
 # functions ##################################################################
 
 def loadGLFunctions():
