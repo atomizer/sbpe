@@ -21,12 +21,12 @@ class Plugin(PluginBase):
     def onInit(self):
         # self.config.option('menu_bg', 0xff1d264d, 'color')
         self.config.option('centered', 1, 'int')
-        self.config.option('max_bg_value', 0.3, 'float')
+        self.config.option('max_bg_value', 1, 'float')
         self.config.option('hide_cursor_after', 1, 'float')
         self.config.options('bool', FLAGS)
         self.config.option('replace_effects', True, 'bool')
 
-        self.config.option('fixed_window', True, 'bool')
+        self.config.option('fixed_window', False, 'bool')
         self.config.options('int', {
             'window_x': 0,
             'window_y': 0,
@@ -49,7 +49,7 @@ class Plugin(PluginBase):
                 continue
             logging.info('  {1}: {0.w}x{0.h} at ({0.x},{0.y})'.format(rect, i))
 
-        self.reposition_window()
+        self.positioned = False
 
     def afterUpdate(self):
         for f in FLAGS:
@@ -78,16 +78,17 @@ class Plugin(PluginBase):
         gc.sinceKeypress = 0
 
         # reduce background brightness if needed
-        bg = self.refs.stage[0].backgroundColor
-        r, g, b = ((bg >> 16) & 0xff, (bg >> 8) & 0xff, bg & 0xff)
-        h, s, v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
-        if v > self.config.max_bg_value:
-            v = self.config.max_bg_value
-            r, g, b = colorsys.hsv_to_rgb(h, s, v)
-            bg = ((int(r * 255) & 0xff) << 16) +\
-                ((int(g * 255) & 0xff) << 8) +\
-                (int(b * 255) & 0xff)
-            self.refs.stage[0].backgroundColor = bg | 0xff000000
+        if self.config.max_bg_value < 1:
+            bg = self.refs.stage[0].backgroundColor
+            r, g, b = ((bg >> 16) & 0xff, (bg >> 8) & 0xff, bg & 0xff)
+            h, s, v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
+            if v > self.config.max_bg_value:
+                v = self.config.max_bg_value
+                r, g, b = colorsys.hsv_to_rgb(h, s, v)
+                bg = ((int(r * 255) & 0xff) << 16) +\
+                    ((int(g * 255) & 0xff) << 8) +\
+                    (int(b * 255) & 0xff)
+                self.refs.stage[0].backgroundColor = bg | 0xff000000
 
         wv = self.refs.WorldView
 
@@ -104,7 +105,6 @@ class Plugin(PluginBase):
                 wv.playerBounds.y = wv.worldBounds.y
                 wv.playerBounds.w = wv.worldBounds.w
                 wv.playerBounds.h = wv.worldBounds.h
-
         elif self.config.centered == 2:
             # centered, allow camera outside world bounds
             wv.offsetsInitialized = False
@@ -136,8 +136,10 @@ class Plugin(PluginBase):
                 self.effecttxt.text = '[{}]'.format(', '.join(s))
                 self.effecttxt.draw(self.refs.windowW // 2, 30, anchorX=0.5)
 
+        self.reposition_window()
+
     def reposition_window(self):
-        if self.config.fixed_window is False:
+        if self.config.fixed_window is False or self.positioned:
             return
 
         window = self.refs.window_[0]
@@ -162,3 +164,5 @@ class Plugin(PluginBase):
         # lib.SDL_SetWindowSize(window, WW, WH)
         lib.SDL_SetWindowPosition(
             window, self.config.window_x, self.config.window_y)
+
+        self.positioned = True
