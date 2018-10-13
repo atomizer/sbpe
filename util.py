@@ -48,7 +48,7 @@ class PlainText(object):
         self._h = ffi.new('int *')
         self.w = self.h = 0
         self.alpha = alpha
-        self._dirty = False
+        self._dirty = True
         self.screenCoords = screenCoords
 
     def __setattr__(self, name, val):
