@@ -101,12 +101,12 @@ class PlainText(object):
         if self._texture <= 0:
             return
 
-        w = ws = self.w
-        h = hs = self.h
+        w = self.w
+        h = self.h
+        ws = w * refs.scaleX
+        hs = h * refs.scaleY
 
         if self.screenCoords:
-            ws *= refs.scaleX
-            hs *= refs.scaleY
             x *= refs.scaleX
             y *= refs.scaleY
 
