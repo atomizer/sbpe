@@ -341,6 +341,15 @@ def getClassName(obj):
     return cname[1 if len(cname) < 11 else 2:].decode()
 
 
+def firstChild(obj):
+    if obj == ffi.NULL:
+        return ffi.NULL
+    cv = ffi.cast('struct UIElementContainer *', obj).children
+    if cv.finish == cv.start or cv.endOfStorage <= cv.start:
+        return ffi.NULL
+    return ffi.cast('struct UIElement **', cv.start)[0]
+
+
 def getUITree(obj, depth=0):
     '''printable UI element tree starting from obj'''
     if obj == ffi.NULL:
