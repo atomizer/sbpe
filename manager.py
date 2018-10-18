@@ -212,6 +212,9 @@ class PluginConfig():
         # round-trip to ensure correct type
         self._cache[name] = self._getvalue(name)
 
+    def __getitem__(self, key):
+        return self.__getattr__(key)
+
     def _getvalue(self, name):
         default, t = self._schema[name]
         try:
