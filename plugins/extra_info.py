@@ -199,7 +199,7 @@ class Plugin(PluginBase):
 
         angle = math.atan2(y1 - y0, x1 - x0)
 
-        # offset target position to the canvas edges along the line
+        # offset target position to the canvas edges if out of bounds
         t = 1
         if x1 < 0 and x0 != x1:
             t = min(t, x0 / (x0 - x1))
@@ -209,8 +209,7 @@ class Plugin(PluginBase):
             t = min(t, (cw - x0) / (x1 - x0))
         if y1 > ch and y0 != y1:
             t = min(t, (ch - y0) / (y1 - y0))
-
-        # arrow point
+        # arrow point coords
         ax = x0 + t * (x1 - x0)
         ay = y0 + t * (y1 - y0)
 
@@ -228,7 +227,7 @@ class Plugin(PluginBase):
             self.drawFrame(dst, color, self.config[optprefix + 'frame'])
             return
 
-        # the two other points of the triangle
+        # draw triangle
         length = self.config[optprefix + 'length'] * self.refs.scaleX
         width = self.config[optprefix + 'width'] / 2 * self.refs.scaleX
         (bx, by) = rotate(-length, width, angle)
