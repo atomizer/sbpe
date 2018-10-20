@@ -266,7 +266,7 @@ class Plugin(PluginBase):
         if x + w < 0 or y + h < 0 or x > cw or y > ch:
             return
 
-        lw = round(width * self.refs.scaleX)
+        lw = max(1, round(width * self.refs.scaleX))
         if lw * 2 > w or lw * 2 > h:
             self.refs.XDL_FillRect(x, y, w, h, color, blend)
             return
