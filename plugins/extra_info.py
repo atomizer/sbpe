@@ -217,7 +217,7 @@ class Plugin(PluginBase):
         ay = y0 + t * (y1 - y0)
 
         # fading
-        dist = math.sqrt((ax - x0) ** 2 + (ay - y0) ** 2) / self.refs.scaleX
+        dist = math.sqrt((ax - x0) ** 2 + (ay - y0) ** 2)
         fade = self.config[optprefix + 'fade']
         color = self.config[optprefix + 'color']
         f = 1
