@@ -38,7 +38,7 @@ TARGETS = {
 
     'arcade': '''
         forest.miner
-        dumb.stelepad
+        dumb.steletop
         hulk.sg
         lab.sg
     ''',
