@@ -45,7 +45,9 @@ TARGETS = {
 
     'player': 'soldier assassin heavy fabricator toaster',
 
-    'hp': 'loot-health1 loot-xmas'
+    'hp': 'loot-health1 loot-xmas',
+
+    'boost': ''
 }
 
 TVIDMAP = {}
@@ -71,8 +73,7 @@ OPTS = (
     ('color', 0xffffffff, 'color'),
     ('length', 20, 'int'),
     ('width', 10, 'int'),
-    ('fadenear', 200, 'int'),
-    ('fadefar', 500, 'int'),
+    ('fade', 300, 'int'),
     ('novis', False, 'bool'),
     ('frame', 5, 'int'),
     ('blink', 0, 'float')
@@ -100,7 +101,7 @@ class Plugin(PluginBase):
     def onPresent(self):
         if not self._initedopts:
             self._initedopts = True
-            for k in self.config.arrows.split():
+            for k in TARGETS.keys():
                 for opt in OPTS:
                     self.config.option(
                         'arrow_{}_{}'.format(k, opt[0]),
