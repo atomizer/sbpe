@@ -1,5 +1,6 @@
 import logging
 import math
+import time
 
 from _remote import ffi, lib
 from manager import PluginBase
@@ -73,7 +74,8 @@ OPTS = (
     ('fadenear', 200, 'int'),
     ('fadefar', 500, 'int'),
     ('novis', False, 'bool'),
-    ('frame', 5, 'int')
+    ('frame', 5, 'int'),
+    ('blink', 0, 'float')
 )
 
 
@@ -217,8 +219,15 @@ class Plugin(PluginBase):
         dist = math.sqrt((ax - x0) ** 2 + (ay - y0) ** 2) / self.refs.scaleX
         fade = self.config[optprefix + 'fade']
         color = self.config[optprefix + 'color']
+        f = 1
         if dist < fade and fade > 0:
-            f = (dist - fade) / fade
+            f = dist / fade
+        # blinking
+        bp = self.config[optprefix + 'blink']
+        if bp > 0:
+            f = f * abs(time.perf_counter() % bp - bp / 2) * 2 / bp
+
+        if f < 1:
             ca = math.floor((color >> 24) * f) & 0xff
             color = (color & 0xffffff) | (ca << 24)
 
