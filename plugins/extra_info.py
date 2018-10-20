@@ -163,6 +163,9 @@ class Plugin(PluginBase):
             except KeyError:
                 continue
 
+            if k not in kinds:
+                continue
+
             # do we need hp?
             if k == 'hp':
                 plrprops = ffi.cast('struct WorldObject *', plr).props
