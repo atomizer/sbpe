@@ -96,7 +96,11 @@ class Plugin(PluginBase):
         for opt in OPTS:
             self.config.option('arrows_' + opt[0], opt[1], opt[2])
 
+        self.config.option('show_hp', False, 'bool')
+
         self._initedopts = False
+        self.numbers = util.NumberDict(size=16, color=0xffff80)
+        self.negnumbers = util.NumberDict(size=16, color=0x8080ff)
 
     def onPresent(self):
         if not self._initedopts:
@@ -126,19 +130,39 @@ class Plugin(PluginBase):
         kinds = self.config.arrows.split()
 
         for obj in objects:
-            vid = util.getstr(obj.props.vid)
+            p = obj.props
+            vid = util.getstr(p.vid)
 
             # invisible
             if len(vid) == 0:
                 # triggers
-                if obj.props.trigger != 0:
+                if p.trigger != 0:
                     self.drawFrame(
                         obj, self.config.trigger_color,
                         self.config.trigger_frame)
                 # otherwise skip
                 continue
 
-            # do we need the boost?
+            # object hp/armor
+            x = p.xmp // 256 - wv.offset.x
+            y = p.ymp // 256 - wv.offset.y
+            inbounds = x + p.wmp // 256 > 0 and y + p.hmp // 256 > 0 and\
+                x < self.refs.canvasW_[0] and y < self.refs.canvasH_[0]
+            if inbounds and self.config.show_hp:
+                vstep = self.numbers.size * self.refs.scaleY
+                x += p.wmp // 512
+                y += (p.hmp // 512) - vstep
+
+                if p.hitpoints >= 0:
+                    self.numbers.draw(p.hitpoints, x, y, anchorX=0.5)
+                elif p.hitpoints != -1:
+                    self.negnumbers.draw(abs(p.hitpoints), x, y, anchorX=0.5)
+
+                if p.armor > 0:
+                    y += vstep
+                    self.numbers.draw(p.armor, x, y, anchorX=0.5)
+
+            # boosts
             if 'boost' in kinds and vid[:-1] in BOOSTS:
                 btype = BOOSTS[vid[:-1]]
                 blevel = int(vid[-1])
