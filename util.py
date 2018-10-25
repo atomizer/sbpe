@@ -103,22 +103,28 @@ class PlainText(object):
 
         w = self.w
         h = self.h
-        ws = w * refs.scaleX
-        hs = h * refs.scaleY
 
-        if self.screenCoords:
-            x *= refs.scaleX
-            y *= refs.scaleY
+        if not self.screenCoords:
+            x /= refs.scaleX
+            y /= refs.scaleY
 
-        x -= anchorX * ws
-        y -= anchorY * hs
+        x -= anchorX * w
+        y -= anchorY * h
         rotDegt = round(angle * 10)
+
+        cw = refs.canvasW_[0]
+        ch = refs.canvasH_[0]
+        refs.canvasW_[0] = refs.windowW
+        refs.canvasH_[0] = refs.windowH
 
         refs.XDL_DrawTexture(
             self._texture, 0, 0, w, h,
-            round(x), round(y), round(ws), round(hs),
+            round(x), round(y), w, h,
             rotDegt, w // 2, h // 2,
             0, self._cmod, lib.BLENDMODE_BLEND)
+
+        refs.canvasW_[0] = cw
+        refs.canvasH_[0] = ch
 
 
 class MultilineText(object):
@@ -184,19 +190,24 @@ class NumberDict(PlainText):
         refs.XDL_SizeFromNumberDict(self._texture, num, _nw, _nh)
         nw = _nw[0]
         nh = _nh[0]
-        sw = nw * refs.scaleX
-        sh = nh * refs.scaleY
 
-        if self.screenCoords:
-            x *= refs.scaleX
-            y *= refs.scaleY
+        if not self.screenCoords:
+            x /= refs.scaleX
+            y /= refs.scaleY
 
-        x -= anchorX * sw
-        y -= anchorY * sh
+        x -= anchorX * nw
+        y -= anchorY * nh
+
+        cw = refs.canvasW_[0]
+        ch = refs.canvasH_[0]
+        refs.canvasW_[0] = refs.windowW
+        refs.canvasH_[0] = refs.windowH
 
         refs.XDL_DrawFromNumberDict(
-            self._texture, num, round(nw), round(nh),
-            round(x), round(y), round(sw), round(sh))
+            self._texture, num, nw, nh, round(x), round(y), nw, nh)
+
+        refs.canvasW_[0] = cw
+        refs.canvasH_[0] = ch
 
     def __del__(self):
         pass
