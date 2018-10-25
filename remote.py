@@ -22,6 +22,8 @@ SYMTYPES = {
     'canvasW_': 'int *',
     'canvasH_': 'int *',
     'userData_': 'void **',
+    'WorldClient::handleWindowEvent': 'void *',
+    'UIElementContainer::handleWindowEvent': 'void *'
 }
 
 

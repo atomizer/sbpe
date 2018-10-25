@@ -48,6 +48,9 @@ flags::drawScatter
 flags::drawUniform
 flags::drawHitBoxes
 flags::drawBoxes
+
+WorldClient::handleWindowEvent
+UIElementContainer::handleWindowEvent
 '''.split()
 
 
