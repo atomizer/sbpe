@@ -150,16 +150,22 @@ class Plugin(PluginBase):
 
         canvasW = self.refs.canvasW_[0]
         canvasH = self.refs.canvasH_[0]
+        winW = self.refs.windowW
+        winH = self.refs.windowH
+        # use window coordinates for rects
+        self.refs.canvasW_[0] = winW
+        self.refs.canvasH_[0] = winH
+
         bounds = wv.worldBounds
 
-        scale = min(self.config.w * canvasW / bounds.w,
-                    self.config.h * canvasH / bounds.h)
+        scale = min(self.config.w * winW / bounds.w,
+                    self.config.h * winH / bounds.h)
         scrw = round(scale * bounds.w)
         scrh = round(scale * bounds.h)
-        scrx = round(self.config.px * canvasW - scrw / 2)
-        scry = round(self.config.py * canvasH - scrh / 2)
-        scrx = max(0, min(canvasW - scrw, scrx))
-        scry = max(0, min(canvasH - scrh, scry))
+        scrx = round(self.config.px * winW - scrw / 2)
+        scry = round(self.config.py * winH - scrh / 2)
+        scrx = max(0, min(winW - scrw, scrx))
+        scry = max(0, min(winH - scrh, scry))
 
         # compare room size to current viewport
         roomscale = max(bounds.w / canvasW, bounds.h / canvasH)
@@ -196,6 +202,10 @@ class Plugin(PluginBase):
 
         # our player world
         drawObjects(cw.mySubWorld.asNativeSubWorld)
+
+        # restore actual values
+        self.refs.canvasW_[0] = canvasW
+        self.refs.canvasH_[0] = canvasH
 
         if self.config.antialias:
             # force flush
