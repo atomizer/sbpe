@@ -98,10 +98,12 @@ class Plugin(PluginBase):
 
         self.config.option('show_hp', False, 'bool')
         self.config.option('show_uses', True, 'bool')
+        self.config.option('show_room_id', True, 'bool')
 
         self._initedopts = False
         self.numbers = util.NumberDict(size=16, color=0xffff80)
         self.negnumbers = util.NumberDict(size=16, color=0x8080ff)
+        self.roomtxt = util.PlainText(size=16)
 
     def onPresent(self):
         if not self._initedopts:
@@ -196,6 +198,7 @@ class Plugin(PluginBase):
             except KeyError:
                 continue
 
+            # consider only enabled types
             if k not in kinds:
                 continue
 
@@ -205,8 +208,18 @@ class Plugin(PluginBase):
                 if plrprops.hitpoints == plrprops.maxhitpoints:
                     continue
 
-            # all checks passed, guess we are interested in this obj
+            # all checks passed, we are interested in this obj
             self.drawArrow(plr, obj, k)
+
+        # zone/room id
+        cwprops = cw.asWorld.props
+        txt = util.getstr(cwprops.zone) or util.getstr(cwprops.music)
+        if cwprops.floor > 0:
+            txt = '{} {}'.format(txt, cwprops.floor + 1)
+        self.roomtxt.text = txt
+        self.roomtxt.draw(
+            self.refs.windowW - 4, self.refs.windowH - 4,
+            anchorX=1, anchorY=1)
 
     def drawArrow(self, src, dst, kind):
         optprefix = 'arrow_' + kind + '_'

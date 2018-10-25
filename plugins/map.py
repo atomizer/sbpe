@@ -79,8 +79,6 @@ class Plugin(PluginBase):
             'chest': 0xff0080ff,
             'item': 0xff0000ff,
         })
-        self.config.option('text_size', 20, 'int')
-        self.txt = util.PlainText()
 
     def onPresent(self):
         def drawShape(xmp, ymp, wmp, hmp, color, shapetype=lib.SHAPE_RECT):
@@ -118,19 +116,6 @@ class Plugin(PluginBase):
                     continue
                 p = obj.props
                 drawShape(p.xmp, p.ymp, p.wmp, p.hmp, color, p.shapetype)
-
-        def drawTxt():
-            zone = util.getstr(cwprops.zone) or util.getstr(cwprops.music)
-            self.txt.size = self.config.text_size
-            self.txt.text = '{} {}'.format(zone, cwprops.floor + 1)
-
-            # correcting position since scr[xywh] are in canvas coords
-            # self.txt.draw((scrx + scrw) / self.refs.scaleX - 4,
-            #               (scry + scrh) / self.refs.scaleY - 4,
-            #               anchorX=1, anchorY=1)
-            # ...or just put it in the corner
-            self.txt.draw(self.refs.windowW - 4, self.refs.windowH - 4,
-                          anchorX=1, anchorY=1)
 
         # actual onPresent starts here
         if self.config.visible is False:
@@ -170,7 +155,6 @@ class Plugin(PluginBase):
         # compare room size to current viewport
         roomscale = max(bounds.w / canvasW, bounds.h / canvasH)
         if roomscale < self.config.small_room:
-            drawTxt()
             return
 
         allies = util.vec2list(cw.allies)
@@ -211,6 +195,3 @@ class Plugin(PluginBase):
             # force flush
             self.refs.XDL_DrawPoint(-1, -1, 0, lib.BLENDMODE_BLEND)
             self.refs.glDisable(GL_POLYGON_SMOOTH)
-
-        # info text
-        drawTxt()
