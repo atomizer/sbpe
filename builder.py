@@ -16,6 +16,8 @@ LIBDIRS = []
 if platform.system() == 'Windows':
     LIBDIRS.append('../libs/SDL/lib/x86/')
 
+CDEFS = 'generated internals SDL XDL subhook xternPython'.split()
+
 
 def readfile(name):
     with open(name, 'r') as f:
@@ -26,8 +28,8 @@ def readfile(name):
 def build():
     ffibuilder = cffi.FFI()
 
-    for fname in glob.glob('cdefs/*.h'):
-        ffibuilder.cdef(readfile(fname))
+    for fname in CDEFS:
+        ffibuilder.cdef(readfile('cdefs/{}.h'.format(fname)))
 
     ffibuilder.embedding_api('uint32_t kickstart(char *p);')
     ffibuilder.embedding_init_code(readfile('remote.py'))
