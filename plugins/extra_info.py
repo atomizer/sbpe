@@ -71,11 +71,12 @@ BOOSTS = {
 
 OPTS = (
     ('color', 0xffffffff, 'color'),
-    ('length', 20, 'int'),
-    ('width', 10, 'int'),
+    ('length', 20, 'float'),
+    ('width', 10, 'float'),
+    ('outline', 2, 'float'),
     ('fade', 300, 'int'),
     ('novis', False, 'bool'),
-    ('frame', 5, 'int'),
+    ('frame', 5, 'float'),
     ('blink', 0, 'float')
 )
 
@@ -287,11 +288,26 @@ class Plugin(PluginBase):
             return
 
         # draw triangle
-        length = self.config[optprefix + 'length'] * self.refs.scaleX
-        width = self.config[optprefix + 'width'] / 2 * self.refs.scaleX
-        (bx, by) = rotate(-length, width, angle)
-        (cx, cy) = rotate(-length, -width, angle)
+        dx = self.config[optprefix + 'length'] * self.refs.scaleX
+        dy = self.config[optprefix + 'width'] / 2 * self.refs.scaleX
 
+        # outline
+        out = self.config[optprefix + 'outline'] * self.refs.scaleX
+        if out > 0:
+            offx = out / math.tan(math.pi / 4 - math.atan2(dx, dy) / 2)
+            offy = out / math.tan(math.pi / 4 - math.atan2(dy, dx) / 2)
+            (oax, oay) = rotate(offx, 0, angle)
+            (obx, oby) = rotate(-dx - out, dy + offy, angle)
+            (ocx, ocy) = rotate(-dx - out, -dy - offy, angle)
+            self.refs.XDL_FillTri(
+                round(ax + oax), round(ay + oay),
+                round(ax + obx), round(ay + oby),
+                round(ax + ocx), round(ay + ocy),
+                color & 0xff000000, lib.BLENDMODE_BLEND)
+
+        # middle
+        (bx, by) = rotate(-dx, dy, angle)
+        (cx, cy) = rotate(-dx, -dy, angle)
         self.refs.XDL_FillTri(
             round(ax), round(ay),
             round(ax + bx), round(ay + by),
