@@ -75,6 +75,12 @@ struct SortedVecElement {
   void *obj;
 };
 
+// std::pair<Label*, Label*>
+struct LabelPair {
+  struct Label *first;
+  struct Label *second;
+};
+
 // ---------------------------------------------------------------------------
 // protobuf-related
 

@@ -132,6 +132,12 @@ class Plugin(PluginBase):
                     ex = toUIElement(overlay.playerWindowExitSprite)
                     ex.x = tw - ex.w
                     ex.y = exy
+                    tt = toUIElement(overlay.toolTip)
+                    if tt != ffi.NULL:
+                        tt.x = inv.x - tt.w
+                    ctt = toUIElement(overlay.comparisonToolTip)
+                    if ctt != ffi.NULL:
+                        ctt.x = tt.x - ctt.w
 
                 if otype == 'ProgressOverlay':
                     pw = toUIElement(overlay.progressWindow)
@@ -159,15 +165,33 @@ class Plugin(PluginBase):
                     ex = toUIElement(overlay.playerWindowExitSprite)
                     ex.x = tw - ex.w
                     ex.y = th - ex.h - 100
+                    if overlay.scoreRankAdded:
+                        # the rank visual element is the last child
+                        oc = ffi.cast('struct UIElementContainer *', overlay)
+                        chl = util.vec2list(oc.children, 'struct UIElement *')
+                        if len(chl) > 0:
+                            sr = chl[-1]
+                            sr.x = scw.x + scw.w - 20
 
                 if otype == 'ZoneScoreOverlay':
                     outro = toUIElement(overlay.outro)
                     outro.x = int(tw * 0.3)
                     outro.y = int(th * 0.5)
+                    hoff = int(tw * 0.3)
                     voff = int(th * 0.7)
-                    # todo: move keyValLabels
+                    kvl = util.vec2list(
+                        overlay.keyValLabels, 'struct LabelPair')
+                    for pair in kvl:
+                        first = toUIElement(pair.first)
+                        second = toUIElement(pair.second)
+                        first.x = hoff - 96
+                        second.x = hoff + 96 - second.w
+                        first.y = second.y = voff
+                        voff += 20
+                    if len(kvl) > 0:
+                        voff += 20
                     xpb = toUIElement(overlay.xpLevelBars)
-                    xpb.x = int(tw * 0.3 - 140)
+                    xpb.x = hoff - 140
                     xpb.y = voff + 20
                     ex = toUIElement(overlay.playerWindowExitSprite)
                     ex.x = tw - ex.w
