@@ -170,7 +170,8 @@ class Plugin(PluginBase):
             # use counts
             if inbounds and self.config.show_uses and p.interact != 0:
                 idesc = p.interactdescription
-                if idesc != ffi.NULL and idesc.numused > 0:
+                if idesc != ffi.NULL and idesc.numused > 0 and\
+                        idesc.totaluses > 0:
                     self.numbers.draw(
                         idesc.numused, x, y, anchorX=0.5, anchorY=0.5)
 
