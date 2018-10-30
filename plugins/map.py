@@ -4,11 +4,6 @@ from _remote import ffi, lib
 from manager import PluginBase
 import util
 
-GL_POLYGON_SMOOTH = 0x0B41
-GL_POLYGON_SMOOTH_HINT = 0x0C53
-GL_NICEST = 0x1102
-# self.refs.glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST)
-
 
 def getObjColor(obj, config, player, allies):
     p = obj.props
@@ -58,7 +53,6 @@ class Plugin(PluginBase):
     def onInit(self):
         self.config.option('visible', True, 'bool')
         self.config.option('hide_outside_zones', True, 'bool')
-        self.config.option('antialias', False, 'bool')
         self.config.options('float', {
             'px': 1,
             'py': 1,
@@ -159,11 +153,6 @@ class Plugin(PluginBase):
 
         allies = util.vec2list(cw.allies)
 
-        if self.config.antialias:
-            # force flush
-            self.refs.XDL_DrawPoint(-1, -1, 0, lib.BLENDMODE_BLEND)
-            self.refs.glEnable(GL_POLYGON_SMOOTH)
-
         # background
         self.refs.XDL_FillRect(
             scrx, scry, scrw, scrh, self.config.bg, lib.BLENDMODE_BLEND)
@@ -190,8 +179,3 @@ class Plugin(PluginBase):
         # restore actual values
         self.refs.canvasW_[0] = canvasW
         self.refs.canvasH_[0] = canvasH
-
-        if self.config.antialias:
-            # force flush
-            self.refs.XDL_DrawPoint(-1, -1, 0, lib.BLENDMODE_BLEND)
-            self.refs.glDisable(GL_POLYGON_SMOOTH)
