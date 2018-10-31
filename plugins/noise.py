@@ -14,6 +14,7 @@ class Plugin(PluginBase):
             'hide_factions': False,
             'hide_healthbars': False,
             'hide_ally_objects': False,
+            'hide_effects': False,
         })
         self.config.option('damage_flash_intensity', 1, 'float')
 
@@ -22,7 +23,8 @@ class Plugin(PluginBase):
 
     def afterUpdate(self):
         cw = self.refs.ClientWorld
-        if cw == ffi.NULL:
+        wv = self.refs.WorldView
+        if cw == ffi.NULL or wv == ffi.NULL:
             return
 
         # other players
@@ -71,6 +73,12 @@ class Plugin(PluginBase):
                 dt = swt - obj.lastDamageT
                 if dt < rt:
                     obj.lastDamageT = swt - rt
+
+        for graphic in util.vec2list(wv.dynamicGraphics):
+            gtype = util.getClassName(graphic)
+            if self.config.hide_effects and gtype == 'AnimationGraphic':
+                g = ffi.cast('struct AnimationGraphic *', graphic)
+                g.startTime = 0
 
     def hide(self, obj):
         obj.props.xmp -= OFFSET
