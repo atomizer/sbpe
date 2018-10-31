@@ -4,6 +4,7 @@ import json
 import os
 import platform
 import subprocess
+import sys
 import time
 
 from mayhem.proc import ProcessError
@@ -158,17 +159,31 @@ def runLoader(exepath=''):
         logging.error('injection not ok')
         gpop.kill()
         return False
-    else:
-        stderr = gpop.communicate()[1]
-        logging.info('game closed: code {}'.format(gpop.returncode))
-        if len(stderr) > 0:
-            print(stderr.decode())
 
-        if mipmaps and os.path.exists(dvbak):
-            os.rename(dvpath, dvmpath)
-            os.rename(dvbak, dvpath)
+    rlog = None
+    rlogpath = os.path.join(SCRIPTPATH, 'remote.log')
+    if os.path.exists(rlogpath):
+        rlog = open(rlogpath, 'r')
+        logging.info('following remote.log...')
 
-        return True
+    try:
+        while True:
+            if gpop.poll() is not None:
+                break
+            while True:
+                s = rlog.read()
+                if len(s) == 0:
+                    break
+                sys.stdout.write(s)
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        gpop.kill()
+
+    logging.info('game closed: code {}'.format(gpop.returncode))
+
+    if mipmaps and os.path.exists(dvbak):
+        os.rename(dvpath, dvmpath)
+        os.rename(dvbak, dvpath)
 
 
 if __name__ == '__main__':
