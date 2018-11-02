@@ -1,37 +1,17 @@
 todo
 
-- window management: borderless, predefined coords, size
-
 - player list
+  - batch commands
 
-- remove screen flash/shake: worldView.shakeMagnitude, etc -> replace with an indicator
+- highlights
 
-- extra info overlay
-
-  - own shell pointer + vulbox
+- extra info
+  - own shell hitboxes
 <WorldObject> -> VidAnimData *vad -> STDVector<AnimationData*> animDataVec -> STDVector<AnimBoxes> boxes[3] -> int time, int length, STDVector<Rectangle> rects
 
-  - interacts and triggers
-    - draw triggers in world
-    - player count on portals
-    - key count
-
-  - point towards objectives
-    - exits
-    - shops
-    - secrets
-    - hp if needed
-    - boosts if needed
-
-  - enemy hp, armor, etc
-
-- hide
-  - friendlies (transparency or replace with rects)
-  - names/factions, hp bars
-  - death animations (ANIM_DESTROY_* if no dmg/hitbox)
-  - damage flash
-
 - chat
-  - popout, keep log, tabs, commands
+  - popout?
+  - keep log
+  - tabs (global, faction, per-person)
 
 - account switcher
