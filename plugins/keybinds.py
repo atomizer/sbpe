@@ -1,4 +1,5 @@
 import logging
+import time
 
 from _remote import ffi, lib
 from manager import PluginBase
@@ -6,21 +7,16 @@ import util
 
 
 class Plugin(PluginBase):
-    def onInit(self):
-        num = ffi.new('int *')
-        self.keyStates = lib.SDL_GetKeyboardState(num)
-        self.numKeys = num[0]
-        self.oldKeys = ffi.new('uint8_t[]', self.numKeys)
-
+    def updateBinds(self):
         self.binds = {}
         for desc, key in self.config._section.items():
+            desc = desc.split()
+            if len(desc) < 4:
+                continue
             k = lib.SDL_GetScancodeFromName(key.encode())
             if k == 0:
                 logging.error('key name not recognized: "{}"'.format(key))
                 continue
-            desc = desc.split()
-            if len(desc) <= 3:
-                logging.error('not enough parameters: {}'.format(desc))
             b = {
                 'plugin': 'plugin_' + desc[0],
                 'option': desc[1],
@@ -31,6 +27,18 @@ class Plugin(PluginBase):
                 self.binds[k].append(b)
             else:
                 self.binds[k] = [b]
+
+    def onInit(self):
+        num = ffi.new('int *')
+        self.keyStates = lib.SDL_GetKeyboardState(num)
+        self.numKeys = num[0]
+        self.oldKeys = ffi.new('uint8_t[]', self.numKeys)
+
+        self.updateBinds()
+
+        self.config.option('info_time', 2, 'float')
+        self.info = util.PlainText(size=16)
+        self.last_change = 0
 
     def beforeUpdate(self):
         if not lib.SDL_IsTextInputActive():
@@ -80,3 +88,13 @@ class Plugin(PluginBase):
                     conf._section[opt] = val
                     if opt in conf._cache:
                         del conf._cache[opt]
+                    self.info.text = '{}.{} = {}'.format(pname[7:], opt, val)
+                    self.last_change = time.perf_counter()
+
+    def onPresent(self):
+        if self.config.info_time == 0:
+            return
+        f = (time.perf_counter() - self.last_change) / self.config.info_time
+        if f >= 0 and f < 1:
+            self.info.alpha = 1 - f
+            self.info.draw(4, 4)
