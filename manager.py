@@ -27,8 +27,7 @@ class Manager(object):
             refs.config.add_section('manager')
 
         self.period = self.config['manager'].getint('period', 3)
-        plist = self.config['manager'].get('priority', '').split()
-        self.priority = set(plist)
+        self.priority = self.config['manager'].get('priority', '').split()
 
         self._active = {}
         self._mtimes = {}
