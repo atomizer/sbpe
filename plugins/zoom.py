@@ -30,11 +30,8 @@ def setUIElementSize(elem, w, h):
 
 class Plugin(PluginBase):
     def onInit(self):
-        self.config.option('active', False, 'bool')
-        self.config.options('int', {
-                'step': 320,
-                'level': 8
-            })
+        self.config.option('active', True, 'bool')
+        self.config.option('level', -1, 'int')
         self.config.option('fast', True, 'bool')
         self.config.option('time', 0, 'float')
 
@@ -66,7 +63,7 @@ class Plugin(PluginBase):
             self.start = self.target = 1
             nscale = 1
         else:
-            twidth = self.config.level * self.config.step
+            twidth = self.config.level
             targ = twidth / self.refs.windowW
 
             if targ <= 0:
