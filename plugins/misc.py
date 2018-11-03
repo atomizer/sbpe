@@ -24,7 +24,6 @@ class Plugin(PluginBase):
         self.config.option('max_bg_value', 1, 'float')
         self.config.option('hide_cursor_after', 1, 'float')
         self.config.options('bool', FLAGS)
-        self.config.option('replace_effects', True, 'bool')
 
         self.config.option('fixed_window', False, 'bool')
         self.config.options('int', {
@@ -33,11 +32,6 @@ class Plugin(PluginBase):
             'window_width': 1920,
             'window_height': 1080
         })
-
-        self._shake = 0
-        self._flash = 0
-
-        self.effecttxt = util.PlainText(size=30, color=0xffffff00)
 
         nd = lib.SDL_GetNumVideoDisplays()
         logging.info('displays:')
@@ -114,28 +108,7 @@ class Plugin(PluginBase):
                 wv.playerBounds.w = wv.worldBounds.w + 200000
                 wv.playerBounds.h = wv.worldBounds.h + 200000
 
-        if self.config.replace_effects:
-            if wv.shakePos < wv.shakeDuration and wv.shakeMagnitude > 0:
-                self._shake = time.perf_counter() + wv.shakeDuration / 1000
-            wv.shakeMagnitude = 0
-
-            flashduration = wv.flashStart + wv.flashHold + wv.flashEnd
-            if wv.flashPos < flashduration and wv.flashColor != 0:
-                self._flash = time.perf_counter() + flashduration / 1000
-            wv.flashColor = 0
-
     def onPresent(self):
-        if self.config.replace_effects:
-            ct = time.perf_counter()
-            s = []
-            if self._shake > ct:
-                s = ['SHAKE']
-            if self._flash > ct:
-                s += ['FLASH']
-            if len(s) > 0:
-                self.effecttxt.text = '[{}]'.format(', '.join(s))
-                self.effecttxt.draw(self.refs.windowW // 2, 30, anchorX=0.5)
-
         self.reposition_window()
 
     def reposition_window(self):

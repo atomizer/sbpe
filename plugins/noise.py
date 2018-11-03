@@ -1,3 +1,5 @@
+import time
+
 from _remote import ffi, lib
 from manager import PluginBase
 import util
@@ -20,6 +22,11 @@ class Plugin(PluginBase):
 
         self.hidden = set()
         self.oldbits = []
+
+        self.config.option('replace_shake', True, 'bool')
+        self._shake = 0
+        self._flash = 0
+        self.shaketxt = util.PlainText(size=30, color=0xffffff00)
 
     def afterUpdate(self):
         cw = self.refs.ClientWorld
@@ -80,6 +87,16 @@ class Plugin(PluginBase):
                 g = ffi.cast('struct AnimationGraphic *', graphic)
                 g.startTime = 0
 
+        if self.config.replace_shake:
+            if wv.shakePos < wv.shakeDuration and wv.shakeMagnitude > 0:
+                self._shake = time.perf_counter() + wv.shakeDuration / 1000
+            wv.shakeMagnitude = 0
+
+            flashduration = wv.flashStart + wv.flashHold + wv.flashEnd
+            if wv.flashPos < flashduration and wv.flashColor != 0:
+                self._flash = time.perf_counter() + flashduration / 1000
+            wv.flashColor = 0
+
     def hide(self, obj):
         obj.props.xmp -= OFFSET
         self.hidden.add(obj)
@@ -94,3 +111,14 @@ class Plugin(PluginBase):
         for obj, bits in self.oldbits:
             obj.props._has_bits[0] |= bits
         self.oldbits = []
+
+        if self.config.replace_shake:
+            ct = time.perf_counter()
+            s = []
+            if self._shake > ct:
+                s = ['SHAKE']
+            if self._flash > ct:
+                s += ['FLASH']
+            if len(s) > 0:
+                self.shaketxt.text = '[{}]'.format(', '.join(s))
+                self.shaketxt.draw(self.refs.windowW // 2, 20, anchorX=0.5)
