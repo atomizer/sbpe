@@ -150,7 +150,7 @@ def initHooks():
         if orig != ffi.NULL:
             ORIGS[fname] = orig
         else:
-            logging.warning('{}: no trampoline, using fallback'.format(fname))
+            logging.info('{}: no trampoline, using fallback'.format(fname))
 
             def call_orig(*args):
                 lib.subhook_remove(hook)
