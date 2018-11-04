@@ -75,7 +75,6 @@ OPTS = (
     ('width', 10, 'float'),
     ('outline', 2, 'float'),
     ('fade', 300, 'int'),
-    ('novis', False, 'bool'),
     ('frame', 5, 'float'),
     ('blink', 0, 'float')
 )
@@ -240,8 +239,7 @@ class Plugin(PluginBase):
 
         inbounds = (x1 + dw2 >= 0 and x1 - dw2 <= cw and y1 + dh2 >= 0 and y1 - dh2 <= ch)
 
-        # novis: if the target is visible, don't draw
-        if inbounds and self.config[optprefix + 'novis']:
+        if inbounds and self.config[optprefix + 'frame'] == 0:
             return
 
         if inbounds:
