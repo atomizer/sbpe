@@ -72,10 +72,16 @@ class Plugin(PluginBase):
             self.seen[acc] = (self.ct, name, faction, shell)
 
     def onPresent(self):
+        plst = list(self.seen.values())
+
+        cw = self.refs.ClientWorld
+        if cw != ffi.NULL and cw.asWorld.props.safe:
+            # wipe old records in safe zones
+            self.seen = {}
+
         if not self.config.visible:
             return
 
-        plst = list(self.seen.values())
         plst.sort(key=lambda x: str.lower(x[1]))
         plst.sort(key=lambda x: str.lower(x[2]))
         plst.sort(key=lambda x: x[0], reverse=True)
@@ -109,11 +115,3 @@ class Plugin(PluginBase):
         self.columns['shell'].draw(x - 5, y, anchorX=1)
         self.columns['name'].draw(x, y)
         self.columns['faction'].draw(x + 100, y)
-
-        cw = self.refs.ClientWorld
-        if cw == ffi.NULL:
-            return
-
-        if cw.asWorld.props.safe:
-            # wipe old records in safe zones
-            self.seen = {}
