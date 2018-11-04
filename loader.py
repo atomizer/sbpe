@@ -187,5 +187,5 @@ def runLoader(exepath=''):
 
 
 if __name__ == '__main__':
-    logging.info('sbppf loader')
+    logging.info('SBPE loader')
     runLoader(DEFAULTGAMEPATH)

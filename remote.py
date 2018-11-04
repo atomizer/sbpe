@@ -190,7 +190,7 @@ def kickstart(p):
         filename=os.path.join(refs.SCRIPTPATH, LOGFILE), filemode='w',
         format='%(asctime)s %(module)s [%(levelname)s] %(message)s')
 
-    logging.info('sbppf ' + refs.VERSION)
+    logging.info('SBPE ' + refs.VERSION)
     logging.info('platform: ' + refs.SYSINFO)
 
     refs.CONFIGFILE = os.path.join(refs.SCRIPTPATH, CONFIGFILE)

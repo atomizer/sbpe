@@ -7,7 +7,7 @@ from _remote import ffi, lib
 from manager import PluginBase
 import util
 
-VTEMPLATE = 'client v{0} + sbppf {1.VERSION}'
+VTEMPLATE = 'client v{0} + SBPE {1.VERSION}'
 
 
 class Plugin(PluginBase):
