@@ -34,14 +34,15 @@ class Plugin(PluginBase):
         })
 
         nd = lib.SDL_GetNumVideoDisplays()
-        logging.info('displays:')
-        rect = ffi.new('struct SDL_Rect *')
-        for i in range(nd):
-            res = lib.SDL_GetDisplayBounds(i, rect)
-            if res != 0:
-                logging.warning(lib.SDL_GetError())
-                continue
-            logging.info('  {1}: {0.w}x{0.h} at ({0.x},{0.y})'.format(rect, i))
+        if nd > 1:
+            logging.info('displays:')
+            rect = ffi.new('struct SDL_Rect *')
+            for i in range(nd):
+                res = lib.SDL_GetDisplayBounds(i, rect)
+                if res != 0:
+                    logging.warning(lib.SDL_GetError())
+                    continue
+                logging.info('  {1}: {0.w}x{0.h} at ({0.x},{0.y})'.format(rect, i))
 
         self.positioned = False
 
