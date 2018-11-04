@@ -155,10 +155,12 @@ class MultilineText(object):
 
         object.__setattr__(self, name, val)
 
-    def draw(self, x, y):
+    def draw(self, x, y, **kwargs):
         for t in self.children:
-            t.draw(x, y)
+            t.draw(x, y, **kwargs)
             y += self.spacing
+            if y > refs.windowH:
+                return
 
 
 class NumberDict(PlainText):
