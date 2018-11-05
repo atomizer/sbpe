@@ -115,13 +115,6 @@ class Manager(object):
             self._mtimes[fname] = mtime
             self._reload(fname)
 
-        # if config was deleted, write default values
-        if not os.path.exists(self.refs.CONFIGFILE):
-            with open(self.refs.CONFIGFILE, 'w') as f:
-                self.config.write(f)
-            # we did this, so we already know about it
-            self._mtimes['config'] = os.stat(self.refs.CONFIGFILE).st_mtime
-
     def _runCallback(self, mname, cbname):
         try:
             getattr(self._active[mname], cbname)()

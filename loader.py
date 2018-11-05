@@ -109,6 +109,9 @@ def runLoader(exepath=''):
         conf.read(CONFFILE)
         exepath = conf.get('general', 'game', fallback=exepath)
         mipmaps = conf.getboolean('general', 'mipmaps', fallback=False)
+    else:
+        logging.error('{} not found!'.format(CONFFILE))
+        return
 
     if not os.path.isfile(exepath):
         logging.error('put the path to the game executable in ' + CONFFILE)
