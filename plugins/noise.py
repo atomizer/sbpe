@@ -68,6 +68,9 @@ class Plugin(PluginBase):
                     if obj.props.terraintype > 0:
                         # anything that acts like terrain (macrons)
                         continue
+                    if util.getstr(obj.props.vid)[:5] == 'timer':
+                        # macron timer
+                        continue
                     self.hide(obj)
 
         # reduce damage flash time
