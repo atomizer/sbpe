@@ -3,6 +3,7 @@ import io
 import json
 import os
 import platform
+import shutil
 import subprocess
 import sys
 import time
@@ -21,6 +22,7 @@ REMOTEPATH = os.path.normpath(os.path.join(SCRIPTPATH, 'build/remote.bin'))
 SYMQPATH = 'symquery/{}/bin/symquery'.format(platform.system())
 SYMQPATH = os.path.normpath(os.path.join(SCRIPTPATH, SYMQPATH))
 CONFFILE = os.path.join(SCRIPTPATH, 'config.ini')
+CONF_TEMPLATE = os.path.join(SCRIPTPATH, 'config_template.ini')
 
 STARTUP_OFFSET = subprocess.check_output([
     SYMQPATH, '-e', REMOTEPATH, '-s', 'kickstart'])
@@ -104,13 +106,22 @@ def inject(proc, data):
 
 def runLoader(exepath=''):
     mipmaps = False
+
+    if not os.path.exists(CONFFILE):
+        logging.info('config not found, copying from template')
+        try:
+            shutil.copy(CONF_TEMPLATE, CONFFILE)
+        except Exception:
+            logging.error('failed to copy config!')
+            return
+
     if os.path.exists(CONFFILE):
         conf = configparser.ConfigParser()
         conf.read(CONFFILE)
         exepath = conf.get('general', 'game', fallback=exepath)
         mipmaps = conf.getboolean('general', 'mipmaps', fallback=False)
     else:
-        logging.error('{} not found!'.format(CONFFILE))
+        logging.error('config not found!')
         return
 
     if not os.path.isfile(exepath):
