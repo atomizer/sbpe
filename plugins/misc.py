@@ -16,6 +16,9 @@ FLAGS = {
     'drawBoxes': False
 }
 
+# a "big" number (sufficiently big, but below 2**24)
+BN = 1000000
+
 
 class Plugin(PluginBase):
     def onInit(self):
@@ -95,19 +98,21 @@ class Plugin(PluginBase):
         if self.config.centered == 1:
             # centered camera (old style)
             wv.offsetsInitialized = False
-            if wv.playerBounds.x != wv.worldBounds.x:
-                wv.playerBounds.x = wv.worldBounds.x
-                wv.playerBounds.y = wv.worldBounds.y
-                wv.playerBounds.w = wv.worldBounds.w
-                wv.playerBounds.h = wv.worldBounds.h
         elif self.config.centered == 2:
             # centered, allow camera outside world bounds
             wv.offsetsInitialized = False
-            if wv.playerBounds.x == wv.worldBounds.x:
-                wv.playerBounds.x = wv.worldBounds.x - 100000
-                wv.playerBounds.y = wv.worldBounds.y - 100000
-                wv.playerBounds.w = wv.worldBounds.w + 200000
-                wv.playerBounds.h = wv.worldBounds.h + 200000
+            if wv.playerBounds.w < wv.worldBounds.w + BN:
+                wv.playerBounds.x -= BN
+                wv.playerBounds.y -= BN
+                wv.playerBounds.w += BN * 2
+                wv.playerBounds.h += BN * 2
+
+        # set playerBounds back to previous values if switched from mode 2
+        if self.config.centered != 2 and wv.playerBounds.w > wv.worldBounds.w + BN:
+            wv.playerBounds.x += BN
+            wv.playerBounds.y += BN
+            wv.playerBounds.w -= BN * 2
+            wv.playerBounds.h -= BN * 2
 
     def onPresent(self):
         self.reposition_window()
