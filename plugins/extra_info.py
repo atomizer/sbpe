@@ -186,11 +186,11 @@ class Plugin(PluginBase):
                 mvals = getattr(plr.charDesc, btype[1])
                 mvals = ffi.unpack(mvals.elements, mvals.current_size)
 
-                for i in range(len(mvals)):
-                    if mvals[i] > currvalue:
+                for i in range(1, len(mvals)):
+                    if mvals[i] > currvalue and i <= blevel:
+                        self.drawArrow(plr, obj, 'boost')
                         break
-                if i <= blevel:
-                    self.drawArrow(plr, obj, 'boost')
+
                 continue
 
             # match vid name with target list
