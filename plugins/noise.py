@@ -79,10 +79,12 @@ class Plugin(PluginBase):
         if rt > 0:
             # server world time
             swt = ffi.cast('struct SubWorld *', cw.serverSubWorld).t
-            for obj in util.worldobjects(cw.serverSubWorld):
-                dt = swt - obj.lastDamageT
-                if dt < rt:
-                    obj.lastDamageT = swt - rt
+            # skip the beginning since lastDamageT is 0 by default
+            if swt > 132:
+                for obj in util.worldobjects(cw.serverSubWorld):
+                    dt = swt - obj.lastDamageT
+                    if dt < rt:
+                        obj.lastDamageT = swt - rt
 
         for graphic in util.vec2list(wv.dynamicGraphics):
             gtype = util.getClassName(graphic)
