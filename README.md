@@ -71,10 +71,14 @@ Sections of the config:
 
 ### `[plugin_hud]` - custom status hud
 
-- `x`, `y` - coordinates of the top-mid point between hp and hpmax indicators
+- `x`, `y` - coordinates of the top-mid point between hp and hpmax indicators.
 - `spacing`: this value is added between the lines. With big font sizes, negative values might be preferable.
 - `size_*`, `color_*`: font size and color of various elements.
 - `outline`: outline size.
+- `bar_width`, `bar_height`: size of the health bar in pixels. Set to 0 to disable.
+- `bar_y`: vertical offset of the health bar from the top of the character.
+- `bar_background`, `bar_outline`, `bar_color`: health bar colors.
+- `bar_notches`: color of 25HP interval markers on the empty health.
 
 ### `[plugin_map]` - (mini)map
 
