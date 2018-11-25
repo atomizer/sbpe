@@ -40,6 +40,7 @@ Sections of the config:
 - `game`: the path to `mvmmoclient.exe`
 - `mipmaps`: whether to use mipmapping at all. Recommended to leave enabled, but turn off if you have any problems. Also, see below section "mipmaps and sprite editing".
 - `mipmap_maxlevel`: integer, default: 2, recommended sane range: 0 to 4. Determines the maximum mipmap level that will be generated. Increasing this makes sense if you intend to zoom more than 4 times further than your native resolution. Increasing this also increases the amount of sprite sheets and video memory requirements. If you are interested, you can read more about mipmapping on the internet.
+- `keep_open`: if `yes`, the command line window will stay open and show the log in real time. Useful for debugging.
 
 ### `[manager]`
 

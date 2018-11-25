@@ -113,20 +113,21 @@ def runLoader(exepath=''):
             shutil.copy(CONF_TEMPLATE, CONFFILE)
         except Exception:
             logging.error('failed to copy config!')
-            return
+            return False
 
     if os.path.exists(CONFFILE):
         conf = configparser.ConfigParser()
         conf.read(CONFFILE)
         exepath = conf.get('general', 'game', fallback=exepath)
         mipmaps = conf.getboolean('general', 'mipmaps', fallback=False)
+        keepopen = conf.getboolean('general', 'keep_open', fallback=False)
     else:
         logging.error('config not found!')
-        return
+        return False
 
     if not os.path.isfile(exepath):
         logging.error('put the path to the game executable in ' + CONFFILE)
-        return
+        return False
 
     if mipmaps:
         gdir = os.path.dirname(os.path.abspath(exepath))
@@ -174,6 +175,9 @@ def runLoader(exepath=''):
         gpop.kill()
         return False
 
+    if not keepopen:
+        return True
+
     rlog = None
     rlogpath = os.path.join(SCRIPTPATH, 'remote.log')
     if os.path.exists(rlogpath):
@@ -199,7 +203,10 @@ def runLoader(exepath=''):
         os.rename(dvpath, dvmpath)
         os.rename(dvbak, dvpath)
 
+    return True
+
 
 if __name__ == '__main__':
     logging.info('SBPE loader')
-    runLoader(DEFAULTGAMEPATH)
+    if runLoader(DEFAULTGAMEPATH) is False:
+        input('\npress ENTER to close')
