@@ -38,6 +38,8 @@ Copy `config-template.ini` to `config.ini` if you don't have a config file yet.
 
 ### config file basics
 
+Use a modern editor, like [Sublime Text](https://www.sublimetext.com/) or [Notepad++](https://notepad-plus-plus.org/)
+
 For booleans, only use values `yes` and `no`.
 
 For colors, use hexadecimal `rgb` or `rrggbb` or `aarrggbb`, where `a` is alpha. Use value `0` for "fully transparent"; `000` and `000000` are "opaque black".
@@ -227,7 +229,7 @@ Thanks to Crunchy Games for not stripping symbols from the binary, would probabl
 
 ISC on my code; see appropriate readmes or links above for licenses for other projects.
 
-Copyright 2018 atomizer <danila.gerasimov@gmail.com>
+Copyright 2018 atomizer
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
