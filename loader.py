@@ -97,8 +97,9 @@ def launch(exepath):
         os.environ['DYLD_FORCE_FLAT_NAMESPACE'] = '1'
 
     # start the game
-    gpop = subprocess.Popen([exepath], stderr=subprocess.DEVNULL,
-                            cwd=os.path.dirname(exepath))
+    gpop = subprocess.Popen(
+        [exepath], stderr=subprocess.STDOUT,
+        stdout=subprocess.PIPE, cwd=os.path.dirname(exepath))
 
     # on Windows, inject into the running process
     if platform.system() == 'Windows':
@@ -175,6 +176,11 @@ def runLoader(exepath=''):
 
     os.environ['SBPE_SYMFILE'] = SYMFILE
 
+    rlog = None
+    rlogpath = os.path.join(SCRIPTPATH, 'remote.log')
+    if os.path.exists(rlogpath):
+        os.unlink(rlogpath)
+
     gpop = launch(exepath)
 
     if not gpop:
@@ -186,17 +192,17 @@ def runLoader(exepath=''):
     if not keepopen:
         return True
 
-    rlog = None
-    rlogpath = os.path.join(SCRIPTPATH, 'remote.log')
+    while not os.path.exists(rlogpath) and gpop.poll() is None:
+        logging.info('waiting for log')
+        time.sleep(0.5)
+
     if os.path.exists(rlogpath):
         rlog = open(rlogpath, 'r')
         logging.info('following remote.log...')
 
     try:
-        while True:
-            if gpop.poll() is not None:
-                break
-            while True:
+        while gpop.poll() is None:
+            while rlog is not None:
                 s = rlog.read()
                 if len(s) == 0:
                     break
@@ -206,6 +212,12 @@ def runLoader(exepath=''):
         gpop.kill()
 
     logging.info('game closed: code {}'.format(gpop.returncode))
+
+    stdo = gpop.communicate()[0].decode()
+
+    if len(stdo) > 0:
+        logging.info('stdout:')
+        print(stdo)
 
     if mipmaps and os.path.exists(dvbak):
         os.rename(dvpath, dvmpath)
@@ -217,4 +229,4 @@ def runLoader(exepath=''):
 if __name__ == '__main__':
     logging.info('SBPE loader')
     if runLoader(DEFAULTGAMEPATH) is False:
-        input('\npress ENTER to close')
+        input('\npress ENTER to exit')
