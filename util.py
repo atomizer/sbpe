@@ -347,9 +347,11 @@ def getClassName(obj):
     '''
     if obj == ffi.NULL:
         return 'NULL'
-    classptr = ffi.cast('void**', obj)[0]
+
+    # class pointer is always at [0]
+    classptr = ffi.cast('void****', obj)[0]
     # vtable (1 up) -> type -> name (1 down)
-    nameptr = ffi.cast('void***', classptr - 4)[0][1]
+    nameptr = classptr[-1][1]
     cname = ffi.string(ffi.cast('char*', nameptr), 100)
     return cname[1 if len(cname) < 11 else 2:].decode()
 
