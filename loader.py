@@ -15,7 +15,10 @@ import logging
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 BASE = 0x400000
-DEFAULTGAMEPATH = 'c:\\Program Files (x86)\\Steam\\SteamApps\\common\\StarBreak\\mvmmoclient.exe'
+DEFAULTGAMEPATH = {
+    'Windows': 'c:\\Program Files (x86)\\Steam\\SteamApps\\common\\StarBreak\\mvmmoclient.exe',
+    'Linux': os.path.expanduser('~/.steam/steam/steamapps/common/StarBreak/mvmmoclient')
+}[platform.system()]
 
 SCRIPTPATH = os.path.dirname(__file__) or os.getcwd()
 REMOTEPATH = os.path.normpath(os.path.join(SCRIPTPATH, 'build/remote.bin'))
@@ -23,6 +26,7 @@ SYMQPATH = 'symquery/{}/bin/symquery'.format(platform.system())
 SYMQPATH = os.path.normpath(os.path.join(SCRIPTPATH, SYMQPATH))
 CONFFILE = os.path.join(SCRIPTPATH, 'config.ini')
 CONF_TEMPLATE = os.path.join(SCRIPTPATH, 'config_template.ini')
+SYMFILE = os.path.join(SCRIPTPATH, 'symbols.json')
 
 STARTUP_OFFSET = subprocess.check_output([
     SYMQPATH, '-e', REMOTEPATH, '-s', 'kickstart'])
@@ -84,24 +88,34 @@ def resolveSymbols(exepath):
     return offsets
 
 
-def inject(proc, data):
-    payload = json.dumps(data).encode('utf-8') + b'\x00'
-    try:
-        lib_h = proc.load_library(REMOTEPATH)
-        # write data to remote memory
-        pmem = proc.allocate(size=len(payload))
-        proc.write_memory(pmem, payload)
-        # start remote thread
-        addr = lib_h + STARTUP_OFFSET
-        thr = proc.start_thread(addr, pmem)
-        logging.info('starting from 0x{:x}'.format(addr))
-        proc.join_thread(thr)
-        logging.info('startup done')
-        proc.free(pmem)
-    except ProcessError as error:
-        logging.error(error.msg)
-        return False
-    return proc
+def launch(exepath):
+    # on Linux and MacOS, use ld/dyld
+    if platform.system() == 'Linux':
+        os.environ['LD_PRELOAD'] = REMOTEPATH
+    if platform.system() == 'Darwin':
+        os.environ['DYLD_INSERT_LIBRARIES'] = REMOTEPATH
+        os.environ['DYLD_FORCE_FLAT_NAMESPACE'] = '1'
+
+    # start the game
+    gpop = subprocess.Popen([exepath], stderr=subprocess.DEVNULL,
+                            cwd=os.path.dirname(exepath))
+
+    # on Windows, inject into the running process
+    if platform.system() == 'Windows':
+        try:
+            proc = NativeProcess(pid=gpop.pid)
+            lib_h = proc.load_library(REMOTEPATH)
+            # start remote thread
+            addr = lib_h + STARTUP_OFFSET
+            thr = proc.start_thread(addr)
+            logging.info('starting from 0x{:x}'.format(addr))
+            proc.join_thread(thr)
+        except ProcessError as error:
+            gpop.kill()
+            logging.error(error.msg)
+            return False
+
+    return gpop
 
 
 def runLoader(exepath=''):
@@ -149,31 +163,25 @@ def runLoader(exepath=''):
             os.rename(dvpath, os.path.join(tdir, 'dataVersion.bpb.bak'))
             os.rename(dvmpath, dvpath)
 
-    gpop = subprocess.Popen([exepath], stderr=subprocess.PIPE,
-                            cwd=os.path.dirname(exepath))
-    try:
-        proc = NativeProcess(pid=gpop.pid)
-    except Exception:
-        gpop.kill()
-        raise
-
-    logging.info('game pid {}'.format(proc.pid))
-
-    data = {'path': SCRIPTPATH}
-
     offsets = resolveSymbols(exepath)
     if offsets is not None:
-        data['offsets'] = offsets
         logging.info('symbols ok')
     else:
         logging.error('symbols not ok')
-        gpop.kill()
         return False
 
-    if not inject(proc, data):
-        logging.error('injection not ok')
-        gpop.kill()
+    with open(SYMFILE, 'wb') as f:
+        f.write(json.dumps(offsets).encode('utf-8'))
+
+    os.environ['SBPE_SYMFILE'] = SYMFILE
+
+    gpop = launch(exepath)
+
+    if not gpop:
+        logging.error('failed to launch')
         return False
+
+    logging.info('game pid {}'.format(gpop.pid))
 
     if not keepopen:
         return True

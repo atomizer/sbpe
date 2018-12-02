@@ -10,3 +10,4 @@ rectbinpack/_rbp.cpp
 pypy/
 config.ini
 plugins/test.py
+symbols.json

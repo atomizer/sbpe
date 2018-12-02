@@ -31,7 +31,7 @@ def build():
     for fname in CDEFS:
         ffibuilder.cdef(readfile('cdefs/{}.h'.format(fname)))
 
-    ffibuilder.embedding_api('uint32_t kickstart(char *p);')
+    ffibuilder.embedding_api('uint32_t kickstart();')
     ffibuilder.embedding_init_code(readfile('remote.py'))
 
     ffibuilder.set_source(

@@ -4,26 +4,10 @@ void *SDL_GetKeyboardFocus(void);
 bool SDL_IsTextInputActive(void);
 const uint8_t *SDL_GetKeyboardState(int *numkeys);
 
-const char *SDL_GetScancodeName(enum SDL_Scancode scancode);
+const char *SDL_GetScancodeName(int scancode);
 int SDL_GetScancodeFromName(const char *name);
 
 int SDL_GetModState(void);
-
-enum SDL_Keymod {
-  KMOD_NONE = 0x0,
-  KMOD_LSHIFT = 0x1,
-  KMOD_RSHIFT = 0x2,
-  KMOD_LCTRL = 0x40,
-  KMOD_RCTRL = 0x80,
-  KMOD_LALT = 0x100,
-  KMOD_RALT = 0x200,
-  KMOD_LGUI = 0x400,
-  KMOD_RGUI = 0x800,
-  KMOD_NUM = 0x1000,
-  KMOD_CAPS = 0x2000,
-  KMOD_MODE = 0x4000,
-  KMOD_RESERVED = 0x8000,
-};
 
 // window
 

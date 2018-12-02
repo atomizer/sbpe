@@ -178,11 +178,15 @@ def initHooks():
 # startup ####################################################################
 
 @ffi.def_extern()
-def kickstart(p):
+def kickstart():
     global refs, util
 
-    data = json.loads(ffi.string(p).decode('utf-8'))
-    refs.SCRIPTPATH = data['path']
+    SYMFILE = os.environ['SBPE_SYMFILE']
+
+    with open(SYMFILE, 'rb') as f:
+        offsets = json.loads(f.read().decode('utf-8'))
+
+    refs.SCRIPTPATH = os.path.dirname(SYMFILE)
     sys.path.insert(1, refs.SCRIPTPATH)
 
     logging.basicConfig(
@@ -197,7 +201,6 @@ def kickstart(p):
     refs.config.read(refs.CONFIGFILE)
 
     # import native functions/objects
-    offsets = data['offsets']
     for sname in offsets:
         offset = offsets[sname]
         if sname in SYMTYPES:

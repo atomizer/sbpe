@@ -226,8 +226,8 @@ struct ObjectUpdate {
   struct PlaySound *playsound;
   int32_t movetoymp;
   int32_t movetodt;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ObjectUpdate_ModifyProps {
   void *classptr;
@@ -236,16 +236,16 @@ struct ObjectUpdate_ModifyProps {
   struct STDString *messageval;
   struct STDString *stringval;
   bool boolval;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct PlaySound {
   void *classptr;
   struct STDString *soundname;
   int32_t wx;
   int32_t wy;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 enum MessageType {
   MT_INVALID = 0x0,
@@ -722,16 +722,16 @@ struct GeneralUpdate {
   struct GeneralUpdate_RunDecorationAnim *rundecorationanim;
   struct GeneralUpdate_CutScene *cutscene;
   struct GeneralUpdate_WorldTitle *worldtitle;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GeneralUpdate_Create {
   void *classptr;
   struct Properties *props;
   uint32_t objid;
   uint32_t creatorid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GeneralUpdate_Damage {
   void *classptr;
@@ -743,23 +743,23 @@ struct GeneralUpdate_Damage {
   int32_t x;
   int32_t y;
   struct STDString *damagefxvid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GeneralUpdate_Destroy {
   void *classptr;
   uint32_t ownerid;
   uint32_t objid;
-  int reason;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t reason;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GeneralUpdate_ScreenShake {
   void *classptr;
   int32_t magnitude;
   int32_t duration;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GeneralUpdate_ScreenFlash {
   void *classptr;
@@ -767,29 +767,29 @@ struct GeneralUpdate_ScreenFlash {
   int32_t hold;
   int32_t end;
   uint32_t color;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GeneralUpdate_RunDecorationAnim {
   void *classptr;
   struct STDString *name;
-  int anim;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t anim;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GeneralUpdate_CutScene {
   void *classptr;
   struct STDString *vid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GeneralUpdate_WorldTitle {
   void *classptr;
   struct STDString *title;
   int32_t x;
   int32_t y;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Properties {
   void *classptr;
@@ -798,17 +798,17 @@ struct Properties {
   int32_t wmp;
   int32_t hmp;
   int32_t z;
-  int shapetype;
+  uint32_t shapetype;
   int32_t facing;
   int32_t lifetime;
-  int blocktype;
-  int ownertype;
+  uint32_t blocktype;
+  uint32_t ownertype;
   int32_t damage;
   int32_t hitboxdamage;
   int32_t hitpoints;
   int32_t maxhitpoints;
   int32_t removetype;
-  int terraintype;
+  uint32_t terraintype;
   struct InteractDescription *interactdescription;
   int32_t interact;
   int32_t trigger;
@@ -826,15 +826,15 @@ struct Properties {
   bool noleech;
   int32_t recommend;
   uint32_t activateworldid;
-  int foreignclass;
+  uint32_t foreignclass;
   int32_t killachievement;
   struct STDString *vid;
   struct DrawMods *drawmods;
   bool spawn;
   bool rotate;
-  int pose;
+  uint32_t pose;
   int32_t posetime;
-  int prevpose;
+  uint32_t prevpose;
   struct AnimationProperties *animprops;
   struct STDString *movetrail;
   struct STDString *destroyvid;
@@ -842,38 +842,38 @@ struct Properties {
   struct Properties_Move *move;
   struct Reaction *interactreaction;
   struct Reaction *triggerreaction;
-  int _cached_size;
-  unsigned int _has_bits[2];
+  int32_t _cached_size;
+  uint32_t _has_bits[2];
 };
 struct InteractDescription {
   void *classptr;
-  int type;
-  int chartype;
+  uint32_t type;
+  uint32_t chartype;
   struct STDString *gatename;
-  int requireddeed;
+  uint32_t requireddeed;
   int32_t requiredlevel;
   int32_t requiredplayertype;
   int32_t mk;
   int32_t numused;
   bool noblink;
   int32_t totaluses;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct PlayerData {
   void *classptr;
   struct STDString *accountid;
   struct STDString *factionname;
   int32_t level;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DrawMods {
   void *classptr;
   struct RepeatedPtrField imagemap; // std::basic_string<char,std::char_traits<char>,std::allocator<char> > 
   struct RepeatedPtrField anchoredimage; // AnchoredImage
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AnimationProperties {
   void *classptr;
@@ -881,8 +881,8 @@ struct AnimationProperties {
   int32_t pos;
   int32_t time;
   bool loop;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Properties_Move {
   void *classptr;
@@ -894,29 +894,29 @@ struct Properties_Move {
   struct Properties_Move_Follow *follow;
   struct Properties_Move_Lerp *lerp;
   struct Sinusoidal *sin;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Reaction {
   void *classptr;
   struct STDString *sound;
   struct ObjKeyMessage *teleport;
   struct ItemPurchase *itempurchase;
-  int keyuse;
+  uint32_t keyuse;
   int32_t openstash;
   int32_t switchcharslot;
   int32_t stashitempos;
   bool openucwindow;
   bool openfactionregistrar;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ObjKeyMessage {
   void *classptr;
   uint32_t worldid;
   uint32_t objid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Linear {
   void *classptr;
@@ -925,8 +925,8 @@ struct Linear {
   int32_t pos;
   int32_t dt;
   struct PointMessage *start;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Properties_Move_Vel {
   void *classptr;
@@ -938,15 +938,15 @@ struct Properties_Move_Vel {
   int32_t minyvel;
   int32_t maxxvel;
   int32_t maxyvel;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Properties_Move_Waypoint {
   void *classptr;
   struct RepeatedPtrField points; // Linear
   bool loop;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Elliptical {
   void *classptr;
@@ -960,22 +960,22 @@ struct Elliptical {
   int32_t dt;
   int32_t ravel;
   int32_t rbvel;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Properties_Move_Follow {
   void *classptr;
   int32_t maxdist;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Properties_Move_Lerp {
   void *classptr;
   struct ObjKeyMessage *target;
   int32_t percentage;
   bool center;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Sinusoidal {
   void *classptr;
@@ -987,34 +987,34 @@ struct Sinusoidal {
   int32_t amp;
   int32_t angle;
   int32_t pos;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ItemPurchase {
   void *classptr;
   int32_t price;
-  int currency;
+  uint32_t currency;
   struct ItemProperties *itemprops;
   uint32_t stashid;
   uint32_t charslotid;
   bool issecret;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct PointMessage {
   void *classptr;
   int32_t xmp;
   int32_t ymp;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ItemProperties {
   void *classptr;
   int32_t type;
   int32_t slotpos;
   struct RepeatedPtrField statboosts; // StatBoost
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct WorldUpdate {
   void *classptr;
@@ -1022,8 +1022,8 @@ struct WorldUpdate {
   int32_t dt;
   struct RepeatedPtrField generalupdates; // GeneralUpdate
   struct RepeatedPtrField objectupdates; // ObjectUpdate
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Delta {
   void *classptr;
@@ -1034,20 +1034,20 @@ struct Delta {
   struct CreateLoot *createloot;
   struct StatBoost *statboost;
   bool staterequested;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CreateSubWorld {
   void *classptr;
   uint32_t worldid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DestroySubWorld {
   void *classptr;
   uint32_t worldid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CreatePlayer {
   void *classptr;
@@ -1061,39 +1061,39 @@ struct CreatePlayer {
   struct RectMessage *pos;
   struct RepeatedPtrField slottedcharprops; // CharacterProperties
   struct STDString *factionname;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CreateLoot {
   void *classptr;
   struct Properties *props;
   struct RepeatedPtrField itemprops; // ItemProperties
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct StatBoost {
   void *classptr;
-  int stat;
+  uint32_t stat;
   int32_t val;
   int32_t level;
   bool increment;
   struct STDString *subtypestr;
   int32_t subtype;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AccountProperties {
   void *classptr;
   struct RepeatedPtrField totalstats; // CharStatMessage
   struct AccountProgress *progress;
   int32_t ec;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CharacterProperties {
   void *classptr;
   uint32_t charid;
-  int type;
+  uint32_t type;
   int32_t charslotid;
   int32_t hitpoints;
   int32_t maxhitpoints;
@@ -1111,11 +1111,11 @@ struct CharacterProperties {
   struct STDString *imagemap;
   struct RepeatedPtrField items; // ItemProperties
   int32_t invslots;
-  int state;
+  uint32_t state;
   struct RepeatedPtrField stats; // CharStatMessage
   struct CharacterScore *score;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct RectMessage {
   void *classptr;
@@ -1123,8 +1123,8 @@ struct RectMessage {
   int32_t ymp;
   int32_t wmp;
   int32_t hmp;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AccountProgress {
   void *classptr;
@@ -1136,8 +1136,8 @@ struct AccountProgress {
   int32_t uc;
   struct RepeatedPtrField beststats; // CharStatMessage
   int32_t totalscore;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CharacterScore {
   void *classptr;
@@ -1146,8 +1146,8 @@ struct CharacterScore {
   int32_t finalscore;
   struct RepeatedPtrField bonuses; // CharacterScore_Bonus
   int32_t prevtotalscore;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 enum GameServiceType {
   GAMESERVICE_INVALID = 0xFFFFFFFF,
@@ -1180,8 +1180,8 @@ struct ServerLocMessage {
   struct STDString *hostname;
   int32_t rawsocketport;
   int32_t websocketport;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 enum PlatformType {
   PLATFORM_UNKNOWN = 0x0,
@@ -1374,7 +1374,7 @@ struct AnimPoint {
 };
 struct AnimBoxDescription {
   void *classptr;
-  int type;
+  uint32_t type;
   int32_t id;
   int32_t time;
   int32_t length;
@@ -1382,32 +1382,32 @@ struct AnimBoxDescription {
   int32_t y;
   int32_t w;
   int32_t h;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AnimPointDescription {
   void *classptr;
-  int type;
+  uint32_t type;
   int32_t time;
   int32_t x;
   int32_t y;
   int32_t angle;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AnimationDescription {
   void *classptr;
   int32_t fullpose;
-  int prevpose;
+  uint32_t prevpose;
   struct STDString *aaid;
-  int anim;
+  uint32_t anim;
   int32_t length;
   struct RepeatedPtrField framedesc; // FrameDescription
   struct RepeatedPtrField box; // AnimBoxDescription
   struct RepeatedPtrField point; // AnimPointDescription
   bool looping;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AnimationData {
   uint32_t ganim;
@@ -1428,7 +1428,7 @@ struct AnimDataLibrary {
 };
 struct CharacterDescription {
   void *classptr;
-  int type;
+  uint32_t type;
   int32_t w;
   struct STDString *vid;
   struct STDString *auravid;
@@ -1459,8 +1459,8 @@ struct CharacterDescription {
   struct STDString *hitsound;
   struct STDString *deathsound;
   struct RepeatedPtrField startingitems; // CharacterDescription_StartingItem
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CharacterLibrary {
   struct STDUMap typeMap; // CharacterType,CharacterDescription*,std::hash<int>,std::equal_to<CharacterType>,std::allocator<std::pair<const CharacterType,CharacterDescription*> > 
@@ -1523,7 +1523,7 @@ struct WorldProperties {
   uint32_t gameid;
   struct STDString *zone;
   int32_t floor;
-  int gdv;
+  int32_t gdv;
   struct STDString *music;
   uint32_t seed;
   int32_t gravity;
@@ -1541,8 +1541,8 @@ struct WorldProperties {
   bool allowrejoin;
   int32_t movemult;
   int32_t forceplayertype;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct MapInfo {
   uint32_t worldId;
@@ -1605,8 +1605,8 @@ struct DecorationDescription {
   struct RepeatedPtrField edge; // DecorationDescription_Edge
   struct RepeatedPtrField fill; // DecorationDescription_Fill
   uint32_t backgroundcolor;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct NativeObject {
   struct WorldObject asWorldObject;
@@ -1706,8 +1706,8 @@ struct WorldState_World {
   void *classptr;
   struct RepeatedPtrField obj; // WorldState_World_Obj
   uint32_t ownerid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 enum ScatterType {
   SCATTERTYPE_INVALID = 0xFFFFFFFF,
@@ -1735,30 +1735,30 @@ struct WorldState {
   void *classptr;
   struct WorldState_World *serverworld;
   struct RepeatedPtrField clientworld; // WorldState_World
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct TimePasses {
   void *classptr;
   int32_t dt;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct PlayerInput {
   void *classptr;
   int32_t total;
   int32_t hit;
   int32_t unhit;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ModifyInv {
   void *classptr;
-  int command;
+  uint32_t command;
   int32_t slotpos;
   int32_t targetslotpos;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Flappy {
   struct Player asPlayer;
@@ -1957,19 +1957,19 @@ struct ItemDescription {
   void *classptr;
   struct STDString *name;
   uint32_t type;
-  int build;
+  uint32_t build;
   int32_t tier;
   uint32_t price;
-  int currency;
-  int itemclass;
+  uint32_t currency;
+  uint32_t itemclass;
   int32_t itemsubclass;
-  int slot;
+  uint32_t slot;
   struct RepeatedField_int usableby;
   struct STDString *lootvid;
   struct STDString *lootdestroyvid;
   struct STDString *lootsound;
   int32_t lootlifetime;
-  int anim;
+  uint32_t anim;
   struct STDString *aaid;
   struct STDString *imagemap;
   struct STDString *sound;
@@ -1990,16 +1990,16 @@ struct ItemDescription {
   struct RepeatedPtrField statboosts; // StatBoost
   struct RepeatedPtrField obj; // ItemObjDescription
   int32_t bounces;
-  int _cached_size;
-  unsigned int _has_bits[2];
+  int32_t _cached_size;
+  uint32_t _has_bits[2];
 };
 struct AnchoredImage {
   void *classptr;
   struct STDString *vid;
-  int pointtype;
+  uint32_t pointtype;
   int32_t draworder;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Item {
   void *classptr;
@@ -2054,10 +2054,10 @@ struct Shield {
 };
 struct Keys {
   void *classptr;
-  int zone;
+  uint32_t zone;
   int32_t count;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct OnDestruct {
   struct STDFunction func; // void()
@@ -2066,8 +2066,8 @@ struct CharStatMessage {
   void *classptr;
   int32_t stat;
   uint32_t val;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 enum Rank {
   RANK_INVALID = 0xFFFFFFFF,
@@ -2260,7 +2260,7 @@ struct ItemObjDescription {
   int32_t movetime;
   int32_t radius;
   int32_t hitpoints;
-  int chartype;
+  uint32_t chartype;
   int32_t jitter;
   struct STDString *damagefxvid;
   struct STDString *createsound;
@@ -2269,8 +2269,8 @@ struct ItemObjDescription {
   struct STDString *soundprefix;
   int32_t behavior;
   bool rotate;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct BombJump {
   struct Item asItem;
@@ -2640,8 +2640,8 @@ struct WorldState_World_Obj {
   void *classptr;
   struct Properties *props;
   uint32_t objid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ArrayUtil {
   char gap0[1];
@@ -2704,8 +2704,8 @@ struct PVidDescription {
   struct STDString *name;
   struct STDString *descid;
   struct RepeatedPtrField imageids; // std::basic_string<char,std::char_traits<char>,std::allocator<char> > 
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Texture {
   struct PVidDescription pvidDesc;
@@ -2720,8 +2720,8 @@ struct ImageFileDescription {
   struct RepeatedPtrField tileviddesc; // TileVidDescription
   struct RepeatedPtrField tiledesc; // TileDescription
   struct RepeatedPtrField animatedimagedesc; // AnimatedImageDescription
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct UIIDInfo {
   int sheetId;
@@ -2735,8 +2735,8 @@ struct ImageDefinition {
   int32_t h;
   int32_t rpx;
   int32_t rpy;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 enum GamepadType {
   GAMEPAD_NONE = 0x0,
@@ -2942,8 +2942,8 @@ struct FrameDescription {
   void *classptr;
   struct RepeatedPtrField element; // FrameDescription_Element
   int32_t time;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ImageMaps {
   struct STDVector maps; // ImageMap,std::allocator<ImageMap> 
@@ -3215,8 +3215,8 @@ struct GameDest {
   bool teleporttoparty;
   uint32_t time;
   struct ObjLocMessage *source;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct WorldView {
   struct UIElement asUIElement;
@@ -3302,9 +3302,9 @@ struct Chat {
   struct STDString *target;
   struct STDString *message;
   struct STDString *filteredmessage;
-  int chattype;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t chattype;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ChatLogEntry {
   struct Chat chat;
@@ -3323,8 +3323,8 @@ struct ObjLocMessage {
   struct ServerLocMessage *server;
   struct ObjKeyMessage *objkey;
   uint32_t gameid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 enum TileType {
   NONE = 0x0,
@@ -3486,8 +3486,8 @@ struct Login {
   struct STDString *secret;
   struct STDString *accountid;
   struct STDString *steamauthticket;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct TextureLoader__TextureRequest {
   struct Texture *texture;
@@ -3498,15 +3498,15 @@ struct Hello {
   uint32_t hid;
   int32_t dataversiontimestamp;
   struct STDString *dataversionid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ErrorMessage {
   void *classptr;
   struct STDString *description;
-  int code;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t code;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct TrackEvent {
   void *classptr;
@@ -3514,15 +3514,15 @@ struct TrackEvent {
   struct STDString *action;
   struct STDString *label;
   double value;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct UserLinksMessage {
   void *classptr;
   struct RepeatedPtrField ignoreid; // std::basic_string<char,std::char_traits<char>,std::allocator<char> > 
   struct RepeatedPtrField friendid; // std::basic_string<char,std::char_traits<char>,std::allocator<char> > 
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Joined {
   void *classptr;
@@ -3530,22 +3530,22 @@ struct Joined {
   struct STDString *accountid;
   struct STDString *username;
   bool isadmin;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct LoadPVid {
   void *classptr;
   struct STDString *pvid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ChangeServer {
   void *classptr;
   struct ServerLocMessage *server;
   struct GameDest *gamedest;
   struct STDString *gamekey;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct UserLinks {
   struct Handler onChange;
@@ -3558,10 +3558,10 @@ struct Join {
   struct STDString *accountid;
   struct GameDest *gamedest;
   struct STDString *gamekey;
-  int gameservice;
+  uint32_t gameservice;
   bool newsession;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GameMenuButton {
   struct UIElementContainer asUIElementContainer;
@@ -3639,7 +3639,7 @@ struct TextureLoader {
 struct Connect {
   void *classptr;
   uint32_t hid;
-  int platfromtype;
+  uint32_t platfromtype;
   uint32_t sessionid;
   uint32_t enckey;
   struct STDString *currentpvid;
@@ -3651,8 +3651,8 @@ struct Connect {
   struct ResetPassword *resetpassword;
   struct PortAccount *importaccount;
   struct PortAccount *exportaccount;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Register {
   void *classptr;
@@ -3662,8 +3662,8 @@ struct Register {
   struct STDString *newguid;
   struct STDString *newusername;
   struct STDString *newpassword;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ChangeName {
   void *classptr;
@@ -3671,22 +3671,22 @@ struct ChangeName {
   struct STDString *secret;
   struct STDString *accountid;
   struct STDString *newusername;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ChangePassword {
   void *classptr;
   struct STDString *guid;
   struct STDString *password;
   struct STDString *newpassword;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ResetPassword {
   void *classptr;
   struct STDString *guid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct PortAccount {
   void *classptr;
@@ -3695,27 +3695,27 @@ struct PortAccount {
   struct STDString *accountid;
   struct STDString *newguid;
   struct STDString *newpassword;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct PlayerText {
   void *classptr;
   struct STDString *text;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct PlayerEmote {
   void *classptr;
-  int emote;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t emote;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct FinalizePurchase {
   void *classptr;
   struct STDString *purchasekey;
-  int purchaseid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t purchaseid;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CreateWorld {
   void *classptr;
@@ -3723,8 +3723,8 @@ struct CreateWorld {
   struct WorldState *worldstate;
   struct ObjKeyMessage *spawnobj;
   uint32_t worldid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct GameMenu {
   struct UIElementContainer asUIElementContainer;
@@ -3749,20 +3749,20 @@ struct InputKeys {
   int32_t primary;
   int32_t secondary;
   int32_t tertiary;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct InputMappingPB {
   void *classptr;
   struct RepeatedPtrField inputkeys; // InputKeys
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ClusterInfo {
   void *classptr;
   struct RepeatedPtrField clusters; // Cluster
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct MainMenu {
   struct UIElementContainer asUIElementContainer;
@@ -3787,8 +3787,8 @@ struct MainMenu {
 struct UIBGDecorationFile {
   void *classptr;
   struct UIBGDecorationDescription *decoration;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DecoratedBackground {
   struct UIElementContainer asUIElementContainer;
@@ -3813,15 +3813,15 @@ struct UIBGDecorationDescription {
   void *classptr;
   struct RepeatedPtrField uniform; // UIBGDecorationDescription_Uniform
   struct RepeatedPtrField scatter; // UIBGDecorationDescription_Scatter
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ImageMapDescription {
   void *classptr;
   struct STDString *name;
   struct RepeatedPtrField mapping; // ImageMapDescription_Mapping
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AnimatedImageDescription {
   void *classptr;
@@ -3829,8 +3829,8 @@ struct AnimatedImageDescription {
   struct RepeatedPtrField imagemapdesc; // ImageMapDescription
   struct RepeatedPtrField animdesc; // AnimationDescription
   int32_t versionid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct FrameDescription_Element {
   void *classptr;
@@ -3841,16 +3841,16 @@ struct FrameDescription_Element {
   int32_t scalex;
   int32_t scaley;
   int32_t opacity;
-  int blendmode;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t blendmode;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ImageMapDescription_Mapping {
   void *classptr;
   int32_t uiid;
   int32_t targetuiid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct NumberTexture {
   int value;
@@ -3862,31 +3862,31 @@ struct NumberTexture {
 struct SheetDefinition {
   void *classptr;
   struct RepeatedPtrField imagedef; // ImageDefinition
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DataVersion {
   void *classptr;
   struct STDString *id;
   struct RepeatedPtrField pvid; // PVidDescription
   int32_t timestamp;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ImageVidDescription {
   void *classptr;
   struct STDString *vid;
   int32_t versionid;
   int32_t uiid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct TileVidDescription {
   void *classptr;
   struct STDString *vid;
   int32_t tilesetid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct TileDescription {
   void *classptr;
@@ -3897,8 +3897,8 @@ struct TileDescription {
   bool mirrorx;
   bool mirrory;
   bool rotate;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AccountWindow {
   struct UIElementContainer asUIElementContainer;
@@ -3914,9 +3914,9 @@ struct ChangeNameWindow {
 };
 struct GeneralResponse {
   void *classptr;
-  int code;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t code;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ServerRequestTask {
   struct AsyncTask asAsyncTask;
@@ -3935,9 +3935,9 @@ struct ChangePasswordWindow {
 struct ChangePasswordResponse {
   void *classptr;
   struct STDString *secret;
-  int code;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t code;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ExportAccountWindow {
   struct AccountWindow asAccountWindow;
@@ -3951,9 +3951,9 @@ struct PortAccountResponse {
   struct STDString *accountid;
   struct STDString *secret;
   struct STDString *username;
-  int code;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t code;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ForgotPasswordWindow {
   struct AccountWindow asAccountWindow;
@@ -3978,20 +3978,20 @@ struct LoginResponse {
   struct STDString *accountid;
   struct STDString *username;
   struct LoginResponse_Suspension *suspension;
-  int code;
+  uint32_t code;
   bool isprod;
   bool created;
   struct ClusterInfo *clusterinfo;
   struct STDString *error;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct LoginResponse_Suspension {
   void *classptr;
   struct STDString *reason;
   int32_t hoursleft;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct RegisterWindow {
   struct AccountWindow asAccountWindow;
@@ -4005,11 +4005,11 @@ struct RegisterResponse {
   void *classptr;
   struct STDString *accountid;
   struct STDString *secret;
-  int code;
+  uint32_t code;
   bool created;
   struct STDString *username;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CharInteractElement {
   char gap0[1];
@@ -4049,9 +4049,9 @@ struct UIBGDecorationDescription_Uniform {
   int32_t tilewidth;
   struct STDString *vid;
   int32_t tileheight;
-  int blendmode;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t blendmode;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct UIBGDecorationDescription_Scatter {
   void *classptr;
@@ -4066,9 +4066,9 @@ struct UIBGDecorationDescription_Scatter {
   int32_t spacingwidth;
   struct STDString *vid;
   int32_t spacingheight;
-  int blendmode;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t blendmode;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct UIBGDecorationDescription_Scatter_Bounds {
   void *classptr;
@@ -4076,8 +4076,8 @@ struct UIBGDecorationDescription_Scatter_Bounds {
   float top;
   float right;
   float bottom;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DepositInteractElement {
   char gap0[1];
@@ -4110,10 +4110,10 @@ struct FactionRoster_Member {
   void *classptr;
   struct STDString *username;
   struct STDString *accountid;
-  int rank;
+  uint32_t rank;
   bool online;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct FactionRosterWindow {
   struct WorldOverlay asWorldOverlay;
@@ -4124,9 +4124,9 @@ struct FactionRosterWindow {
 struct FactionRosterResponse {
   void *classptr;
   struct FactionRoster *roster;
-  int code;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t code;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct PlayerWindowExitSprite {
   struct UIElementContainer asUIElementContainer;
@@ -4145,8 +4145,8 @@ struct FactionRoster {
   void *classptr;
   struct STDString *name;
   struct RepeatedPtrField member; // FactionRoster_Member
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 enum WorldOverlay__Type {
   INVALID = 0xFFFFFFFF,
@@ -4301,8 +4301,8 @@ struct Cluster {
   double latitude;
   double longitude;
   bool recommended;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ProgressOverlay {
   struct WorldOverlay asWorldOverlay;
@@ -4360,10 +4360,10 @@ struct ScoreStatLine {
 };
 struct CharacterScore_Bonus {
   void *classptr;
-  int bonus;
+  uint32_t bonus;
   int32_t value;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct StatLineList {
   struct STDVector statLines; // ScoreStatLine*,std::allocator<ScoreStatLine*> 
@@ -4417,8 +4417,8 @@ struct XPLevelScore {
   void *classptr;
   int32_t totalscore;
   uint32_t deeds;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ZoneScoreOverlay {
   struct WorldOverlay asWorldOverlay;
@@ -4477,14 +4477,14 @@ struct KeyVal {
   void *classptr;
   struct STDString *key;
   struct STDString *val;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct KeyValList {
   void *classptr;
   struct RepeatedPtrField keyval; // KeyVal
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct AnimationGraphic {
   struct DynamicGraphic asDynamicGraphic;
@@ -4600,10 +4600,10 @@ struct ScatterMovingGraphic {
 struct TilesDescription {
   void *classptr;
   struct STDString *vid;
-  int gdv;
+  uint32_t gdv;
   int32_t z;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DecorationDescription_Uniform_Layer {
   void *classptr;
@@ -4611,31 +4611,31 @@ struct DecorationDescription_Uniform_Layer {
   int32_t tilewidth;
   struct STDString *vid;
   int32_t tileheight;
-  int blendmode;
+  uint32_t blendmode;
   bool allowfliph;
   bool allowflipv;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DecorationDescription_Uniform {
   void *classptr;
   int32_t z;
-  int mingq;
-  int maxgq;
-  int gdv;
+  uint32_t mingq;
+  uint32_t maxgq;
+  uint32_t gdv;
   struct RepeatedPtrField layer; // DecorationDescription_Uniform_Layer
   int32_t xps;
   int32_t yps;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DecorationDescription_Scatter {
   void *classptr;
   struct STDString *name;
   struct RepeatedField_int type;
   struct RepeatedField_int mingq;
-  int maxgq;
-  int gdv;
+  uint32_t maxgq;
+  uint32_t gdv;
   struct DecorationDescription_Scatter_Bounds *bounds;
   int32_t xps;
   int32_t xpsjitter;
@@ -4647,12 +4647,12 @@ struct DecorationDescription_Scatter {
   int32_t spacingwidth;
   struct STDString *vid;
   int32_t spacingheight;
-  int blendmode;
+  uint32_t blendmode;
   bool allowfliph;
   int32_t widthoverride;
   int32_t heightoverride;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DecorationDescription_Scatter_Bounds {
   void *classptr;
@@ -4660,16 +4660,16 @@ struct DecorationDescription_Scatter_Bounds {
   float top;
   float right;
   float bottom;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DecorationDescription_Edge {
   void *classptr;
   struct STDString *name;
   struct RepeatedField_int type;
   struct RepeatedField_int mingq;
-  int maxgq;
-  int gdv;
+  uint32_t maxgq;
+  uint32_t gdv;
   int32_t frequency;
   int32_t widthoverride;
   int32_t heightoverride;
@@ -4678,72 +4678,72 @@ struct DecorationDescription_Edge {
   bool allowfliph;
   struct STDString *vidrestrict;
   struct RepeatedPtrField element; // DecorationDescription_Edge_Element
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DecorationDescription_Fill {
   void *classptr;
   int32_t z;
-  int mingq;
-  int maxgq;
-  int gdv;
+  uint32_t mingq;
+  uint32_t maxgq;
+  uint32_t gdv;
   uint32_t color;
-  int blendmode;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t blendmode;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct DecorationDescription_Edge_Element {
   void *classptr;
   struct STDString *vid;
   int32_t z;
-  int blendmode;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t blendmode;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct Emote {
   void *classptr;
   struct ObjKeyMessage *obj;
-  int emote;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t emote;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ShowCharScore {
   void *classptr;
   struct CharacterProperties *charprops;
   struct STDString *username;
   struct XPLevelScore *xplevelscore;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ShowZoneCompleteScore {
   void *classptr;
-  int zonetype;
+  uint32_t zonetype;
   int32_t prevnum;
   int32_t maxnum;
   int32_t score;
   struct XPLevelScore *xplevelscore;
   int32_t prevtotalscore;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ServerDeltaAck {
   void *classptr;
   struct WorldState *worldstate;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct InitPurchase {
   void *classptr;
-  int purchaseid;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t purchaseid;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct FactionAction {
   void *classptr;
   struct STDString *factionname;
-  int type;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  uint32_t type;
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct ControllerState {
   int axis[6];
@@ -4807,14 +4807,14 @@ enum FlushReason {
 };
 struct EmptyMessage {
   void *classptr;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct CharacterDescription_StartingItem {
   void *classptr;
   struct STDString *name;
-  int _cached_size;
-  unsigned int _has_bits[1];
+  int32_t _cached_size;
+  uint32_t _has_bits[1];
 };
 struct LZ4_stream_t {
   long long table[2052];

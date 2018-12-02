@@ -92,7 +92,7 @@ struct RepeatedPtrField {
 };
 
 struct RepeatedField_int {
-  int *elements;
+  int32_t *elements;
   int current_size;
   int total_size;
 };
