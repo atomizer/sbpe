@@ -188,10 +188,12 @@ Make sure all dependencies are in place:
 
 - python 3.5+ or pypy3
 - C/C++ compiler that can be found by disttools
+- update submodules: `git submodule update --init --recursive`
 - python modules: `cffi` (built-in on pypy), `Pillow`, `protobuf`
 - SDL: install [development libraries](https://libsdl.org/download-2.0.php) for the version used by the game
     - Windows: unzip [this](https://libsdl.org/release/SDL2-devel-2.0.4-VC.zip) into `libs/SDL`
     - Linux: install `libsdl2-dev`
+- symquery: download DrMemory release for the appropriate platform and copy symquery to `symquery/{Windows,Linux,Darwin}/bin`
 
 to compile, run `rectbinpack/rbp_builder.py` and `builder.py`.
 
