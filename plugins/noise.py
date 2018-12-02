@@ -93,13 +93,14 @@ class Plugin(PluginBase):
                 g.startTime = 0
 
         if self.config.replace_shake:
+            ct = time.perf_counter()
             if wv.shakePos < wv.shakeDuration and wv.shakeMagnitude > 0:
-                self._shake = time.perf_counter() + wv.shakeDuration / 1000
+                self._shake = max(self._shake, ct + wv.shakeDuration / 1000)
             wv.shakeMagnitude = 0
 
             flashduration = wv.flashStart + wv.flashHold + wv.flashEnd
             if wv.flashPos < flashduration and wv.flashColor != 0:
-                self._flash = time.perf_counter() + flashduration / 1000
+                self._flash = max(self._flash, ct + flashduration / 1000)
             wv.flashColor = 0
 
     def hide(self, obj):
