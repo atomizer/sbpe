@@ -1,37 +1,52 @@
-# Starbreak Plugin Engine (SBPE)
+# StarBreak Plugin Engine (SBPE)
 
 ## Features
 
 - zoom, faster and more compatible than sbzoom
 - arrows pointing towards objectives, trigger indicators
-- hide various visual noise, with granular configuration
-- custom status hud
+- hide visual noise, with granular configuration
+- custom status hud and healthbar
 - map
 - player list
-- 2 modes of centered camera, inbounds or not
+- 2 modes of centered camera
 - borderless windowed mode, but also works with in-game fullscreen
 - fps, net lag indicators
 - mipmapping (smooth seamless textures when zooming)
 - various minor tweaks (disables autokick, autohides mouse cursor, etc)
-- most things are configurable and keybindable
+- most tweaks are configurable and keybindable
+
+## OS support
+
+- Windows: yes
+- Linux: not functional yet, but possible
+- Mac: maybe?
 
 ## Download
 
-...
+https://github.com/atomizer/sbpe/releases
+
+## Run
+
+**Important: do not run sbpe and sbzoom at the same time!**
+
+- set correct game path in `config.ini`
+- on windows, start `run.bat`
 
 ## Configure
 
-Rename `config-template.ini` to `config.ini` if you don't have a config file yet.
+Copy `config-template.ini` to `config.ini` if you don't have a config file yet.
+
+### config file basics
 
 For booleans, only use values `yes` and `no`.
 
 For colors, use hexadecimal `rgb` or `rrggbb` or `aarrggbb`, where `a` is alpha. Use value `0` for "fully transparent"; `000` and `000000` are "opaque black".
 
-Text sizes can be set to 0 to hide the element.
+Text sizes can be set to 0 to hide the corresponding element.
 
-You can fully disable any plugin by adding `enabled = no` to the corresponding section.
+You can fully disable any plugin by adding `enabled = no` to the corresponding section, or by adding an underscore to the beginning of the file name, or by removing the file from `plugins/`.
 
-Most options will take effect whenever the config file is changed.
+Most options will take effect whenever the config file is changed, otherwise you'll need to restart the game to see the effect.
 
 Sections of the config:
 
@@ -151,48 +166,55 @@ Valid key names are listed here (first column, case sensitive): https://wiki.lib
 
 One key can be bound to any amount of options, and one option can be changed by any amount of keybinds.
 
-## Run
-
-- set correct game path in `config.ini`
-- on windows, start `run.bat`
-
 ## Mipmaps and sprite editing
 
-SBPE is compatible with modified sprites. However, when mipmaps are enabled, default sprite sheets are not loaded. To see default sprites, disable mipmaps (`mipmaps = no`). To re-generate mipmaps after you have edited and tested your new sprites, enable mipmaps and delete this file in the game directory: `data/texture/DataVersion.m.bpb` (note the m!) On the next start SBPE will update mipmaps accordingly.
+SBPE is compatible with modified sprites. However, when mipmaps are enabled, default sprite sheets are not loaded.
+
+To see sprites from default sprite sheet names, disable mipmaps (`mipmaps = no`).
+
+To re-generate mipmaps after you have edited and tested your new sprites:
+
+- close the game
+- enable mipmaps
+- delete this file in the game directory: `data/texture/DataVersion.m.bpb` (note the m!)
+
+On the next start SBPE will update mipmaps accordingly.
 
 ## Compiling
 
-performance is way better when compiled and run with pypy (which is the default in prebuilt release)
+performance is way better when compiled and run with pypy (which is the default in prebuilt release). Portable pypy is straight up unpacked into `pypy/` directory.
 
 Make sure all dependencies are in place:
 
 - python 3.5+ or pypy3
-- a C compiler that can be found by disttools
+- C/C++ compiler that can be found by disttools
 - python modules: `cffi` (built-in on pypy), `Pillow`, `protobuf`
 - SDL: install [development libraries](https://libsdl.org/download-2.0.php) for the version used by the game
-    - Windows: unzip [this](https://libsdl.org/release/SDL2-devel-2.0.4-VC.zip) to `libs/SDL`
-    - Linux: ?
-    - Mac: ???
-- `libs/subhook`: source [here](https://github.com/Zeex/subhook), don't build
+    - Windows: unzip [this](https://libsdl.org/release/SDL2-devel-2.0.4-VC.zip) into `libs/SDL`
+    - Linux: install `libsdl2-dev`
 
-Then, to compile, run `rectbinpack/rbp_builder.py` and `builder.py`.
+to compile, run `rectbinpack/rbp_builder.py` and `builder.py`.
+
+To make linux binaries distributable, need to set relative RUNPATH:
+```
+patchelf --set-rpath $ORIGIN/../pypy/lib build/remote.bin
+patchelf --set-rpath $ORIGIN/../pypy/lib rectbinpack/_rbp.so
+```
 
 ## Writing plugins
-
-_insert a tutorial of some sort here_
 
 There is live-reloading for plugins. In case of uncaught exceptions, traceback is written to `remote.log`. The plugin that caused the error is unloaded until it is edited.
 
 for plugin ideas see `notes.txt`
 
-## External resources used
+## External resources
 
 - pypy: https://pypy.org
 - cffi: https://cffi.readthedocs.io
 - symquery: part of https://github.com/DynamoRIO/drmemory
 - mayhem: https://github.com/zeroSteiner/mayhem
 - subhook: https://github.com/Zeex/subhook
-- plthook: https://github.com/kubo/plthook (not actually used atm)
+- plthook: https://github.com/kubo/plthook
 - rectbinpack: based on https://github.com/juj/RectangleBinPack
 
 ## Thanks
@@ -201,7 +223,7 @@ Thanks to Crunchy Games for not stripping symbols from the binary, would probabl
 
 ## License
 
-ISC on my code.
+ISC on my code; see appropriate readmes or links above for licenses for other projects.
 
 Copyright 2018 atomizer <danila.gerasimov@gmail.com>
 
