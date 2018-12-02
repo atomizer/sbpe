@@ -145,7 +145,7 @@ def hook_textureCallback(texture, sptr):
 
 def initHooks():
     def addhook(fname, hookfunc, ret=False):
-        hook = lib.subhook_new(refs[fname], hookfunc, 0)
+        hook = lib.subhook_new(refs[fname], hookfunc, 1)
         orig = ffi.cast('p' + fname, lib.subhook_get_trampoline(hook))
         if orig != ffi.NULL:
             ORIGS[fname] = orig
@@ -162,6 +162,8 @@ def initHooks():
             ORIGS[fname] = call_orig
 
         lib.subhook_install(hook)
+        if not lib.subhook_is_installed(hook):
+            logging.error('failed to hook {}'.format(fname))
 
     addhook('XDL_DoEvents', lib.hook_DoEvents)
     addhook('XDL_Clear', lib.hook_Clear)
