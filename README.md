@@ -18,8 +18,8 @@
 ## OS support
 
 - Windows: yes
-- Linux: not functional yet, but possible
-- Mac: maybe?
+- Linux: not functional yet
+- Mac: planned
 
 ## Download
 
