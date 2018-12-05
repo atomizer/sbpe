@@ -191,6 +191,10 @@ class Plugin(PluginBase):
                     ex.x = tw - ex.w
                     ex.y = th - ex.h - 100
 
+        # re-center camera
+        if self.refs.WorldView != ffi.NULL:
+            self.refs.WorldView.offsetsInitialized = False
+
         self.refs.windowEventCallback(
             lib.XDL_WINDOWEVENT_SIZE_CHANGED, self.refs.userData_[0])
 
