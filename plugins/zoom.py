@@ -40,12 +40,9 @@ class Plugin(PluginBase):
         self.stime = 0
 
         # allows to cleanly skip the worldclient event handler
-        self._hook = 0
-        if self.config.fast:
-            self._hook = lib.subhook_new(
-                self.refs['WorldClient::handleWindowEvent'],
-                self.refs['UIElementContainer::handleWindowEvent'], 0)
-            lib.subhook_install(self._hook)
+        self._hook = lib.subhook_new(
+            self.refs['WorldClient::handleWindowEvent'],
+            self.refs['UIElementContainer::handleWindowEvent'], 1)
 
     def __del__(self):
         if self._hook:
