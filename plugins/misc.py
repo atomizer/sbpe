@@ -113,6 +113,7 @@ class Plugin(PluginBase):
             wv.playerBounds.y += BN
             wv.playerBounds.w -= BN * 2
             wv.playerBounds.h -= BN * 2
+            wv.offsetsInitialized = False
 
     def onPresent(self):
         self.reposition_window()
