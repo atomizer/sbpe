@@ -122,6 +122,7 @@ def launch(exepath):
 def runLoader(exepath=''):
     mipmaps = False
 
+    # ensure config exists
     if not os.path.exists(CONFFILE):
         logging.info('config not found, copying from template')
         try:
@@ -130,20 +131,18 @@ def runLoader(exepath=''):
             logging.error('failed to copy config!')
             return False
 
-    if os.path.exists(CONFFILE):
-        conf = configparser.ConfigParser()
-        conf.read(CONFFILE)
-        exepath = conf.get('general', 'game', fallback=exepath)
-        mipmaps = conf.getboolean('general', 'mipmaps', fallback=False)
-        keepopen = conf.getboolean('general', 'keep_open', fallback=False)
-    else:
-        logging.error('config not found!')
-        return False
+    conf = configparser.ConfigParser()
+    conf.read(CONFFILE)
+    exepath = conf.get('general', 'game', fallback=exepath)
+    mipmaps = conf.getboolean('general', 'mipmaps', fallback=False)
+    keepopen = conf.getboolean('general', 'keep_open', fallback=False)
 
+    # ensure the binary exists
     if not os.path.isfile(exepath):
         logging.error('put the path to the game executable in ' + CONFFILE)
         return False
 
+    # resolve symbols and prepare environment
     offsets = resolveSymbols(exepath)
     if offsets is not None:
         logging.info('symbols ok')
@@ -190,6 +189,7 @@ def runLoader(exepath=''):
     if os.path.exists(rlogpath):
         os.unlink(rlogpath)
 
+    # start the game
     gpop = launch(exepath)
 
     if not gpop:
@@ -198,9 +198,11 @@ def runLoader(exepath=''):
 
     logging.info('game pid {}'.format(gpop.pid))
 
+    # exit here to close the console window
     if not keepopen:
         return True
 
+    # mirror log
     while not os.path.exists(rlogpath) and gpop.poll() is None:
         logging.info('waiting for log')
         time.sleep(0.5)
@@ -217,11 +219,12 @@ def runLoader(exepath=''):
                     break
                 sys.stdout.write(s)
             time.sleep(0.5)
-    except KeyboardInterrupt:
+    except Exception:
         gpop.kill()
 
     logging.info('game closed: code {}'.format(gpop.returncode))
 
+    # dump stdout
     stdo = gpop.communicate()[0].decode()
 
     if len(stdo) > 0:
