@@ -144,26 +144,6 @@ def runLoader(exepath=''):
         logging.error('put the path to the game executable in ' + CONFFILE)
         return False
 
-    if mipmaps:
-        gdir = os.path.dirname(os.path.abspath(exepath))
-        tdir = os.path.join(gdir, 'data', 'texture')
-        dvpath = os.path.join(tdir, 'dataVersion.bpb')
-        dvmpath = os.path.join(tdir, 'dataVersion.m.bpb')
-        dvbak = os.path.join(tdir, 'dataVersion.bpb.bak')
-
-        if not os.path.exists(dvbak):
-            # presumably there are no other instances running
-            if not os.path.exists(dvmpath):
-                logging.info('mipmaps enabled, but not found. generating...')
-
-                import genmipmaps
-                genmipmaps.BASEPATH = tdir
-                mn = conf.getint('general', 'mipmap_maxlevel', fallback=2)
-                genmipmaps.main(tdir, mipmaps=mn)
-
-            os.rename(dvpath, os.path.join(tdir, 'dataVersion.bpb.bak'))
-            os.rename(dvmpath, dvpath)
-
     offsets = resolveSymbols(exepath)
     if offsets is not None:
         logging.info('symbols ok')
@@ -176,6 +156,35 @@ def runLoader(exepath=''):
 
     os.environ['SBPE_SYMFILE'] = SYMFILE
 
+    # texture dir and dataVersion paths
+    gdir = os.path.dirname(os.path.abspath(exepath))
+    tdir = os.path.join(gdir, 'data', 'texture')
+
+    dvpath = os.path.join(tdir, 'dataVersion.bpb')
+    dvmpath = os.path.join(tdir, 'dataVersion.m.bpb')
+    dvbak = os.path.join(tdir, 'dataVersion.bpb.bak')
+
+    if not os.path.exists(dvbak):
+        # create a backup of the original file if there is none
+        shutil.copy(dvpath, dvbak)
+    else:
+        # otherwise restore from backup to reset state
+        shutil.copy(dvbak, dvpath)
+
+    # generate mipmaps if needed
+    if mipmaps and not os.path.exists(dvmpath):
+        logging.info('mipmaps enabled, but not found. generating...')
+
+        import genmipmaps
+        genmipmaps.BASEPATH = tdir
+        mn = conf.getint('general', 'mipmap_maxlevel', fallback=2)
+        genmipmaps.main(tdir, mipmaps=mn)
+
+    # overwrite dataVersion
+    if mipmaps:
+        shutil.copy(dvmpath, dvpath)
+
+    # remove old log
     rlog = None
     rlogpath = os.path.join(SCRIPTPATH, 'remote.log')
     if os.path.exists(rlogpath):
@@ -218,10 +227,6 @@ def runLoader(exepath=''):
     if len(stdo) > 0:
         logging.info('stdout:')
         print(stdo)
-
-    if mipmaps and os.path.exists(dvbak):
-        os.rename(dvpath, dvmpath)
-        os.rename(dvbak, dvpath)
 
     return True
 
