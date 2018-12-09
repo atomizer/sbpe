@@ -69,7 +69,8 @@ class Plugin(PluginBase):
                 if mk == 6 and p.maxhitpoints % 5 != 0:
                     mk = 5
                 shell += str(mk)
-            self.seen[acc] = (self.ct, name, faction, shell)
+            wasSpark = True if shell == '' else False
+            self.seen[acc] = (self.ct, name, faction, shell, wasSpark)
 
     def onPresent(self):
         plst = list(self.seen.values())
@@ -103,7 +104,8 @@ class Plugin(PluginBase):
 
         addList('shells', filter(lambda x: x[0] == self.ct and x[3] != '', plst))
         addList('sparks', filter(lambda x: x[0] == self.ct and x[3] == '', plst))
-        addList('seen before', filter(lambda x: x[0] != self.ct, plst))
+        addList('seen before', filter(lambda x: x[0] != self.ct and not x[4], plst))
+        addList('dead', filter(lambda x: x[0] != self.ct and x[4], plst))
 
         self.columns['shell'].text = stxt
         self.columns['name'].text = ntxt
