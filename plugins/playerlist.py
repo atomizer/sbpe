@@ -105,7 +105,7 @@ class Plugin(PluginBase):
         addList('shells', filter(lambda x: x[0] == self.ct and x[3] != '', plst))
         addList('sparks', filter(lambda x: x[0] == self.ct and x[3] == '', plst))
         addList('seen before', filter(lambda x: x[0] != self.ct and not x[4], plst))
-        addList('dead', filter(lambda x: x[0] != self.ct and x[4], plst))
+        addList('died', filter(lambda x: x[0] != self.ct and x[4], plst))
 
         self.columns['shell'].text = stxt
         self.columns['name'].text = ntxt
