@@ -32,7 +32,7 @@ class Plugin(PluginBase):
     def onInit(self):
         self.config.option('active', True, 'bool')
         self.config.option('level', -1, 'int')
-        self.config.option('fast', True, 'bool')
+        self.config.option('fast', False, 'bool')
         self.config.option('time', 0, 'float')
 
         self.start = 1
