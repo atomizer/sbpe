@@ -23,7 +23,7 @@ class Plugin(PluginBase):
         self.hidden = set()
         self.oldbits = []
 
-        self.config.option('replace_shake', True, 'bool')
+        self.config.option('replace_shake', False, 'bool')
         self._shake = 0
         self._flash = 0
         self.shaketxt = util.PlainText(size=30, color=0xffffff00)
