@@ -23,7 +23,7 @@ BN = 1000000
 class Plugin(PluginBase):
     def onInit(self):
         # self.config.option('menu_bg', 0xff1d264d, 'color')
-        self.config.option('centered', 1, 'int')
+        self.config.option('centered', 0, 'int')
         self.config.option('max_bg_value', 1, 'float')
         self.config.option('hide_cursor_after', 1, 'float')
         self.config.options('bool', FLAGS)
