@@ -213,14 +213,15 @@ class Plugin(PluginBase):
             self.drawArrow(plr, obj, k)
 
         # zone/room id
-        cwprops = cw.asWorld.props
-        txt = util.getstr(cwprops.zone) or util.getstr(cwprops.music)
-        if cwprops.floor > 0:
-            txt = '{} {}'.format(txt, cwprops.floor + 1)
-        self.roomtxt.text = txt
-        self.roomtxt.draw(
-            self.refs.windowW - 4, self.refs.windowH - 4,
-            anchorX=1, anchorY=1)
+        if self.config.show_room_id:
+            cwprops = cw.asWorld.props
+            txt = util.getstr(cwprops.zone) or util.getstr(cwprops.music)
+            if cwprops.floor > 0:
+                txt = '{} {}'.format(txt, cwprops.floor + 1)
+            self.roomtxt.text = txt
+            self.roomtxt.draw(
+                self.refs.windowW - 4, self.refs.windowH - 4,
+                anchorX=1, anchorY=1)
 
     def drawArrow(self, src, dst, kind):
         optprefix = 'arrow_' + kind + '_'
