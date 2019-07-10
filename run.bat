@@ -1,4 +1,5 @@
 @echo off
-set PATH=%PATH%;%~dp0pypy
+set PATH=%~dp0pypy;%PATH%
 cd /D %~dp0
+set PYTHONNOUSERSITE=1
 pypy3 loader.py

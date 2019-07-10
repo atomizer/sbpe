@@ -190,6 +190,7 @@ def kickstart():
 
     refs.SCRIPTPATH = os.path.dirname(SYMFILE)
     sys.path.insert(1, refs.SCRIPTPATH)
+    sys.path.insert(1, os.path.join(refs.SCRIPTPATH, 'pypy', 'site-packages'))
 
     logging.basicConfig(
         level=logging.INFO,
