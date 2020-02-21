@@ -38,11 +38,11 @@ class dotdict(dict):
 refs = dotdict(
     tops=[],  # collection of direct children of stage
     topTypes=[],  # the class names of tops
-    MM=ffi.NULL,  # MainMenu
-    GC=ffi.NULL,  # GameClient
-    WC=ffi.NULL,  # WorldClient
-    CW=ffi.NULL,  # ClientWorld
-    WV=ffi.NULL,  # WorldView
+    MainMenu=ffi.NULL,
+    GameClient=ffi.NULL,
+    WorldClient=ffi.NULL,
+    ClientWorld=ffi.NULL,
+    WorldView=ffi.NULL,
     overrideW=0, overrideH=0,  # fake values to return from XDL_GetWindowSize
     windowW=0, windowH=0,  # current window size
     scaleX=1, scaleY=1,    # current window scale
