@@ -18,8 +18,8 @@
 ## OS support
 
 - Windows: yes
-- Linux: not functional yet
-- Mac: planned
+- Mac: no
+- Linux: no
 
 ## Download
 
@@ -66,7 +66,7 @@ Sections of the config:
 
 ### `[plugin_zoom]` - zoom
 
-- `fast`: whether to use fast method or slow but correct method. Fast method has some minor inaccuracies: some background visual elements can change position when zooming (most prominently, the ai statue in eschaton), and the "outside" of "underground" rooms can be empty when zooming out instead of being filled with tiles. Recommended to leave enabled.
+- `fast`: whether to use fast method or slow but correct method. Fast method has some minor inaccuracies: some background visual elements can change position when zooming (most prominently, the ai statue in eschaton), and the "outside" of "underground" rooms can be empty when zooming out instead of being filled with tiles. Recommended to enable if you can survive the above.
 - `level`: zoom level, represents internal canvas width in pixels. `-1` means the native 1:1 scale. Recommended to leave at `-1` and set keybind(s) for the level(s) you want. See `[plugin_keybinds]` for info about keybinds.
 - `time`: transition time, set to 0 for instant. If using slow method, 0 is recommended.
 
