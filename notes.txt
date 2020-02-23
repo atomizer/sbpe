@@ -1,17 +1,26 @@
-todo
+MISC
+
+- make usable and abstract __thiscall to hook class methods
+
+- rewrite rectbinpack wrapper? is fugly
+  - consider cppyy
+  - make it compile on gcc
+
+PLUGINS
 
 - player list
-  - batch commands
+  - time since last seen, since death
+  - actions (ignore, friend, message)
 
-- highlights
+- chat
+  - save log
+  - tabs
+  - player actions from context
+
+- custom nametag rendering, highlights
+
+- discord (pypresence)
 
 - extra info
   - own shell hitboxes
 <WorldObject> -> VidAnimData *vad -> STDVector<AnimationData*> animDataVec -> STDVector<AnimBoxes> boxes[3] -> int time, int length, STDVector<Rectangle> rects
-
-- chat
-  - popout?
-  - keep log
-  - tabs (global, faction, per-person)
-
-- account switcher
