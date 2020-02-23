@@ -17,6 +17,7 @@ class Plugin(PluginBase):
             'hide_healthbars': False,
             'hide_ally_objects': False,
             'hide_effects': False,
+            'hide_chat': False,
         })
         self.config.option('damage_flash_intensity', 1, 'float')
 
@@ -29,6 +30,13 @@ class Plugin(PluginBase):
         self.shaketxt = util.PlainText(size=30, color=0xffffff00)
 
     def afterUpdate(self):
+        gc = self.refs.GameClient
+        if gc != ffi.NULL and gc.chatWindow != ffi.NULL:
+            if self.config.hide_chat:
+                ffi.cast('struct UIElement *', gc.chatWindow).x = -9000
+            else:
+                ffi.cast('struct UIElement *', gc.chatWindow).x = 0
+
         cw = self.refs.ClientWorld
         wv = self.refs.WorldView
         if cw == ffi.NULL or wv == ffi.NULL:
