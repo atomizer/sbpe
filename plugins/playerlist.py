@@ -11,7 +11,7 @@ SHELL_ABBREV = {
     'heavy': 'I',
     'fabricator': 'F',
     'toaster': 'T',
-    'spark': ''
+    'spark': '*'
 }
 
 SHELL_MIN_HP = {
@@ -56,12 +56,22 @@ class Plugin(PluginBase):
             name = util.getstr(p.displayname) or '#' + acc[:6]
             faction = util.getstr(p.playerdata.factionname)
 
+            if acc not in self.seen:
+                d = self.seen[acc] = {}
+            else:
+                d = self.seen[acc]
+
+            d['name'] = name
+            d['faction'] = faction
+            d['time'] = self.ct
+
             shell = ''
             vid = util.getstr(p.vid)
             try:
                 shell = SHELL_ABBREV[vid]
             except KeyError:
                 shell = '?'
+
             if vid in SHELL_MIN_HP and p.maxhitpoints > 0:
                 mk = 1 + (p.maxhitpoints - SHELL_MIN_HP[vid]) // 10
                 mk = min(mk, 6)
@@ -69,7 +79,14 @@ class Plugin(PluginBase):
                 if mk == 6 and p.maxhitpoints % 5 != 0:
                     mk = 5
                 shell += str(mk)
-            self.seen[acc] = (self.ct, name, faction, shell)
+                # remember alive state
+                d['prevshell'] = shell
+
+            d['shell'] = shell
+
+            # detect death
+            if vid == 'spark' and 'prevshell' in d and 'death' not in d:
+                d['death'] = self.ct
 
     def onPresent(self):
         plst = list(self.seen.values())
@@ -82,9 +99,9 @@ class Plugin(PluginBase):
         if not self.config.visible:
             return
 
-        plst.sort(key=lambda x: str.lower(x[1]))
-        plst.sort(key=lambda x: str.lower(x[2]))
-        plst.sort(key=lambda x: x[0], reverse=True)
+        plst.sort(key=lambda x: str.lower(x['name']))
+        plst.sort(key=lambda x: str.lower(x['faction']))
+        plst.sort(key=lambda x: x['time'], reverse=True)
 
         ntxt = stxt = ftxt = ''
 
@@ -97,13 +114,16 @@ class Plugin(PluginBase):
             ntxt += '\n'
             ftxt += '\n'
             for x in lst:
-                ntxt += x[1] + '\n'
-                ftxt += x[2] + '\n'
-                stxt += x[3] + '\n'
+                ntxt += x['name'] + '\n'
+                ftxt += x['faction'] + '\n'
+                if 'death' in x and x['shell'] == SHELL_ABBREV['spark']:
+                    stxt += '({})\n'.format(x['prevshell'])
+                else:
+                    stxt += x['shell'] + '\n'
 
-        addList('shells', filter(lambda x: x[0] == self.ct and x[3] != '', plst))
-        addList('sparks', filter(lambda x: x[0] == self.ct and x[3] == '', plst))
-        addList('seen before', filter(lambda x: x[0] != self.ct, plst))
+        addList('shells', filter(lambda x: x['time'] == self.ct and x['shell'] != SHELL_ABBREV['spark'], plst))
+        addList('sparks', filter(lambda x: x['time'] == self.ct and x['shell'] == SHELL_ABBREV['spark'], plst))
+        addList('seen before', filter(lambda x: x['time'] != self.ct, plst))
 
         self.columns['shell'].text = stxt
         self.columns['name'].text = ntxt
