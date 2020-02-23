@@ -8,7 +8,6 @@ import random
 import time
 
 # installed
-import requests
 from PIL import Image, ImageDraw
 
 # generated
@@ -18,30 +17,32 @@ import bpb_pb2
 import rectbinpack
 
 BASEPATH = os.path.abspath('../data')
-BASEURL = 'https://static.drips.pw/starbreak/data/'
-
 OUTDIR = 'out'
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
-
-def readFile(name, local=True):
-    if local:
-        with open(os.path.join(BASEPATH, name), 'rb') as f:
+def readFile(name):
+    try:
+        with open(name, 'rb') as f:
             s = f.read()
         return s
-    else:
-        return requests.get(BASEURL + name).content
+    except OSError:
+        logging.error('could not read: {}'.format(name))
+        # todo: handle
+        raise
 
 
-def readDataVersion(timestamp=None, local=True):
-    name = 'dataVersion.bpb'
+def getFileTime(name):
+    try:
+        return os.path.getmtime(name)
+    except OSError:
+        return 0
 
-    if not local and timestamp is None:
-        timestamps = requests.get(BASEURL + 'timestamps.json').json()
-        name = 'dataVersion-{}.bpb'.format(timestamps[-1])
 
-    return bpb_pb2.DataVersion.FromString(readFile(name, local=local))
+def readDataVersion(name=None):
+    if name is None:
+        name = os.path.join(BASEPATH, 'dataVersion.bpb')
+    return bpb_pb2.DataVersion.FromString(readFile(name))
 
 
 def readDesc(src):
@@ -59,10 +60,10 @@ def readDesc(src):
     return res
 
 
-def loadSheets(sheetnames, local):
+def loadSheets(sheetnames):
     sheets = {}
     for name in sheetnames:
-        b = io.BytesIO(readFile(name, local=local))
+        b = io.BytesIO(readFile(name))
         sheets[int(name.split('.')[1])] = Image.open(b)
     return sheets
 
@@ -317,13 +318,14 @@ def doPack(pvd, local=True, mipmaps=0):
     pvd.imageIds.extend(pnames)
 
 
-def main(out, local=True, name='all', mipmaps=2):
-    if not os.path.isdir(out):
-        os.mkdir(out)
-    os.chdir(out)
 
-    dv = readDataVersion(local=local)
 
+def main(outdir, mipmaps):
+    if not os.path.isdir(outdir):
+        os.mkdir(outdir)
+    os.chdir(outdir)
+
+    dv = readDataVersion()
     for pack in dv.pvid:
         if name == 'all' or name == pack.name:
             doPack(pack, local=local, mipmaps=mipmaps)
@@ -334,10 +336,16 @@ def main(out, local=True, name='all', mipmaps=2):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(
+        level=logging.INFO, format='[%(levelname)s] %(message)s')
+
     parser = argparse.ArgumentParser()
-    parser.add_argument('name')
-    parser.add_argument('-m', '--mipmaps', default=0, type=int)
-    parser.add_argument('-r', '--remote', action='store_false', dest='local')
+    # parser.add_argument('--name', default='all')
+    parser.add_argument('-m', '--mipmaps', default=2, type=int)
     args = parser.parse_args()
 
-    main(OUTDIR, local=args.local, name=args.name, mipmaps=args.mipmaps)
+    t = time.perf_counter()
+
+    main(OUTDIR, args.mipmaps)
+
+    logging.info('time: {:.2f}s'.format(time.perf_counter() - t))

@@ -11,3 +11,4 @@ pypy/
 config.ini
 plugins/test.py
 symbols.json
+out/
