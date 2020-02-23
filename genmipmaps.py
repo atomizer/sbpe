@@ -19,7 +19,6 @@ import rectbinpack
 BASEPATH = os.path.abspath('../data')
 OUTDIR = 'out'
 
-logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 def readFile(name):
     try:
@@ -81,8 +80,8 @@ def loadSprites(uiids, sheets):
 def repack(items, size):
     res = rectbinpack.MaxRects(size[0], size[1], items)
 
-    occ = ', '.join(['{:.3f}'.format(x) for x in res['occupancy']])
-    logging.info('packed coverage: ' + occ)
+    # occ = ', '.join(['{:.3f}'.format(x) for x in res['occupancy']])
+    # logging.info('packed coverage: ' + occ)
     if len(items) > 0:
         logging.error('failed to pack {} sprites!'.format(len(items)))
 
@@ -90,8 +89,6 @@ def repack(items, size):
 
 
 def extendSprite(spr, border, scale, tbox=None):
-    debug = False
-
     basic = False
     if tbox is None:
         tbox = (0, 0, spr.width, spr.height, 0, 0)
@@ -102,9 +99,6 @@ def extendSprite(spr, border, scale, tbox=None):
     osh = math.ceil((spr.height + oy) / scale)
     obw = math.ceil(bw / scale)
     obh = math.ceil(bh / scale)
-
-    # if spr.width == 160 and spr.height == 19:
-    #     logging.info(dict(ox=ox, oy=oy, bx=bx, by=by, obw=obw, obh=obh, osw=osw, osh=osh, border=border, scale=scale))
 
     # source for border extensions
     if basic:
@@ -128,11 +122,6 @@ def extendSprite(spr, border, scale, tbox=None):
 
     r = Image.new('RGBA', (border * 2 + spr.width, border * 2 + spr.height))
 
-    # this mask overrides everything that is not fully opaque,
-    # so that intentional overflows (usually opaque) are not damaged.
-    # needs additional cropping to use in every operation, cba.
-    # mask = r.getchannel(3).point([255] * 255 + [0])
-
     # extend the sprite by 1 pixel in all directions
     r.paste(bsrc.crop((0, 0, obw, 1)), (bx, by - 1))
     r.paste(bsrc.crop((0, 0, 1, obh)), (bx - 1, by))
@@ -147,15 +136,13 @@ def extendSprite(spr, border, scale, tbox=None):
     if basic:
         r.paste(spr, (border, border))
     else:
-        # using this allows opaque pixels from source (intentional overflow)
-        # override our borders, preserving original art
-        # drawback: some border pixels may change due to resize leaking
+        # allow opaque external pixels (intentional overflow) to
+        # overwrite extended borders, better preserving original art
         r.alpha_composite(spr, (border, border))
-        # slap inner part on top to override any transparency that
-        # could leak from the edges when scaling the whole sprite
+        # ...but overwrite transparency that could leak in from the edges
         r.paste(bsrc, (bx, by))
 
-    if debug and border > 1:
+    if False and border > 1:
         draw = ImageDraw.Draw(r)
         color = 'hsv({},100%,100%)'.format(random.randrange(360))
         draw.rectangle([0, 0, r.width - 1, r.height - 1], outline=color)
@@ -210,7 +197,6 @@ def doPack(pvd, local=True, mipmaps=0):
 
         # offset tile sprites so that the tile edges match
         # pixel edges at the lowest mipmap level.
-        # allows creating sharp tile edges at all mipmap levels
         offx = (border - (bx % border)) % border
         offy = (border - (by % border)) % border
 
@@ -287,7 +273,7 @@ def doPack(pvd, local=True, mipmaps=0):
 
     pb.sheetDef.extend(newsheets)
 
-    # fix uiids everywhere
+    # fix uiids
 
     # ImageVidDescription
     for el in pb.imageVidDesc:
