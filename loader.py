@@ -171,8 +171,8 @@ def runLoader(exepath=''):
         shutil.copy(dvbak, dvpath)
 
     # generate mipmaps if needed
-    if mipmaps and not os.path.exists(dvmpath):
-        logging.info('mipmaps enabled, but not found. generating...')
+    if mipmaps:
+        logging.info('checking mipmaps...')
 
         import genmipmaps
         genmipmaps.BASEPATH = tdir

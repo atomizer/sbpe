@@ -1,5 +1,6 @@
 import argparse
 import array
+import concurrent.futures
 import io
 import logging
 import math
@@ -150,7 +151,7 @@ def extendSprite(spr, border, scale, tbox=None):
     return r
 
 
-def makeSheet(size, sprites, uiids, coords, level, maxlevel, tboxes):
+def makeSheet(size, sprites, coords, level, maxlevel, tboxes):
     border = 1 << (maxlevel - level)
     scale = 1 << level
 
@@ -170,19 +171,20 @@ def makeSheet(size, sprites, uiids, coords, level, maxlevel, tboxes):
     return im
 
 
-def doPack(pvd, local=True, mipmaps=0):
-    logging.info('repacking "{}"'.format(pvd.name))
+def doPack(params):
+    name, bpbname, sheetnames, mipmaps = params
 
-    desc = readDesc(readFile('{0}.{1}.bpb'.format(pvd.name, pvd.descId)))
+    logging.basicConfig(level=logging.INFO)
+    logging.getLogger().handlers[0].setFormatter(
+        logging.Formatter('[%(levelname)s] ({}) %(message)s'.format(name)))
+
+    desc = readDesc(readFile(bpbname))
     uiids = desc['uiids']
     pb = desc['raw']
 
     # phase 1 - sprites
 
-    fnames = ['{0}.{1}.png'.format(pvd.name, img) for img in pvd.imageIds]
-    sheets = loadSheets(sheetnames=fnames, local=local)
-    sprites = loadSprites(uiids, sheets)
-    logging.info('loaded {} sprites'.format(len(sprites)))
+    sheets = loadSheets(sheetnames)
     sheetsize = sheets[0].size
 
     border = 1 << mipmaps
@@ -224,18 +226,21 @@ def doPack(pvd, local=True, mipmaps=0):
 
     packed = repack(items, sheetsize)
 
+    sprites = loadSprites(uiids, sheets)
+    logging.info('{} sprites'.format(len(sprites)))
+
     logging.info('writing png...')
-    pnames = []  # new names for pviddesc
 
     for i in range(len(packed)):
-        for level in range(0, mipmaps + 1):
-            s = makeSheet(sheetsize, sprites, uiids, packed[i], level, mipmaps, tboxes)
+        for level in range(mipmaps + 1):
+            s = makeSheet(sheetsize, sprites, packed[i], level, mipmaps, tboxes)
 
-            fname = '{}.m{}.{}.png'.format(pvd.name, level, i)
-            s.save(fname)
-            logging.info('saved {}'.format(fname))
-
-        pnames.append('m0.{}'.format(i))
+            fname = '{}.m{}.{}.png'.format(name, level, i)
+            logging.info(fname)
+            try:
+                s.save(fname)
+            except OSError:
+                logging.error('failed to save {}!'.format(fname))
 
     # phase 2 - bpb
 
@@ -295,15 +300,31 @@ def doPack(pvd, local=True, mipmaps=0):
                     fde.uiid = umap[fde.uiid]
 
     # write file
-    descname = '{}.m.bpb'.format(pvd.name)
-    with open(descname, 'wb') as f:
-        f.write(pb.SerializeToString())
 
-    pvd.descId = 'm'  # todo: checksums or time modified for autoupdates
-    del pvd.imageIds[:]
-    pvd.imageIds.extend(pnames)
+    descname = '{}.m.bpb'.format(name)
+    try:
+        with open(descname, 'wb') as f:
+            f.write(pb.SerializeToString())
+    except OSError:
+        logging.error('failed to save {}!'.format(descname))
+
+    return len(packed)
 
 
+def isComplete(name, nsheets, mipmaps, mtime):
+    if nsheets == 0:
+        return False
+
+    mbpb = '{}.m.bpb'.format(name)
+
+    # enumerate all expected files
+    targets = [mbpb]
+    for level in range(mipmaps + 1):
+        for sheet in range(nsheets):
+            targets.append('{}.m{}.{}.png'.format(name, level, sheet))
+
+    # if any of the files are old or missing, return False
+    return all(getFileTime(tfile) > mtime for tfile in targets)
 
 
 def main(outdir, mipmaps):
@@ -312,11 +333,68 @@ def main(outdir, mipmaps):
     os.chdir(outdir)
 
     dv = readDataVersion()
-    for pack in dv.pvid:
-        if name == 'all' or name == pack.name:
-            doPack(pack, local=local, mipmaps=mipmaps)
 
-    logging.info('writing dataVersion...')
+    plens = {}
+    if os.path.exists('dataVersion.m.bpb'):
+        ndv = readDataVersion('dataVersion.m.bpb')
+        for pack in ndv.pvid:
+            plens[pack.name] = len(pack.imageIds)
+
+    jobs = {}
+
+    for pack in dv.pvid:
+        # enumerate all the original file names based on dataVersion
+        bpbname = '{0}.{1}.bpb'.format(pack.name, pack.descId)
+        bpbname = os.path.join(BASEPATH, bpbname)
+        sheetnames = []
+        for img in pack.imageIds:
+            sname = '{0}.{1}.png'.format(pack.name, img)
+            sheetnames.append(os.path.join(BASEPATH, sname))
+
+        # most recent modified time of originals
+        lastmtime = max(getFileTime(name) for name in (bpbname, *sheetnames))
+
+        plen = 0
+        if pack.name in plens:
+            plen = plens[pack.name]
+
+        if isComplete(pack.name, plen, mipmaps, lastmtime):
+            logging.debug('ok: {}'.format(pack.name))
+        else:
+            jobs[pack.name] = (pack.name, bpbname, sheetnames, mipmaps)
+
+    if len(jobs) > 0:
+        fnames = {}
+
+        # run packs in parallel
+        logging.info('please wait, updating: {}...'.format(
+            ', '.join(jobs.keys())))
+
+        executor = concurrent.futures.ProcessPoolExecutor(
+            max_workers=min(len(jobs), os.cpu_count() or 1))
+
+        for pname in jobs:
+            future = executor.submit(doPack, jobs[pname])
+            fnames[future] = pname
+
+        # wait for everything to finish
+        for future in concurrent.futures.as_completed(fnames):
+            pname = fnames[future]
+            plens[pname] = future.result()
+            logging.info('done: {}'.format(pname))
+
+        executor.shutdown()
+    else:
+        logging.info('all mipmaps are up to date')
+
+    # modify dataVersion and write out dataVersion.m.bpb
+    for pack in dv.pvid:
+        pack.descId = 'm'
+        del pack.imageIds[:]
+        pack.imageIds.extend([
+            'm0.{}'.format(i) for i in range(plens[pack.name])
+        ])
+
     with open('dataVersion.m.bpb', 'wb') as f:
         f.write(dv.SerializeToString())
 
