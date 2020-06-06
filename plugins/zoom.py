@@ -53,15 +53,14 @@ class Plugin(PluginBase):
         cw = self.refs.canvasW_
         ch = self.refs.canvasH_
 
-        cscale = cw[0] / self.refs.windowW
+        cscale = ch[0] / self.refs.windowH
         ctime = time.perf_counter()
 
         if not self.config.active:
             self.start = self.target = 1
             nscale = 1
         else:
-            twidth = self.config.level
-            targ = twidth / self.refs.windowW
+            targ = self.config.level / self.refs.windowH
 
             if targ <= 0:
                 targ = 1
@@ -86,6 +85,7 @@ class Plugin(PluginBase):
 
         tw = round(nscale * self.refs.windowW)
         th = round(nscale * self.refs.windowH)
+        #logging.info(str(tw) + 'x' + str(th))
 
         cw[0] = self.refs.overrideW = tw
         ch[0] = self.refs.overrideH = th
