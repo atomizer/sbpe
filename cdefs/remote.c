@@ -17,6 +17,7 @@
 
 #include <dlfcn.h>
 
+CFFI_DLLEXPORT uint32_t kickstart(void);
 CFFI_DLLEXPORT int SDL_Init(uint32_t flags) {
 	kickstart();
 	return ((int(*)(uint32_t))dlsym(RTLD_NEXT, "SDL_Init"))(flags);
