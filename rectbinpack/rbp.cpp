@@ -7,12 +7,21 @@ MaxRectsBinPack mbp;
 
 std::vector<Rect> dst;
 
+/*
 int MaxRectsBestShortSideFit = MaxRectsBinPack::RectBestShortSideFit; ///< -BSSF: Positions the rectangle against the short side of a free rectangle into which it fits the best.
 int MaxRectsBestLongSideFit = MaxRectsBinPack::RectBestLongSideFit; ///< -BLSF: Positions the rectangle against the long side of a free rectangle into which it fits the best.
 int MaxRectsBestAreaFit = MaxRectsBinPack::RectBestAreaFit; ///< -BAF: Positions the rectangle into the smallest free rect into which it fits.
 int MaxRectsBottomLeftRule = MaxRectsBinPack::RectBottomLeftRule; ///< -BL: Does the Tetris placement.
 int MaxRectsContactPointRule = MaxRectsBinPack::RectContactPointRule; ///< -CP: Choosest the placement where the rectangle touches other rects as much as possible.
+*/
 
+enum MaxRectsFreeRectChoiceHeuristic {
+	MaxRectsBestShortSideFit, ///< -BSSF: Positions the rectangle against the short side of a free rectangle into which it fits the best.
+	MaxRectsBestLongSideFit, ///< -BLSF: Positions the rectangle against the long side of a free rectangle into which it fits the best.
+	MaxRectsBestAreaFit, ///< -BAF: Positions the rectangle into the smallest free rect into which it fits.
+	MaxRectsBottomLeftRule, ///< -BL: Does the Tetris placement.
+	MaxRectsContactPointRule ///< -CP: Choosest the placement where the rectangle touches other rects as much as possible.
+};
 
 extern "C" {
 
