@@ -64,7 +64,7 @@ def loadSheets(sheetnames):
     sheets = {}
     for name in sheetnames:
         b = io.BytesIO(readFile(name))
-        sheets[int(name.split('.')[1])] = Image.open(b)
+        sheets[int(os.path.basename(name).split('.')[1])] = Image.open(b)
     return sheets
 
 
