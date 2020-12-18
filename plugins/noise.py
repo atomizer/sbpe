@@ -49,6 +49,8 @@ class Plugin(PluginBase):
             if self.config.hide_shells:
                 # fail: triggers game's "unknown object" box drawing
                 ffi.cast('int *', props.vid.s)[-3] = 0
+            else:
+                ffi.cast('int *', props.vid.s)[-3] = 1
 
             if self.config.hide_names:
                 # remember and remove relevant bits; also hides factions
