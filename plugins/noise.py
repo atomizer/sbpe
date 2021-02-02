@@ -18,6 +18,7 @@ class Plugin(PluginBase):
             'hide_ally_objects': False,
             'hide_effects': False,
             'hide_chat': False,
+            'ignore_own_faction': False
         })
         self.config.option('damage_flash_intensity', 1, 'float')
 
@@ -41,11 +42,21 @@ class Plugin(PluginBase):
         wv = self.refs.WorldView
         if cw == ffi.NULL or wv == ffi.NULL:
             return
+        
+        ptype = util.getClassName(cw.player)
+        if ptype not in self.refs.CASTABLE['PlayerCharacter']:
+            return
 
+        worldplayer = ffi.cast('struct WorldObject *', cw.player)
+        
         # other players
         allies = util.vec2list(cw.allies, 'struct WorldObject *')
         for obj in allies:
             props = obj.props
+
+            if self.checkFactionMatch(worldplayer, obj):
+                continue
+
             if self.config.hide_shells:
                 # fail: triggers game's "unknown object" box drawing
                 ffi.cast('int *', props.vid.s)[-3] = 0
@@ -70,7 +81,7 @@ class Plugin(PluginBase):
                 cw.clientSubWorlds, 'struct ForeignSubWorld *')
             for csubworld in worlds:
                 for obj in util.worldobjects(csubworld):
-                    if obj in allies:
+                    if obj in allies and self.checkFactionMatch(worldplayer, obj):
                         # shells are treated separately
                         continue
                     if obj.props.terraintype > 0:
@@ -136,3 +147,15 @@ class Plugin(PluginBase):
             if len(s) > 0:
                 self.shaketxt.text = '[{}]'.format(', '.join(s))
                 self.shaketxt.draw(self.refs.windowW // 2, 20, anchorX=0.5)
+    
+    def checkFactionMatch(self, obj1, obj2):
+        faction1 = ''
+        if obj1.props.playerdata != ffi.NULL:
+            faction1 = obj1.props.playerdata.factionname.s
+
+        faction2 = ''
+        if obj2.props.playerdata != ffi.NULL:
+            faction2 = obj2.props.playerdata.factionname.s
+        
+        # this comparison is stupid
+        return (ffi.string(faction1).decode() == ffi.string(faction2).decode()) and self.config.ignore_own_faction
