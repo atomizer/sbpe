@@ -14,11 +14,14 @@ class Plugin(PluginBase):
         self.config.option('res_size', 12, 'int')
         self.config.option('res_color', 0xffffffff, 'color')
         self.config.option('res_warning', 0xffff0000, 'color')
+        self.config.option('buf_color', 0xffffffff, 'color')
+        self.config.option('buf_size', 12, 'int')
 
         self.times = array.array('d')
         self.lastupd = self.prevt = time.perf_counter()
         self.txt = util.PlainText(font='HemiHeadBold')
         self.res = util.PlainText(font='HemiHeadBold')
+        self.buf = util.PlainText(font='HemiHeadBold')
         self._oldres = 0
 
     def onPresent(self):
@@ -67,3 +70,11 @@ class Plugin(PluginBase):
 
         self.res.draw(self.refs.windowW - 4, self.txt.h, anchorX=1)
         self._oldres = res
+        
+        bufsum =  self.refs.GameClient.clientStats.bufSize.sum
+        maxval = self.refs.GameClient.clientStats.bufSize.maxValues
+        buf = int(bufsum/maxval)
+        self.buf.text = 'buf:{}'.format(buf)
+        self.buf.size = self.config.buf_size
+        self.buf.color = self.config.buf_color
+        self.buf.draw(self.refs.windowW - 4, self.res.h*2, anchorX=1)
